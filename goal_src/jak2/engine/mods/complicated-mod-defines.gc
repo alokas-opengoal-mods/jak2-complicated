@@ -1,0 +1,33 @@
+;;-*-Lisp-*-
+(in-package goal)
+
+;; name: mod-defines.gc
+;; name in dgo: mod-defines
+;; dgos: TODO
+
+(define *closest-buzzer-dist* 1000000000.0)
+(define *last-kill-dist* 0.0)
+
+(define-extern mod-run-start (function none))
+(define-extern global-countdown-start (function none))
+(define-extern mod-rule-trigger (function symbol none))
+;; (define-extern mod-rule-handle-trigger (function symbol none))
+;; (define-extern mod-rule-trigger-grounded (function none))
+;; (define-extern mod-rule-trigger-brittle-legs (function none))
+
+;; (define-extern runs-on-jak-spawn (function none))
+;; (define-extern mod-rule-active? (function symbol symbol))
+;; (define-extern mod-timed-punishment-active? (function symbol symbol))
+;; (define-extern mod-on-damage (function none))
+;; (define-extern mod-record-player-hit (function process symbol none))
+;; (define-extern mod-rule-counter-add-progress (function symbol int none))
+;; (define-extern mod-rule-fail! (function symbol none))
+;; (define-extern mod-rule-on-jump (function none))
+;; (define-extern mod-rule-trigger-sizeable (function symbol))
+;; (define-extern mod-trigger-rule-one-frame (function none))
+;; (define-extern mod-rule-start-red-shockwave! (function none))
+;; (define-extern mod-rule-trigger-get-a-grip (function none))
+;; ;; (define-extern *last-launch-time* (int))
+;; (define *last-launch-time* 0)
+
+;; (define-extern target-slot-count-value (function int))

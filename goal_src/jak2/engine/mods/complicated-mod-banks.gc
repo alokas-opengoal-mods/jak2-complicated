@@ -1,0 +1,415 @@
+;;-*-Lisp-*-
+(in-package goal)
+
+;; name: mod-banks.gc
+;; name in dgo: mod-banks
+;; dgos: TODO
+
+(deftype mod-tuning-bank (structure)
+  ((countdown-punishment-baseline-inc-total float)
+   (countdown-punishment-baseline-seconds   float)
+   (pass-max-carry                          int32)
+   (money-punishment-loss                   float)
+   (money-punishment-min-orbs               float)
+   (fall-damage-far                         float)
+   (fall-damage-far-inc                     float)
+   (punishment-input-delay                  float)
+   (bad-ping-input-delay                    float)
+   )
+  )
+
+(define *MOD-tuning-bank*
+  (new 'static 'mod-tuning-bank
+    :countdown-punishment-baseline-inc-total 4916.0
+    :countdown-punishment-baseline-seconds 30.0
+    :pass-max-carry 99
+    :money-punishment-loss 60.0
+    :money-punishment-min-orbs 30.0
+    :fall-damage-far (meters 7.0)
+    :fall-damage-far-inc (meters 10.0)
+    :punishment-input-delay 0.2
+    :bad-ping-input-delay 0.12
+    )
+  )
+
+(deftype mod-punishment-bank (structure)
+  ((timed-punishments  (array symbol))
+   (timed-end-times    (array time-frame))
+   (timed-next-ticks   (array time-frame))
+   (timed-saved-ids    (array symbol))
+   (timed-saved-tenths (array int32))
+   )
+  )
+
+(define *MOD-punishment-bank*
+  (new 'static 'mod-punishment-bank
+    :timed-punishments (new 'static 'boxed-array :type symbol 
+      :length 8 
+      :allocated-length 8
+      )
+    :timed-end-times (new 'static 'boxed-array :type time-frame 
+      :length 8 
+      :allocated-length 8
+      )
+    :timed-next-ticks (new 'static 'boxed-array :type time-frame 
+      :length 8 
+      :allocated-length 8
+      )
+    :timed-saved-ids (new 'static 'boxed-array :type symbol 
+      :length 8 
+      :allocated-length 8
+      )
+    :timed-saved-tenths (new 'static 'boxed-array :type int32 
+      :length 8 
+      :allocated-length 8
+      )
+    )
+  )
+
+(deftype mod-rule-slot-bank (structure)
+  ((active-slots          (array symbol))
+   (pending-slots         (array symbol))
+   (slot-end-times        (array time-frame))
+   (saved-remaining-times (array int32))
+   (saved-punishments     (array symbol))
+   (saved-pending         (array symbol))
+   (saved-roll-tenths     (array int32))
+   (roll-ready-times      (array time-frame))
+   (roll-last-warn-second (array int32))
+   (slot-punishments      (array symbol))
+   (slot-goals            (array int32))
+   (slot-progress         (array int32))
+   (slot-grace-periods    (array time-frame))
+   (slot-outcomes         (array symbol))
+   )
+  )
+
+(define *MOD-rule-slot-bank*
+  (new 'static 'mod-rule-slot-bank
+    :active-slots (new 'static 'boxed-array :type symbol 
+      :length 5 
+      :allocated-length 5
+      )
+    :pending-slots (new 'static 'boxed-array :type symbol 
+      :length 5 
+      :allocated-length 5
+      )
+    :slot-end-times (new 'static 'boxed-array :type time-frame 
+      :length 5 
+      :allocated-length 5
+      )
+    :saved-remaining-times (new 'static 'boxed-array :type int32 
+      :length 5 
+      :allocated-length 5
+      )
+    :saved-punishments (new 'static 'boxed-array :type symbol 
+      :length 5 
+      :allocated-length 5
+      )
+    :saved-pending (new 'static 'boxed-array :type symbol 
+      :length 5 
+      :allocated-length 5
+      )
+    :saved-roll-tenths (new 'static 'boxed-array :type int32 
+      :length 5 
+      :allocated-length 5
+      )
+    :roll-ready-times (new 'static 'boxed-array :type time-frame 
+      :length 5 
+      :allocated-length 5
+      )
+    :roll-last-warn-second (new 'static 'boxed-array :type int32 
+      :length 5 
+      :allocated-length 5
+      )
+    :slot-punishments (new 'static 'boxed-array :type symbol 
+      :length 5 
+      :allocated-length 5
+      )
+    :slot-goals (new 'static 'boxed-array :type int32 
+      :length 5 
+      :allocated-length 5
+      )
+    :slot-progress (new 'static 'boxed-array :type int32 
+      :length 5 
+      :allocated-length 5
+      )
+    :slot-grace-periods (new 'static 'boxed-array :type time-frame 
+      :length 5 
+      :allocated-length 5
+      )
+    :slot-outcomes (new 'static 'boxed-array :type symbol 
+      :length 5 
+      :allocated-length 5
+      )
+    )
+  )
+
+(deftype mod-countdown-bank (structure)
+  ((active?                  symbol)
+   (lost?                    symbol)
+   (remaining-time           int32)
+   (last-update-time         time-frame)
+   (last-warn-second         int32)
+   (saved-remaining-time     int32)
+   (countup-timer            int32)
+   (countup-last-update-time time-frame)
+   (countup-saved-time       int32)
+   )
+  )
+
+(define *MOD-countdown-bank*
+  (new 'static 'mod-countdown-bank
+    :active? #f
+    :lost? #f
+    :remaining-time 0
+    :last-update-time 0
+    :last-warn-second -1
+    :saved-remaining-time -1
+    :countup-timer 0
+    :countup-last-update-time 0
+    :countup-saved-time -1
+    )
+  )
+
+(deftype mod-rule-context-bank (structure)
+  ((last-update-time          time-frame)
+   (last-reverted-cell-task   int32)
+   (last-reverted-cell-until  int32)
+   (last-kill-time            time-frame)
+   (mean-look-clear-time      time-frame)
+   (qte-target-button         int32)
+   (hang-time-air-start       time-frame)
+   (game-beaten?              symbol)
+   (twist-pending-count       int32)
+   (twist-marked-slot         int32)
+   (get-a-grip-last-grab      time-frame)
+   (bus-driver-activate-time  time-frame)
+   (bus-driver-grace-period   time-frame)
+   (shifty-next-time          time-frame)
+   (palate-change-grace-until time-frame)
+   (red-shockwave-until       time-frame)
+   (fisher-missed             int32)
+   (fisher-caught             int32)
+   )
+  )
+
+(define *MOD-rule-context-bank*
+  (new 'static 'mod-rule-context-bank
+    :last-update-time 0
+    :last-reverted-cell-task 0
+    :last-reverted-cell-until 0
+    :last-kill-time 0
+    :mean-look-clear-time 0
+    :qte-target-button 0
+    :hang-time-air-start 0
+    :game-beaten? #f
+    :twist-pending-count -1
+    :twist-marked-slot -1
+    :get-a-grip-last-grab 0
+    :bus-driver-activate-time 0
+    :bus-driver-grace-period (seconds 2)
+    :shifty-next-time 0
+    :palate-change-grace-until 0
+    :red-shockwave-until 0
+    :fisher-missed 0
+    :fisher-caught 0
+    )
+  )
+
+(deftype mod-rng-bank (structure)
+  ((content-state uint)
+   (punish-state  uint)
+   (seed-display  uint)
+   )
+  )
+
+(define *MOD-rng-bank* 
+  (new 'static 'mod-rng-bank 
+    :content-state 1 
+    :punish-state 1 
+    :seed-display 0
+    )
+  )
+
+(deftype mod-quiz-bank (structure)
+  ((math-val1                    int32)
+   (math-val2                    int32)
+   (math-op                      int32) ;; + - *
+   (math-answer                  int32)
+   (math-current-guess           int32)
+   (trivia-current-question      int32)
+   (trivia-current-guess         int32)
+   (trivia-last-tracked-question int32)
+   (trivia-shuffle-map           (array int32))
+   (trivia-dynamic-str           string)
+   (trivia-dynamic-seed          int32)
+   )
+  )
+
+(define *MOD-quiz-bank*
+  (new 'static 'mod-quiz-bank
+    :math-val1 0
+    :math-val2 0
+    :math-op 0
+    :math-answer 0
+    :math-current-guess 0
+    :trivia-current-question 0
+    :trivia-current-guess 0
+    :trivia-last-tracked-question -1
+    :trivia-shuffle-map (new 'static 'boxed-array :type int32 0 1 2 3)
+    :trivia-dynamic-seed 0
+    )
+  )
+
+(set! (-> *MOD-quiz-bank* trivia-dynamic-str) (new 'global 'string 16 (the-as string #f)))
+
+(deftype mod-stats-bank (structure)
+  ((rules-rolled          int32)
+   (rules-broken          int32)
+   (rules-followed        int32)
+   (complications-endured int32)
+   (conditions-skipped    int32)
+   (final-remaining-time  int32)
+   (final-time            int32)
+   (final-score           int32)
+   )
+  )
+
+(define *MOD-stats-bank*
+  (new 'static 'mod-stats-bank
+    :rules-rolled 0
+    :rules-broken 0
+    :rules-followed 0
+    :complications-endured 0
+    :conditions-skipped 0
+    :final-remaining-time 0
+    :final-time 0
+    :final-score 0
+    )
+  )
+
+(deftype mod-pass-bank (structure)
+  ((passes  int32)
+   (credits int32)
+   )
+  )
+
+(define *MOD-pass-bank* 
+  (new 'static 'mod-pass-bank 
+    :passes 0 
+    :credits 0
+    )
+  )
+
+(deftype mod-orb-weight-bank (structure)
+  ((base-walk-speed              float)
+   (base-double-jump-speed       float)
+   (base-jump-speed              float)
+   (base-attack-speed            float)
+   (base-smack-jump-speed        float)
+   (base-forward-high-jump-speed float)
+   (base-jump-attack-speed       float)
+   (base-wheel-flip-dist         float)
+   (base-wheel-flip-height       float)
+   (base-flip-jump-speed         float)
+   (last-applied-orbs            float)
+   )
+  )
+
+(define *MOD-orb-weight-bank*
+  (new 'static 'mod-orb-weight-bank
+    :base-walk-speed 40960.0
+    :base-double-jump-speed 32768.0
+    :base-jump-speed 40960.0
+    :base-attack-speed 40960.0
+    :base-smack-jump-speed 40960.0
+    :base-forward-high-jump-speed 45056.0
+    :base-jump-attack-speed 24576.0
+    :base-wheel-flip-dist (meters 17.3)
+    :base-wheel-flip-height (meters 3.52)
+    :base-flip-jump-speed 51200.0
+    :last-applied-orbs -1.0
+    )
+  )
+
+(deftype mod-target-mesh-bank (structure)
+  ((envmap-save   (array int32))
+   (invis-active? symbol)
+   )
+  )
+
+(define *MOD-target-mesh-bank*
+  (new 'static 'mod-target-mesh-bank
+    :envmap-save (new 'static 'boxed-array :type int32 
+      :length 512 
+      :allocated-length 512
+      )
+    :invis-active? #f
+    )
+  )
+
+(deftype mod-rule-display-bank (structure)
+  ((wrap-line-1        string)
+   (wrap-line-2        string)
+   (highlight-line-buf string)
+   )
+  )
+
+(define *MOD-rule-display-bank* (new 'static 'mod-rule-display-bank))
+
+(set! (-> *MOD-rule-display-bank* wrap-line-1) (new 'global 'string 128 (the-as string #f)))
+
+(set! (-> *MOD-rule-display-bank* wrap-line-2) (new 'global 'string 128 (the-as string #f)))
+
+(set! (-> *MOD-rule-display-bank* highlight-line-buf) (new 'global 'string 128 (the-as string #f)))
+
+(deftype mod-lights-out-bank (structure)
+  ((active?            symbol)
+   (maincave-mood      mood-context)
+   (maincave-mood-func (function mood-context float int none))
+   (robocave-mood      mood-context)
+   (robocave-mood-func (function mood-context float int none))
+   )
+  )
+
+(define *MOD-lights-out-bank* 
+  (new 'static 'mod-lights-out-bank 
+    :active? #f
+    )
+  )
+
+(deftype mod-hit-bank (structure)
+  ((player-hit-handles   (array handle))
+   (player-hit-modes     (array symbol))
+   (player-hit-write-idx int32)))
+
+(define *MOD-hit-bank*
+  (new 'static 'mod-hit-bank
+    :player-hit-handles (new 'static 'boxed-array :type handle 
+      :length 64 
+      :allocated-length 64
+      )
+    :player-hit-modes (new 'static 'boxed-array :type symbol 
+      :length 64 
+      :allocated-length 64
+      )
+    :player-hit-write-idx 0
+    )
+  )
+
+(deftype mod-orb-hunt-bank (structure)
+  ((orb-handle handle)
+   (spawned?   symbol)
+   (level      symbol)
+   )
+  )
+
+(define *MOD-orb-hunt-bank* 
+  (new 'static 'mod-orb-hunt-bank 
+    :spawned? #f 
+    :level #f
+    )
+  )
+
+(set! (-> *MOD-orb-hunt-bank* orb-handle) (the-as handle #f))

@@ -29,11 +29,17 @@
   "dma-buffer.o"
   "dma-bucket.o"
   "dma-disasm.o"
+
+  "complicated-mod-defines.o" ;; Mod change: added
+
   "statistics-h.o" ;; added
   "pc-cheats.o" ;; added
   "pckernel-h.o" ;; added
   "pckernel-impl.o" ;; added
   "pc-debug-common.o" ;; added
+
+  "complicated-menu-2.o" ;; Mod change: added
+
   "pad.o"
   "gs.o"
   "display-h.o"
@@ -471,8 +477,15 @@
   "elec-gate.o"
   "cty-guard-turret-button.o"
   "entity-debug.o" ;; added
+
+  "complicated-mod-banks.o" ;; Mod change: added
+  "complicated-menu.o" ;; Mod change: added
+
   "mod-settings.o" ;; added ;;mod-base-change
   "mod-common-functions.o" ;; added
+
+  "complicated-mod-logic.o" ;; Mod change: added
+
   "orb-placer.o"  ;; added
   "mod-custom-code.o" ;; added
   "path-editor-h.o" ;; added - path-editor-h

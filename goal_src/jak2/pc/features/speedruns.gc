@@ -76,6 +76,10 @@
   (send-event (ppointer->process *speedrun-manager*) 'start-run)
   ;; ensure any required settings are enabled
   (enforce-settings! this)
+
+  ;; Mod change: start complicated mod countdown
+  (mod-run-start)
+
   ;; finalize any category specific setup code
   (case (-> this category)
     (((speedrun-category newgame-normal))
