@@ -378,6 +378,9 @@
   "progress-draw.o"
   "progress-draw-pc.o" ;; added
   "progress-generic-draw-pc.o" ;; added
+
+  "complicated-mod-progress-draw.o" ;; Mod change: added
+
   "ocean.o"
   "ocean-vu0.o"
   "ocean-texture.o"

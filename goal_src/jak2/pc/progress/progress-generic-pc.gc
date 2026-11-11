@@ -405,14 +405,20 @@
   (if selected?
     (cond
       ((and (> (-> this value) (-> this min-value))
-            (cpad-hold? 0 left l-analog-left))
+            (or (cpad-hold? 0 left l-analog-left)
+                (cpad-pressed? 0 down l-analog-down) ;; Mod change: press down for a single increment
+                )
+            )
        ;; TODO - might not work well on higher frame-rates
        (set! (-> this value) (fmax (- (-> this value) (-> this step)) (-> this min-value)))
        (when (< (seconds 0.03) (- (current-time) (-> this last-sound-played)))
         (set! (-> this last-sound-played) (current-time))
         (sound-play-by-name (static-sound-name "menu-slide") (new-sound-id) 512 0 0 (sound-group sfx) #t)))
       ((and (< (-> this value) (-> this max-value))
-            (cpad-hold? 0 right l-analog-right))
+            (or (cpad-hold? 0 right l-analog-right)
+                (cpad-pressed? 0 up l-analog-up) ;; Mod change: press up for a single increment
+                )
+            )
        ;; TODO - might not work well on higher frame-rates
        (set! (-> this value) (fmin (+ (-> this value) (-> this step)) (-> this max-value)))
        (when (< (seconds 0.03) (- (current-time) (-> this last-sound-played)))

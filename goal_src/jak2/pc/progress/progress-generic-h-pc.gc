@@ -277,3 +277,57 @@
 
 (define *progress-generic-temp-string* (new 'global 'string 512 (the string #f)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Mod menu option types
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(deftype mod-menu-generic-button-option (menu-generic-button-option)
+  "A button option that run its action when selected"
+  (;; props
+   (description text-id)
+   )
+  )
+
+(deftype mod-menu-generic-scrolling-page (menu-generic-scrolling-page)
+  "A menu option that holds menu options"
+  (;; props
+   (description text-id)
+   )
+  )
+
+(deftype mod-menu-generic-link-option (menu-generic-link-option)
+  "A generic slider, can go into the negative as well."
+  (;; props
+   (description text-id)
+   )
+  )
+
+(deftype mod-menu-generic-boolean-option (menu-generic-boolean-option)
+  "Generic two option menu entry (ie. yes/no)"
+  (;; props
+   (description text-id)
+   )
+  )
+
+(deftype mod-menu-generic-carousel-option (menu-generic-carousel-option)
+  "Generic left-right menu entry (ie. language selection)"
+  (;; props
+   (description text-id)
+   )
+  )
+
+(deftype mod-menu-generic-confirm-option (menu-generic-confirm-option)
+  "A button option that confirms before triggering it's action"
+  (;; props
+   (description text-id)
+   )
+  )
+
+(deftype mod-menu-generic-slider-option (menu-generic-slider-option)
+  "A generic slider, can go into the negative as well."
+  (;; props
+   (units symbol)
+   (description text-id)
+   )
+  )
+

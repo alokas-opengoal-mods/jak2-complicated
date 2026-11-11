@@ -300,3 +300,313 @@
 ;;   (commit-to-file *complicated-settings*)
 ;;   )
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MENU OPTIONS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defmacro mod-progress-new-generic-link-to-scrolling-page (title &key (should-disable? #f) &rest options)
+  `(new 'static 'mod-menu-generic-link-option
+    :name ,title
+    :should-disable? ,should-disable?
+    :target (new 'static 'menu-option-list
+      :options (new 'static 'boxed-array :type menu-option
+      (new 'static 'mod-menu-generic-scrolling-page
+       :name ,title
+       :menu-options (new 'static 'boxed-array :type menu-option
+       ,@options))))))
+
+(defmacro mod-page-conditions ()
+  `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-condition-options)
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-grounded-name)
+      :description (text-id rule-grounded-description)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-grounded?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-grounded?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-brittle-bones-name)
+      :description (text-id complication-brittle-bones-description)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-brittle-bones?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-brittle-bones?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    )
+  )
+
+(defmacro mod-page-punishments ()
+  `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-punishment-options)
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id punishment-warp-name)
+      :description (text-id punishment-warp-description)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* punishment-warp?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* punishment-warp?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id punishment-fall-damage-name)
+      :description (text-id punishment-fall-damage-description)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* punishment-fall-damage?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* punishment-fall-damage?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    )
+  )
+
+(defmacro mod-page-timer ()
+  `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-timer-options)
+    (mod-option-countup-timer)
+    (new 'static 'mod-menu-generic-slider-option
+      :name (text-id mod-progress-countdown-start-time)
+      :description (text-id mod-progress-countdown-start-time-desc)
+      :min-value 5.0
+      :max-value 600.0
+      :step 5.0
+      :show-decimal? #f
+      :units 'seconds
+      :get-value-fn (lambda () (-> *complicated-settings* countdown-start-seconds))
+      :on-confirm (lambda ((val float))
+        (set! (-> *complicated-settings* countdown-start-seconds) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-slider-option
+      :name (text-id mod-progress-time-limit-multiplier)
+      :description (text-id mod-progress-time-limit-multiplier-desc)
+      :min-value 0.5
+      :max-value 2.0
+      :step 0.01
+      :show-decimal? #f
+      :units 'percent
+      :get-value-fn (lambda () (-> *complicated-settings* time-limit-multiplier))
+      :on-confirm (lambda ((val float))
+        (set! (-> *complicated-settings* time-limit-multiplier) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-slider-option
+      :name (text-id mod-progress-tier-1-increment)
+      :description (text-id mod-progress-tier-1-increment-desc)
+      :min-value -10.0
+      :max-value 30.0
+      :step 1.0
+      :show-decimal? #f
+      :units 'seconds
+      :get-value-fn (lambda () (-> *complicated-settings* tier-1-increment-seconds))
+      :on-confirm (lambda ((val float))
+        (set! (-> *complicated-settings* tier-1-increment-seconds) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-slider-option
+      :name (text-id mod-progress-tier-2-increment)
+      :description (text-id mod-progress-tier-2-increment-desc)
+      :min-value -60.0
+      :max-value 60.0
+      :step 1.0
+      :show-decimal? #f
+      :units 'seconds
+      :get-value-fn (lambda () (-> *complicated-settings* tier-2-increment-seconds))
+      :on-confirm (lambda ((val float))
+        (set! (-> *complicated-settings* tier-2-increment-seconds) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-slider-option
+      :name (text-id mod-progress-tier-3-increment)
+      :description (text-id mod-progress-tier-3-increment-desc)
+      :min-value -30.0
+      :max-value 120.0
+      :step 1.0
+      :show-decimal? #f
+      :units 'seconds
+      :get-value-fn (lambda () (-> *complicated-settings* tier-3-increment-seconds))
+      :on-confirm (lambda ((val float))
+        (set! (-> *complicated-settings* tier-3-increment-seconds) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-slider-option
+      :name (text-id mod-progress-compliance-increment)
+      :description (text-id mod-progress-compliance-increment-desc)
+      :min-value 0.0
+      :max-value 30.0
+      :step 1.0
+      :show-decimal? #f
+      :units 'seconds
+      :get-value-fn (lambda () (-> *complicated-settings* compliance-increment-seconds))
+      :on-confirm (lambda ((val float))
+        (set! (-> *complicated-settings* compliance-increment-seconds) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-slider-option
+      :name (text-id mod-progress-condition-delay)
+      :description (text-id mod-progress-condition-delay-desc)
+      :min-value 0.0
+      :max-value 30.0
+      :step 1.0
+      :show-decimal? #f
+      :units 'seconds
+      :get-value-fn (lambda () (-> *complicated-settings* condition-delay-seconds))
+      :on-confirm (lambda ((val float))
+        (set! (-> *complicated-settings* condition-delay-seconds) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    )
+  )
+
+(defmacro mod-option-game-mode ()
+  '(new 'static 'mod-menu-generic-carousel-option
+    :name (text-id mod-progress-game-mode)
+    :items (new 'static 'boxed-array :type text-id
+      (text-id mod-progress-game-mode-casual)
+      (text-id mod-progress-game-mode-timed)
+      )
+    :get-item-index-fn (lambda () 
+      ;; (-> *complicated-settings* game-mode)
+      (case (-> *complicated-settings* game-mode)
+        (('casual) 0)
+        (('timed) 1)
+        )
+      )
+    :on-confirm (lambda ((index int) (the-progress progress))
+      (set! (-> *complicated-settings* game-mode) (-> *mod-game-mode* index))
+      ;; (complicated-settings-save)
+      )
+    )
+  )
+
+(defmacro mod-option-difficulty ()
+  '(new 'static 'mod-menu-generic-carousel-option
+    :name (text-id mod-progress-difficulty)
+    :description (text-id mod-progress-difficulty-desc)
+    :items (new 'static 'boxed-array :type text-id
+      (text-id mod-progress-difficulty-1)
+      (text-id mod-progress-difficulty-2)
+      (text-id mod-progress-difficulty-3)
+      (text-id mod-progress-difficulty-4)
+      )
+    :get-item-index-fn (lambda () 
+      ;; (-> *complicated-settings* game-mode)
+      (case (-> *complicated-settings* difficulty)
+        (('easy) 0)
+        (('medium) 1)
+        (('hard) 2)
+        (('unfathomable) 3)
+        )
+      )
+    :on-confirm (lambda ((index int) (the-progress progress))
+      (set! (-> *complicated-settings* difficulty) (-> *mod-difficulty* index))
+      ;; (complicated-settings-save)
+      )
+    )
+  )
+  
+(defmacro mod-option-countup-timer ()
+  '(new 'static 'mod-menu-generic-boolean-option
+    :name (text-id mod-progress-countup-timer)
+    :description (text-id mod-progress-countup-timer-desc)
+    :truthy-text (text-id progress-on)
+    :falsey-text (text-id progress-off)
+    :get-value-fn (lambda () (-> *complicated-settings* show-countup-timer?))
+    :on-confirm (lambda ((val symbol))
+      (set! (-> *complicated-settings* show-countup-timer?) val)
+      ;; (complicated-settings-save)
+      )
+    )
+  )
+
+(defmacro mod-option-text-scale ()
+  '(new 'static 'mod-menu-generic-slider-option
+    :name (text-id mod-progress-text-scale)
+    :description (text-id mod-progress-text-scale-desc)
+    :min-value 0.5
+    :max-value 1.0
+    :step 0.01
+    :show-decimal? #f
+    :units 'percent
+    :get-value-fn (lambda () (-> *complicated-settings* text-scale))
+    :on-confirm (lambda ((val float))
+      (set! (-> *complicated-settings* text-scale) val)
+      ;; (complicated-settings-save)
+      )
+    )
+  )
+
+(defmacro mod-option-pass-credits ()
+  '(new 'static 'mod-menu-generic-slider-option
+    :name (text-id mod-progress-pass-credits)
+    :description (text-id mod-progress-pass-credits-desc)
+    :min-value 1.0
+    :max-value 100.0
+    :step 1.0
+    :show-decimal? #f
+    :units #f
+    :get-value-fn (lambda () (-> *complicated-settings* pass-credits-required))
+    :on-confirm (lambda ((val float))
+      (set! (-> *complicated-settings* pass-credits-required) (the int val))
+      ;; (complicated-settings-save)
+      )
+    )
+  )
+
+(defmacro mod-option-active-conditions ()
+  '(new 'static 'mod-menu-generic-slider-option
+    :name (text-id mod-progress-active-conditions)
+    :description (text-id mod-progress-active-conditions-desc)
+    :min-value 0.0
+    :max-value 5.0
+    :step 1.0
+    :show-decimal? #f
+    :units #f
+    :get-value-fn (lambda () (-> *complicated-settings* target-slot-count))
+    :on-confirm (lambda ((val float))
+      (set! (-> *complicated-settings* target-slot-count) (the int val))
+      ;; (complicated-settings-save)
+      )
+    )
+  )
+
+(defmacro mod-option-restore-defaults ()
+  '(new 'static 'mod-menu-generic-confirm-option
+    :name (text-id progress-restore-defaults)
+    :on-confirm (lambda ((val symbol))
+      (reset *complicated-settings*)
+      ;; (complicated-settings-save)
+      )
+    )
+  )
+
+(defmacro mod-complicated-options ()
+  `(progress-new-generic-link-to-scrolling-page (text-id mod-progress-complicated-options)
+    (mod-page-timer)
+    (mod-page-conditions)
+    (mod-page-punishments)
+    (mod-option-game-mode)
+    (mod-option-difficulty)
+    (mod-option-text-scale)
+    (mod-option-pass-credits)
+    (mod-option-active-conditions)
+    (mod-option-restore-defaults)
+    )
+  )
