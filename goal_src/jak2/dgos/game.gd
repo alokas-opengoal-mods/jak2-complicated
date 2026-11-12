@@ -38,7 +38,7 @@
   "pckernel-impl.o" ;; added
   "pc-debug-common.o" ;; added
 
-  "complicated-menu-2.o" ;; Mod change: added
+  "complicated-mod-menu-h.o" ;; Mod change: added
 
   "pad.o"
   "gs.o"
@@ -378,8 +378,9 @@
   "progress-draw.o"
   "progress-draw-pc.o" ;; added
   "progress-generic-draw-pc.o" ;; added
-
-  "complicated-mod-progress-draw.o" ;; Mod change: added
+  
+  "complicated-mod-banks.o" ;; Mod change: added
+  "complicated-mod-menu-draw.o" ;; Mod change: added
 
   "ocean.o"
   "ocean-vu0.o"
@@ -482,14 +483,18 @@
   "entity-debug.o" ;; added
   "mod-settings.o" ;; added ;;mod-base-change
   "mod-common-functions.o" ;; added
-  "orb-placer.o"  ;; added
-  
-  "complicated-mod-banks.o" ;; Mod change: added
-  "complicated-menu.o" ;; Mod change: added
+
   "complicated-mod-h.o" ;; Mod change: added
-  "complicated-mod-logic.o" ;; Mod change: added
-  
+  "complicated-mod-common.o" ;; Mod change: added
+  "complicated-mod-rules.o" ;; Mod change: added
+  "complicated-mod-gameplay.o" ;; Mod change: added
+  "complicated-mod-punishments.o" ;; Mod change: added
+  "complicated-mod-rule-lifecycle.o" ;; Mod change: added
+  "complicated-mod-rule-runtime.o" ;; Mod change: added
+  "complicated-mod-state.o" ;; Mod change: added
   "complicated-mod-draw.o" ;; Mod change: added
+  
+  "orb-placer.o" ;; added
   "mod-custom-code.o" ;; added
   "path-editor-h.o" ;; added - path-editor-h
   "path-editor.o" ;; added - path-editor

@@ -1,0 +1,314 @@
+;;-*-Lisp-*-
+(in-package goal)
+
+;; name: complicated-mod-logic.gc
+;; name in dgo: complicated-mod-logic
+;; dgos: TODO
+
+(require "engine/mods/complicated-mod-banks.gc")
+(defconstant MOD_TICKS_PER_TENTH 30)
+
+;; mask passed to update-perm! when un-collecting a fuel cell
+(defconstant MOD_REVERT_PERM_STATUS 1919)
+
+(reset *complicated-settings*) ;; TEMP FIX, REMOVE LATER
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Custom sound effects
+(define sound-vibe-check "I like ya cut g.mp3")
+(define sound-goodbye "Goodbye.mp3")
+(define sound-warp1 "warp1.mp3")
+(define sound-warp2 "warp2.mp3")
+(define sound-warp3 "warp3.mp3")
+(define sound-timer-beep "timer-beep.wav")
+(define sound-timer-warn "timer-warn.wav")
+(define sound-red-light "red-light.wav")
+(define sound-green-light "green-light.wav")
+(define sound-generic-beep "menu/generic-beep.wav")
+(define sound-secrets-scroll "menu/secrets-scroll.wav")
+(define sound-mission-scroll "menu/mission-scroll.wav")
+(define sound-upgrade-buy "menu/upgrade-buy.wav")
+(define sound-dmenu-pick "menu/dmenu-pick.wav")
+(define sound-dmenu-move "menu/dmenu-move.wav")
+(define sound-city-alarm "city-alarm.wav")
+
+
+;; COMMAND/FUNCTION REFERENCE
+;; Start game: (mod-run-start)
+;; Stop game: (mod-run-reset)
+;; Force specific rule: (mod-rule-activate-slot 0 'rule-grounded)
+;; Check if a specific slot is active: (mod-rule-slot-active? 0)
+
+;; add new options here (getter)
+(define-extern show-countup-timer-enabled? (function symbol))
+(define-extern punishment-toggle-enabled? (function symbol symbol))
+(define-extern klaww-assist-enabled? (function symbol))
+(define-extern fish-assist-enabled? (function symbol))
+(define-extern tier-1-increment-value (function float))
+(define-extern tier-2-increment-value (function float))
+(define-extern tier-3-increment-value (function float))
+(define-extern countdown-start-seconds-value (function float))
+(define-extern new-condition-delay-seconds (function float))
+(define-extern compliance-increment-value (function float))
+(define-extern pass-credits-required-value (function int))
+(define-extern *complicated-difficulty-preset* symbol)
+(define-extern time-limit-multiplier (function float))
+(define-extern text-scale-multiplier (function float))
+(define-extern mod-rule-twist-check-and-mark! (function int symbol none))
+(define-extern mod-rule-twist-marked-slot? (function int symbol))
+(define-extern mod-rule-resolve! (function int symbol symbol none))
+;; (define-extern mod-condition-enabled? (function symbol symbol))
+(define-extern complicated-get-seed (function uint))
+(define-extern spawn-money (function vector float symbol handle))
+(define-extern mod-rule-counter-add-progress (function symbol int none))
+(define-extern target-slot-count-value (function int))
+(define-extern mod-rule-roll-possible? (function symbol))
+
+(defun tier-1-increment-value ()
+  (-> *complicated-settings* tier-1-increment-seconds)
+  )
+
+(defun tier-2-increment-value ()
+  (-> *complicated-settings* tier-2-increment-seconds)
+  )
+
+(defun tier-3-increment-value ()
+  (-> *complicated-settings* tier-3-increment-seconds)
+  )
+
+(defun countdown-start-seconds-value ()
+  (-> *complicated-settings* countdown-start-seconds)
+  )
+  
+(defun new-condition-delay-seconds ()
+  (-> *complicated-settings* condition-delay-seconds)
+  )
+  
+(defun compliance-increment-value ()
+  (-> *complicated-settings* compliance-increment-seconds)
+  )
+  
+(defun pass-credits-required-value ()
+  (-> *complicated-settings* pass-credits-required)
+  )
+  
+(defun target-slot-count-value ()
+  (-> *complicated-settings* target-slot-count)
+  )
+  
+(defun time-limit-multiplier ()
+  (-> *complicated-settings* time-limit-multiplier)
+  )
+  
+(defun show-countup-timer-enabled? ()
+  (-> *complicated-settings* show-countup-timer?)
+  )
+
+(defun text-scale-multiplier ()
+  (-> *complicated-settings* text-scale)
+  )
+
+(defun mod-target-airborne? ()
+  (and *target*
+       (> (-> (the-as fact-info-target (-> *target* fact)) health) 0.0)
+       (not (logtest? (-> *target* control status) (cshape-moving-flags on-ground)))
+       (let ((state-name (-> *target* state name)))
+         (not (or (= state-name 'target-edge-grab)
+                  ;; (= state-name 'target-edge-grab-jump)
+                  ;; (= state-name 'target-edge-grab-off)
+                  (= state-name 'target-look-around)
+                  (= state-name 'target-stance)
+                  (= state-name 'target-walk)
+                  (= state-name 'target-duck-stance)
+                  (= state-name 'target-duck-walk)
+                  (= state-name 'target-attack)
+                  (= state-name 'target-hit-ground-hard)
+                  (= state-name 'target-hit-ground)
+                  (= state-name 'target-flop-hit-ground)
+                  (= state-name 'target-slide-down))))
+    )
+  )
+
+(define *mod-rule-slot-count* 5)
+
+(define *mod-rule-recent-rolls* (new 'global 'boxed-array symbol 8))
+
+(define *mod-unique-enemy-killed-types* (new 'global 'boxed-array symbol 3))
+
+(define *mod-timed-punishment-slot-count* 8)
+
+;; Until this time, assume no condition is eligible to roll.
+(define *mod-rule-idle-recheck-time* 0)
+
+(defun mod-rule-target-slot-count ()
+  (max 0 (min *mod-rule-slot-count* (-> *complicated-settings* target-slot-count)))
+  )
+
+
+;; True if every villager trade for this level group is already done.
+;; (defun mod-villagers-closed? ((level symbol))
+;;   (cond
+;;     ((or (eq? level 'village1) (eq? level 'beach))
+;;      (and (task-closed? (game-task village1-mayor-money) (task-status need-resolution))
+;;           (task-closed? (game-task village1-uncle-money) (task-status need-resolution))))
+;;     ((or (eq? level 'village2) (eq? level 'rolling))
+;;      (and (task-closed? (game-task village2-gambler-money) (task-status need-resolution))
+;;           (task-closed? (game-task village2-geologist-money) (task-status need-resolution))
+;;           (task-closed? (game-task village2-warrior-money) (task-status need-resolution))))
+;;     ((eq? level 'village3)
+;;      (and (task-closed? (game-task village3-miner-money1) (task-status need-resolution))
+;;           (task-closed? (game-task village3-miner-money2) (task-status need-resolution))
+;;           (task-closed? (game-task village3-miner-money3) (task-status need-resolution))
+;;           (task-closed? (game-task village3-miner-money4) (task-status need-resolution))))
+;;     (else #f)))
+
+;; True if every oracle trade for this level group is already done.
+;; (defun mod-oracles-closed? ((level symbol))
+;;   (cond
+;;     ((or (eq? level 'village1) (eq? level 'beach))
+;;      (and (task-closed? (game-task village1-oracle-money1) (task-status need-resolution))
+;;           (task-closed? (game-task village1-oracle-money2) (task-status need-resolution))))
+;;     ((or (eq? level 'village2) (eq? level 'rolling))
+;;      (and (task-closed? (game-task village2-oracle-money1) (task-status need-resolution))
+;;           (task-closed? (game-task village2-oracle-money2) (task-status need-resolution))))
+;;     ((eq? level 'village3)
+;;      (and (task-closed? (game-task village3-oracle-money1) (task-status need-resolution))
+;;           (task-closed? (game-task village3-oracle-money2) (task-status need-resolution))))
+;;     (else #f)))
+
+;; Integer avalanche hash; scrambles a uint into a well-mixed one.
+(defun mod-rng-hash-u32 ((x uint))
+  (set! x (logxor x (shr x 16)))
+  (set! x (* x (the uint #x7feb352d)))
+  (set! x (logxor x (shr x 15)))
+  (set! x (* x (the uint #x846ca68b)))
+  (set! x (logxor x (shr x 16)))
+  x)
+
+(defun mod-rng-random-seed ()
+  (mod-rng-hash-u32 (the uint (current-time))))
+
+
+;; TEMP FIX until the cpp code is committed
+(defun mod-rng-active-seed ()
+  ;; (let ((imgui-seed (the uint (complicated-get-seed))))
+  (let ((imgui-seed (the uint (rand-vu-int-range 1000000000 9999999999))))
+    (if (!= imgui-seed 0) 
+      (logand imgui-seed (the uint #x7fffffff)) 
+      (logand (mod-rng-random-seed) (the uint #x7fffffff))
+      )
+    )
+  )
+
+;; Derive the two RNG stream states (content and punishment) from one master seed. Never leaves a state at 0.
+(defun mod-rng-seed-all! ((master-seed uint))
+  (let ((content-hash (mod-rng-hash-u32 (+ master-seed (the uint 1))))
+        (punish-hash (mod-rng-hash-u32 (+ master-seed (the uint 2)))))
+    (set! (-> *MOD-rng-bank* content-state) (if (= content-hash 0) (the uint 1) content-hash))
+    (set! (-> *MOD-rng-bank* punish-state) (if (= punish-hash 0) (the uint 1) punish-hash)))
+  (none))
+
+;; Advance the content RNG one xorshift32 step. Content (rule rolls, quizzes) and punishment use
+;; separate streams so one can't disturb the other.
+(defun mod-rng-content-next-u32 ()
+  (let ((x (-> *MOD-rng-bank* content-state)))
+    (set! x (logxor x (shl x 13)))
+    (set! x (logxor x (shr x 17)))
+    (set! x (logxor x (shl x 5)))
+    (set! (-> *MOD-rng-bank* content-state) x)
+    x))
+
+(defun mod-rng-punish-next-u32 ()
+  (let ((x (-> *MOD-rng-bank* punish-state)))
+    (set! x (logxor x (shl x 13)))
+    (set! x (logxor x (shr x 17)))
+    (set! x (logxor x (shl x 5)))
+    (set! (-> *MOD-rng-bank* punish-state) x)
+    x))
+
+(defun mod-rand-int-range ((lo int) (hi int))
+  (let* ((bound (the uint (- hi lo)))
+         (threshold (mod (- (the uint 0) bound) bound))
+         (r (mod-rng-content-next-u32)))
+    (while (< r threshold)
+      (set! r (mod-rng-content-next-u32)))
+    (+ lo (the int (mod r bound)))))
+
+;; Same as mod-rand-int-range but uses the punishment stream.
+(defun mod-rand-punish-int-range ((lo int) (hi int))
+  (let* ((bound (the uint (- hi lo)))
+         (threshold (mod (- (the uint 0) bound) bound))
+         (r (mod-rng-punish-next-u32)))
+    (while (< r threshold)
+      (set! r (mod-rng-punish-next-u32)))
+    (+ lo (the int (mod r bound)))))
+
+(defun mod-rand-float-range ((lo float) (hi float))
+  (let ((r (logand (mod-rng-content-next-u32) (the uint #x7fffffff))))
+    (+ lo (* (- hi lo) (/ (the float r) 2147483648.0)))))
+
+(defun mod-symbol-index ((ids (array symbol)) (id symbol))
+  (let ((i 0)) (while (< i (-> ids length)) (when (= (-> ids i) id) (return i)) (+! i 1)) -1))
+
+
+(defmacro mod-slot-ref (field slot)
+  `(-> (-> *MOD-rule-slot-bank* ,field) ,slot))
+
+(defun mod-rule-find-active-slot ((id symbol))
+  (mod-symbol-index (-> *MOD-rule-slot-bank* active-slots) id))
+
+(defun mod-rule-active? ((id symbol))
+  (>= (mod-rule-find-active-slot id) 0))
+
+;; True if the slot holds an active condition or is waiting to roll one.
+(defun mod-rule-slot-occupied? ((slot int))
+  (or (mod-slot-ref active-slots slot) (mod-slot-ref pending-slots slot)))
+
+;; Bounds-checked array lookup; returns #f when idx is out of range.
+(defun mod-symbol-at ((ids (array symbol)) (idx int))
+  (if (and (>= idx 0) (< idx (-> ids length))) (-> ids idx) #f))
+
+;; Pack one byte per entry (index into ids, #xff = empty) into a uint. Save format: do not change.
+(defun mod-pack-symbols ((arr (array symbol)) (ids (array symbol)) (n int))
+  (let ((result (the uint 0))
+        (i 0))
+    (while (< i n)
+      (let* ((sym (-> arr i))
+             (idx (if sym (mod-symbol-index ids sym) -1))
+             (byte-val (if (>= idx 0) (the uint idx) (the uint #xff))))
+        (set! result (logior result (shl byte-val (* i 8)))))
+      (+! i 1))
+    (the int result)))
+
+;; Inverse of mod-pack-symbols for a single slot's byte.
+(defun mod-unpack-symbol ((bits uint) (slot int) (ids (array symbol)))
+  (mod-symbol-at ids (the int (logand (shr bits (* slot 8)) (the uint #xff)))))
+
+(defun mod-rule-id-from-index ((idx int))
+  (mod-symbol-at *mod-rule-ids* idx)
+  )
+
+(defun mod-rule-index-from-id ((id symbol))
+  (mod-symbol-index *mod-rule-ids* id)
+  )
+
+(defun mod-punishment-index-from-id ((id symbol))
+  (mod-symbol-index *mod-punishment-ids* id))
+
+(defun mod-punishment-id-from-index ((idx int))
+  (mod-symbol-at *mod-punishment-ids* idx))
+  
+(defun mod-seconds->ms ((secs float))
+  (the int (+ 0.5 (* secs 1000.0))))
+
+(defun mod-target-on-mode? ((mode symbol))
+  (= (send-event *target* 'query 'mode) mode)
+  )
+
+(defun mod-target-on-racer-or-flut? ()
+  (or (mod-target-on-mode? 'racer) (mod-target-on-mode? 'flut)))
+
+(defun mod-target-has-eco-type? ((eco-type pickup-type))
+  (the symbol (and *target* (= (-> *target* fact eco-type) eco-type) (>= (-> *target* fact eco-level) 1.0))))

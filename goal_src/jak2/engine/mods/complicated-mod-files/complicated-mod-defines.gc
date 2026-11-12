@@ -8,6 +8,7 @@
 (define *closest-buzzer-dist* 1000000000.0)
 (define *last-kill-dist* 0.0)
 
+(define-extern mod-run-hud-draw (function (none)))
 (define-extern mod-run-start (function none))
 (define-extern global-countdown-start (function none))
 (define-extern mod-rule-trigger (function symbol none))

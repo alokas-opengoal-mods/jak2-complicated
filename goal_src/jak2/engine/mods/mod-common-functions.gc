@@ -371,3 +371,14 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
 (defun play-custom-sfx ((filename string) (volume float))
   (play-sound-file filename (the int (* (-> *setting-control* user-current sfx-volume) volume)))
   )
+
+(defmacro def-save-field-pair (save-name resume-name place)
+  `(begin
+    (defun ,save-name ()
+      ,place)
+    (defun ,resume-name ((val int))
+      (set! ,place val)
+      (none)
+      )
+    )
+  )
