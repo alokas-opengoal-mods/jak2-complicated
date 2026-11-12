@@ -275,19 +275,14 @@ This file is for the mod HUD draw functions
          (row y)
          (text-box-height 20)
          (text-scale 0.5)
-         (rule-idx (mod-rule-index-from-id id))
-        ;;  (rule-name (text-id->string (-> *mod-rules* rule-idx name-text)))
-        ;;  (rule-desc (text-id->string (-> *mod-rules* rule-idx desc-text)))
-         (rule-name (mod-rule-name id))
-         (rule-desc (mod-rule-description id))
-        ;;  (show-progress? (-> (mod-rule-info-get id) progress?))
+         (show-progress? (-> (mod-rule-info-get id) progress?))
          )
 
     ;; Draw rule name
     (set! text-scale 0.5)
     (set! text-box-height (mod-text-box-relative-height text-scale 1))
     (mod-draw-text
-      rule-name
+      (text-id->string (mod-rule-name id))
       *mod-hud-x*
       row
       *mod-hud-slot-width*
@@ -306,26 +301,10 @@ This file is for the mod HUD draw functions
     (when (or (not compact?) 
               (mod-rule-desc-essential? id)
               )
-      ;; (if (eq? id 'rule-qte)
-      ;;   (begin
-      ;;     (mod-draw-string-xy-scaled 
-      ;;       rule-desc 
-      ;;       buf 
-      ;;       10 
-      ;;       row 
-      ;;       (font-color white) 
-      ;;       (mod-hud-flags) 
-      ;;       0.35
-      ;;       )
-      ;;     (mod-draw-qte-button buf (mod-scale-px 50) row)
-      ;;     (+! row (mod-scale-px 20))
-      ;;     )
-      ;;   (set! row (mod-rule-draw-wrapped! buf id rule-desc 25 10 row 0.35 9))
-      ;;   )
       (set! text-scale 0.35)
       (set! text-box-height (mod-text-box-relative-height text-scale 2))
       (mod-draw-text
-        rule-desc
+        (text-id->string (mod-rule-description id))
         *mod-hud-x*
         row
         *mod-hud-slot-width*
@@ -379,14 +358,7 @@ This file is for the mod HUD draw functions
       )
 
     ;; Draw rule progress counters
-    (case id
-      (('rule-hang-time 
-        'rule-distancing 
-        'rule-sniper
-        'complication-bus-driver
-        'rule-speed
-        'complication-get-a-grip
-        )
+    (when show-progress?
       (set! text-scale 0.3)
       (set! text-box-height (mod-text-box-relative-height text-scale 1))
       (let ((label (text-id null))
@@ -456,7 +428,6 @@ This file is for the mod HUD draw functions
         )
       (+! row (mod-scale-px text-box-height))
       )
-    )
 
 ;;     ;; Draw math quiz
 ;;     (when (eq? id 'rule-math-quiz)
@@ -635,7 +606,7 @@ This file is for the mod HUD draw functions
         )
     (when msg
       ;; (mod-draw-string-xy-scaled (the-as string msg) buf *mod-hud-x* y color (mod-hud-flags) 0.4)
-      (set! text-scale 0.4)
+      (set! text-scale 0.5)
       (set! text-box-height (mod-text-box-relative-height text-scale 1))
       (mod-draw-text
         (text-id->string (the text-id msg))
@@ -647,7 +618,7 @@ This file is for the mod HUD draw functions
         (mod-hud-flags)
         text-scale
         )
-      (+! y text-box-height)
+      (+! y (mod-scale-px text-box-height))
       )
     (when (and (eq? (-> (-> *MOD-rule-slot-bank* pending-slots) slot) 'mod-rule-pending-roll)
                (> (mod-rule-target-slot-count) 0)
@@ -655,11 +626,22 @@ This file is for the mod HUD draw functions
       (let* ((left (max 0 (- (-> (-> *MOD-rule-slot-bank* roll-ready-times) slot) (current-time))))
              (timer (mod-format-time-frame left 1 'auto))
              )
-        (set! text-scale 0.4)
+        (set! text-scale 0.35)
         (set! text-box-height (mod-text-box-relative-height text-scale 1))
         (mod-draw-text
-          (string-format (text-id->string (text-id mod-hud-next-condition)) timer)
+          (text-id->string (text-id mod-hud-next-condition))
           *mod-hud-x*
+          y
+          300
+          text-box-height
+          (font-color white)
+          (mod-hud-flags)
+          text-scale
+          )
+
+        (mod-draw-text
+          timer
+          (+ *mod-hud-x* (mod-scale-px 120))
           y
           300
           text-box-height

@@ -7,347 +7,355 @@
 
 
 (defun mod-rule-name ((id symbol))
-  ;; (-> (mod-rule-info-get id) name-text)
-  (case id
-    (('rule-grounded) "GROUNDED")
-    (('rule-management) "ANGER MANAGEMENT")
-    (('rule-die) "DIE")
-    (('rule-lurker-pressure) "BLOODLUST")
-    (('rule-hitlist) "HITLIST")
-    (('rule-double-kill) "DOUBLE KILL")
-    (('rule-sniper) "SNIPER")
-    (('rule-crate-break) "BULL AND CHINA")
-    (('rule-money-pressure) "CASH GRAB")
-    (('rule-fuel-pressure) "CELL PRESSURE")
-    (('rule-buzzer-pressure) "BUZZER BEATER")
-    (('rule-flop-this) "FLOP THIS")
-    (('complication-brittle-bones) "BRITTLE BONES")
-    (('complication-rotten-eggs) "ROTTEN EGGS")
-    (('complication-eco-allergy) "ECO ALLERGY")
-    (('rule-keep-it-low) "KEEP IT LOW")
-    (('complication-sizeable) "SIZEABLE CONTRIBUTIONS")
-    (('complication-cumbersome) "CUMBERSOME")
-    (('complication-ohko) "OHKO")
-    (('complication-critical) "CRITICAL CONDITION")
-    (('complication-glare) "GLARE")
-    (('complication-heating-balloons) "HEATING BALLOONS")
-    (('complication-disassociate) "DISASSOCIATE")
-    (('complication-bus-driver) "BUS DRIVER")
-    (('complication-wings-tied) "WINGS TIED")
-    (('complication-fuel-shortage) "FUEL SHORTAGE")
-    (('complication-hidden-treasure) "HIDDEN TREASURE")
-    (('complication-drought) "DROUGHT")
-    (('complication-jak-rabbit) "JAK RABBIT")
-    (('rule-survivor) "STEP ONE")
-    (('rule-vendetta) "VENDETTA")
-    (('rule-hands-on) "HANDS ON")
-    (('complication-eco-reserve) "ECO RESERVE")
-    (('complication-red-stop) "SEEING RED")
-    (('rule-one-frame) "SPIN TO WIN")
-    (('rule-distancing) "SOCIAL DISTANCING")
-    (('rule-red-light) "RED LIGHT")
-    (('complication-rgyb) "RGYB")
-    (('complication-butter-fingers) "BUTTER FINGERS")
-    (('rule-for-billy) "FOR BILLY")
-    (('rule-cold-feet) "COLD FEET")
-    (('complication-overclock) "OVERCLOCK")
-    (('rule-speed) "SPEED RACER")
-    (('rule-math-quiz) "QUICK MATHS")
-    (('rule-trivia) "DON\c12T KNOW JAK")
-    (('complication-bad-ping) "BAD PING")
-    (('rule-green-pilled) "GREEN-PILLED")
-    (('rule-button-pusher) "BUTTON PUSHER")
-    (('rule-loyal-customer) "LOYAL CUSTOMER")
-    (('complication-invisible-man) "INVISIBLE MAN")
-    (('rule-cooked) "COOKED")
-    (('complication-joyride) "JOYRIDE")
-    (('rule-sagging-sails) "SAGGING SAILS")
-    (('rule-side-to-side) "SIDE TO SIDE")
-    (('rule-landlubber) "LANDLUBBER")
-    (('complication-double-aphids) "INFESTATION")
-    (('complication-invert) "THIS ONE SUCKS")
-    (('complication-loose-pockets) "LOOSE POCKETS")
-    (('complication-twisted) "TWISTED")
-    (('complication-vibe-check) "VIBE CHECK")
-    (('complication-income-tax) "INCOME TAX")
-    (('rule-express-delivery) "EXPRESS DELIVERY")
-    (('rule-qte) "QUICK TIME EVENT")
-    (('rule-touch-grass) "TOUCH GRASS")
-    (('complication-mirror) "MIRRORED")
-    (('complication-no-double-jump) "ONE AND DONE")
-    (('rule-hang-time) "HANG TIME")
-    (('complication-unbreakable) "UNBREAKABLE")
-    (('complication-get-a-grip) "GET A GRIP")
-    (('complication-fast-reel) "FAST REEL")
-    (('complication-palate-change) "PALATE CHANGE")
-    (('complication-jak-be-nimble) "JAK BE NIMBLE")
-    (('rule-no-harm) "DO NO HARM")
-    (('complication-soul-bond) "SOUL BOND")
-    (('complication-shifty) "SHIFTY")
-    (('complication-interference) "INTERFERENCE")
-    (('complication-quicksand) "QUICKSAND")
-    (('complication-lights-out) "LIGHTS OUT")
-    (('rule-supercharged) "SUPERCHARGED")
-    (('complication-half-price) "LIMITED TIME OFFER")
-    (('rule-keep-rolling) "KEEP ROLLING")
-    (('complication-energy-boost) "ENERGY BOOST")
-    (('rule-uncharted) "UNCHARTED")
-    (('rule-bonecracker) "BONECRACKER")
-    (('rule-orb-hunt) "ORB HUNT")
-    (('rule-no-ledge) "LEDGE LESS")
-    (else "UNKNOWN")))
+  (-> (mod-rule-info-get id) name-text)
+  ;; (case id
+  ;;   (('rule-grounded) "GROUNDED")
+  ;;   (('rule-management) "ANGER MANAGEMENT")
+  ;;   (('rule-die) "DIE")
+  ;;   (('rule-kill-pressure) "BLOODLUST")
+  ;;   (('rule-hitlist) "HITLIST")
+  ;;   (('rule-double-kill) "DOUBLE KILL")
+  ;;   (('rule-sniper) "SNIPER")
+  ;;   (('rule-crate-break) "BULL AND CHINA")
+  ;;   (('rule-money-pressure) "CASH GRAB")
+  ;;   (('rule-fuel-pressure) "CELL PRESSURE")
+  ;;   (('rule-buzzer-pressure) "BUZZER BEATER")
+  ;;   (('rule-flop-this) "FLOP THIS")
+  ;;   (('complication-brittle-bones) "BRITTLE BONES")
+  ;;   (('complication-rotten-eggs) "ROTTEN EGGS")
+  ;;   (('complication-eco-allergy) "ECO ALLERGY")
+  ;;   (('rule-keep-it-low) "KEEP IT LOW")
+  ;;   (('complication-sizeable) "SIZEABLE CONTRIBUTIONS")
+  ;;   (('complication-cumbersome) "CUMBERSOME")
+  ;;   (('complication-ohko) "OHKO")
+  ;;   (('complication-critical) "CRITICAL CONDITION")
+  ;;   (('complication-glare) "GLARE")
+  ;;   (('complication-heating-balloons) "HEATING BALLOONS")
+  ;;   (('complication-disassociate) "DISASSOCIATE")
+  ;;   (('complication-bus-driver) "BUS DRIVER")
+  ;;   (('complication-wings-tied) "WINGS TIED")
+  ;;   (('complication-fuel-shortage) "FUEL SHORTAGE")
+  ;;   (('complication-hidden-treasure) "HIDDEN TREASURE")
+  ;;   (('complication-drought) "DROUGHT")
+  ;;   (('complication-jak-rabbit) "JAK RABBIT")
+  ;;   (('rule-survivor) "STEP ONE")
+  ;;   (('rule-vendetta) "VENDETTA")
+  ;;   (('rule-hands-on) "HANDS ON")
+  ;;   (('complication-eco-reserve) "ECO RESERVE")
+  ;;   (('complication-red-stop) "SEEING RED")
+  ;;   (('rule-one-frame) "SPIN TO WIN")
+  ;;   (('rule-distancing) "SOCIAL DISTANCING")
+  ;;   (('rule-red-light) "RED LIGHT")
+  ;;   (('complication-rgyb) "RGYB")
+  ;;   (('complication-butter-fingers) "BUTTER FINGERS")
+  ;;   (('rule-for-billy) "FOR BILLY")
+  ;;   (('rule-cold-feet) "COLD FEET")
+  ;;   (('complication-overclock) "OVERCLOCK")
+  ;;   (('rule-speed) "SPEED RACER")
+  ;;   (('rule-math-quiz) "QUICK MATHS")
+  ;;   (('rule-trivia) "DON\c12T KNOW JAK")
+  ;;   (('complication-bad-ping) "BAD PING")
+  ;;   (('rule-green-pilled) "GREEN-PILLED")
+  ;;   (('rule-button-pusher) "BUTTON PUSHER")
+  ;;   (('rule-loyal-customer) "LOYAL CUSTOMER")
+  ;;   (('complication-invisible-man) "INVISIBLE MAN")
+  ;;   (('rule-cooked) "COOKED")
+  ;;   (('complication-joyride) "JOYRIDE")
+  ;;   (('rule-sagging-sails) "SAGGING SAILS")
+  ;;   (('rule-side-to-side) "SIDE TO SIDE")
+  ;;   (('rule-landlubber) "LANDLUBBER")
+  ;;   (('complication-double-aphids) "INFESTATION")
+  ;;   (('complication-invert) "THIS ONE SUCKS")
+  ;;   (('complication-loose-pockets) "LOOSE POCKETS")
+  ;;   (('complication-twisted) "TWISTED")
+  ;;   (('complication-vibe-check) "VIBE CHECK")
+  ;;   (('complication-income-tax) "INCOME TAX")
+  ;;   (('rule-express-delivery) "EXPRESS DELIVERY")
+  ;;   (('rule-qte) "QUICK TIME EVENT")
+  ;;   (('rule-touch-grass) "TOUCH GRASS")
+  ;;   (('complication-mirror) "MIRRORED")
+  ;;   (('complication-no-double-jump) "ONE AND DONE")
+  ;;   (('rule-hang-time) "HANG TIME")
+  ;;   (('complication-unbreakable) "UNBREAKABLE")
+  ;;   (('complication-get-a-grip) "GET A GRIP")
+  ;;   (('complication-fast-reel) "FAST REEL")
+  ;;   (('complication-palate-change) "PALATE CHANGE")
+  ;;   (('complication-jak-be-nimble) "JAK BE NIMBLE")
+  ;;   (('rule-no-harm) "DO NO HARM")
+  ;;   (('complication-soul-bond) "SOUL BOND")
+  ;;   (('complication-shifty) "SHIFTY")
+  ;;   (('complication-interference) "INTERFERENCE")
+  ;;   (('complication-quicksand) "QUICKSAND")
+  ;;   (('complication-lights-out) "LIGHTS OUT")
+  ;;   (('rule-supercharged) "SUPERCHARGED")
+  ;;   (('complication-half-price) "LIMITED TIME OFFER")
+  ;;   (('rule-keep-rolling) "KEEP ROLLING")
+  ;;   (('complication-energy-boost) "ENERGY BOOST")
+  ;;   (('rule-uncharted) "UNCHARTED")
+  ;;   (('rule-bonecracker) "BONECRACKER")
+  ;;   (('rule-orb-hunt) "ORB HUNT")
+  ;;   (('rule-no-ledge) "LEDGE LESS")
+  ;;   (else "UNKNOWN")
+  ;;   )
+  )
 
 (defun mod-apply-time-limit-multiplier ((base-time time-frame))
   (let* ((raw-mult (time-limit-multiplier))
          (tenths (the int (+ (* raw-mult 10.0) 0.5))))
     (the time-frame (/ (* base-time (the time-frame tenths)) 10))))
 
-(defun mod-level-display-name ((level symbol))
-  (case level
-    (('training) "GEYSER ROCK")
-    (('village1) "SANDOVER VILLAGE")
-    (('beach) "SENTINEL BEACH")
-    (('jungle) "FORBIDDEN JUNGLE")
-    (('jungleb) "JUNGLE TEMPLE")
-    (('misty) "MISTY ISLAND")
-    (('firecanyon) "FIRE CANYON")
-    (('village2) "ROCK VILLAGE")
-    (('sunken 'sunkenb) "LOST PRECURSOR CITY")
-    (('swamp) "BOGGY SWAMP")
-    (('rolling) "PRECUROR BASIN")
-    (('ogre) "MOUNTAIN PASS")
-    (('village3) "VOLCANIC CRATER")
-    (('snow) "SNOWY MOUNTAIN")
-    (('maincave) "MAIN CAVE")
-    (('robocave) "ROBOT ROOM")
-    (('darkcave) "DARK CAVE")
-    (('lavatube) "LAVA TUBE")
-    (('citadel) "CITADEL")
-    (('finalboss) "FINAL BOSS")
-    (else "UNKNOWN")))
+;; (defun mod-level-display-name ((level symbol))
+;;   (case level
+;;     (('training) "GEYSER ROCK")
+;;     (('village1) "SANDOVER VILLAGE")
+;;     (('beach) "SENTINEL BEACH")
+;;     (('jungle) "FORBIDDEN JUNGLE")
+;;     (('jungleb) "JUNGLE TEMPLE")
+;;     (('misty) "MISTY ISLAND")
+;;     (('firecanyon) "FIRE CANYON")
+;;     (('village2) "ROCK VILLAGE")
+;;     (('sunken 'sunkenb) "LOST PRECURSOR CITY")
+;;     (('swamp) "BOGGY SWAMP")
+;;     (('rolling) "PRECUROR BASIN")
+;;     (('ogre) "MOUNTAIN PASS")
+;;     (('village3) "VOLCANIC CRATER")
+;;     (('snow) "SNOWY MOUNTAIN")
+;;     (('maincave) "MAIN CAVE")
+;;     (('robocave) "ROBOT ROOM")
+;;     (('darkcave) "DARK CAVE")
+;;     (('lavatube) "LAVA TUBE")
+;;     (('citadel) "CITADEL")
+;;     (('finalboss) "FINAL BOSS")
+;;     (else "UNKNOWN")
+;;     )
+;;   )
 
 (defun mod-rule-description ((id symbol))
-  ;; (-> (mod-rule-info-get id) desc-text)
-  (case id
-    (('rule-grounded) "DO NOT JUMP.")
-    (('rule-management) "DO NOT PUNCH.")
-    (('rule-die) "KILL HIM. KILL HIM NOW.")
-    (('rule-lurker-pressure) "KILL 6 LURKERS.")
-    (('rule-hitlist) "KILL 3 UNIQUE LURKER TYPES.")
-    (('rule-double-kill) "KILL 2 LURKERS AT THE SAME TIME.")
-    (('rule-sniper) "KILL A LURKER FROM AT LEAST 70 METERS AWAY.")
-    (('rule-crate-break) "BREAK 5 CRATES.")
-    (('rule-money-pressure) "COLLECT 20 ORBS.")
-    (('rule-fuel-pressure) "COLLECT A POWER CELL.")
-    (('rule-buzzer-pressure) "COLLECT A SCOUT FLY.")
-    (('rule-flop-this) "LURKERS MAY ONLY BE KILLED WITH GROUND POUNDS.")
-    (('complication-brittle-bones) "EVERY JUMP HAS A 10% CHANCE TO DAMAGE YOU.")
-    (('complication-rotten-eggs) "ORBS KILL YOU.")
-    (('complication-eco-allergy) "ECO DAMAGES YOU.")
-    (('rule-keep-it-low) "DO NOT JUMP KICK.")
-    (('complication-sizeable) "ROLLJUMPS COST 2 ORBS.")
-    (('complication-cumbersome) "ORBS WEIGH JAK DOWN.")
-    (('complication-heating-balloons) "COOLING BALLOONS MELT YOU.")
-    (('complication-drought) "ALL WATER, LAVA, AND DARK ECO ARE GONE.")
-    (('complication-ohko) "JAK IS LIMITED TO ONE HEALTH.")
-    (('complication-critical) "CELLS CAN ONLY BE COLLECTED AT ONE HEALTH.")
-    (('complication-glare) "JAK FREEZES WHEN LURKERS SEE HIM.")
-    (('complication-disassociate) "KILLING A LURKER DISMOUNTS FLUT FLUT.")
-    (('complication-bus-driver) "ZOOMER EXPLODES IF TOO SLOW.")
-    (('complication-fuel-shortage) "ALL POWER CELLS ARE GONE.")
-    (('complication-hidden-treasure) "ORBS ARE INVISIBLE.")
-    (('complication-wings-tied) "YOU CANNOT COLLECT CELLS WHILE ON FLUT FLUT.")
-    (('complication-jak-rabbit) "JUMP HEIGHTS ARE DOUBLED.")
-    (('rule-vendetta) "KILL A LURKER WITH RED ECO.")
-    (('rule-hands-on) "CRATES MAY ONLY BE BROKEN BY DIRECT CONTACT FROM JAK.")
-    (('rule-survivor) "STAY ALIVE.")
-    (('complication-eco-reserve) "YELLOW ECO PAUSES TIMER.")
-    (('complication-red-stop) "RED ECO PAUSES TIMER.")
-    (('rule-one-frame) "DO A ONE-FRAME.")
-    (('rule-distancing) "DO NOT GET WITHIN 8 METERS OF A SCOUT FLY.")
-    (('rule-red-light) "DO NOT MOVE.")
-    (('complication-rgyb) "BLUE AND YELLOW ECO ARE SWAPPED.")
-    (('complication-butter-fingers) "JAK CANNOT GRAB LEDGES.")
-    (('rule-for-billy) "PROTECT FARTHY\c12S SNACKS. DO NOT LEAVE BOGGY SWAMP.")
-    (('rule-cold-feet) "KEEP OFF THE ICE.")
-    (('complication-overclock) "CITADEL DISCS ARE FASTER.")
-    (('rule-speed) "REACH A SPEED OF 40 METERS PER SECOND.")
-    (('rule-math-quiz) "ANSWER CORRECTLY.       (USE D-PAD)")
-    (('rule-trivia) "ANSWER CORRECTLY.")
-    (('complication-bad-ping) (string-format "YOU HAVE ~D-MS INPUT DELAY." (mod-seconds->ms (-> *MOD-tuning-bank* bad-ping-input-delay))))
-    (('rule-green-pilled) "INCREASE YOUR HEALTH WITH GREEN ECO.")
-    (('rule-button-pusher) "PUSH A BUTTON.")
-    (('rule-loyal-customer) "BUY AN ORACLE CELL.")
-    (('complication-invisible-man) "JAK IS INVISIBLE.")
-    (('rule-cooked) "BURN JAK.")
-    (('complication-joyride) "HEY! THERE\c12S THE FLUT-FLUT!")
-    (('rule-sagging-sails) "MISS 3 FIVE-POUND FISH.")
-    (('rule-side-to-side) "DO NOT TOUCH THE MIDDLE PLATFORM.")
-    (('rule-landlubber) "STAY OUT OF THE WATER, MUD, AND TAR.")
-    (('complication-double-aphids) "DOUBLE THE APHIDS.")
-    (('complication-invert) "CONTROLS ARE INVERTED.")
-    (('complication-loose-pockets) "BONKING OR TAKING DAMAGE LOSES 20 ORBS.")
-    (('complication-twisted)
-     (let ((rolls-away (- (-> *MOD-rule-context-bank* twist-pending-count) (-> *MOD-stats-bank* rules-rolled))))
-       (if (> rolls-away 0)
-         (string-format "THE RULE ROLLED ~D RULES FROM NOW MUST BE BROKEN." rolls-away)
-         "A LATER RULE MUST BE BROKEN.")))
-    (('complication-vibe-check) "I LIKE YA CUT, G.")
-    (('complication-income-tax) "TIMER INCREMENTS ARE HALVED.")
-    (('rule-touch-grass) "DO THAT.")
-    (('rule-express-delivery) "RETURN THE MUSE.          OR SUFFER MY CURSE.")
-    (('rule-qte) "PRESS ")
-    (('complication-mirror) "THE WORLD IS MIRRORED.")
-    (('complication-no-double-jump) "JAK AND FLUT FLUT FORGOT HOW TO DOUBLE JUMP.")
-    (('rule-hang-time) "STAY AIRBORNE FOR 3 CONSECUTIVE SECONDS.")
-    (('complication-unbreakable) "SCOUT FLY CRATES CAN ONLY BE BROKEN BY ECO.")
-    (('complication-get-a-grip)
-     (let ((seconds (/ (the int (mod-apply-time-limit-multiplier (seconds 12))) (seconds 1))))
-       (string-format "FOR EVERY ~D SECONDS A LEDGE IS NOT GRABBED, YOU DIE." seconds)))
-    (('complication-fast-reel) "YOUR REEL SPEED HAS INCREASED!")
-    (('complication-palate-change) "EELS ARE GOOD, YELLOWS ARE BAD.")
-    (('complication-jak-be-nimble) "JAK BE QUICK.")
-    (('rule-no-harm) "DO NOT KILL ANY LURKERS.")
-    (('complication-soul-bond) "IF A LURKER DIES, YOU DIE TOO.")
-    (('complication-shifty) "JAK RANDOMLY TELEPORTS SHORT DISTANCES.")
-    (('complication-interference) "ECO PIXELATES THE SCREEN.")
-    (('complication-quicksand) "THE TIMER DRAINS TWICE AS FAST WHILE YOU\c12RE ON SAND.")
-    (('complication-lights-out) "SORRY, WERE YOU USING THAT?")
-    (('rule-supercharged) "COLLECT BLUE ECO.")
-    (('complication-half-price) "POWER CELLS ARE 50% OFF!")
-    (('rule-keep-rolling) "ROLL 30 TIMES.")
-    (('complication-energy-boost) "HAVE SOME ECO.")
-    (('rule-uncharted) "VISIT A LEVEL YOU HAVE NOT BEEN TO YET.")
-    (('rule-bonecracker) "KNOCK DOWN A BONE BRIDGE.")
-    (('rule-orb-hunt)
-     (if (-> *MOD-orb-hunt-bank* level)
-       (string-format "COLLECT THE HIDDEN ORB IN ~S." (mod-level-display-name (-> *MOD-orb-hunt-bank* level)))
-       "COLLECT THE HIDDEN ORB IN THIS LEVEL."))
-    (('rule-no-ledge) "DO NOT GRAB A LEDGE.")
-    (else "NO DESCRIPTION AVAILABLE.")))
+  (-> (mod-rule-info-get id) desc-text)
+  ;; (case id
+  ;;   (('rule-grounded) "DO NOT JUMP.")
+  ;;   (('rule-management) "DO NOT PUNCH.")
+  ;;   (('rule-die) "KILL HIM. KILL HIM NOW.")
+  ;;   (('rule-kill-pressure) "KILL 6 LURKERS.")
+  ;;   (('rule-hitlist) "KILL 3 UNIQUE LURKER TYPES.")
+  ;;   (('rule-double-kill) "KILL 2 LURKERS AT THE SAME TIME.")
+  ;;   (('rule-sniper) "KILL A LURKER FROM AT LEAST 70 METERS AWAY.")
+  ;;   (('rule-crate-break) "BREAK 5 CRATES.")
+  ;;   (('rule-money-pressure) "COLLECT 20 ORBS.")
+  ;;   (('rule-fuel-pressure) "COLLECT A POWER CELL.")
+  ;;   (('rule-buzzer-pressure) "COLLECT A SCOUT FLY.")
+  ;;   (('rule-flop-this) "LURKERS MAY ONLY BE KILLED WITH GROUND POUNDS.")
+  ;;   (('complication-brittle-bones) "EVERY JUMP HAS A 10% CHANCE TO DAMAGE YOU.")
+  ;;   (('complication-rotten-eggs) "ORBS KILL YOU.")
+  ;;   (('complication-eco-allergy) "ECO DAMAGES YOU.")
+  ;;   (('rule-keep-it-low) "DO NOT JUMP KICK.")
+  ;;   (('complication-sizeable) "ROLLJUMPS COST 2 ORBS.")
+  ;;   (('complication-cumbersome) "ORBS WEIGH JAK DOWN.")
+  ;;   (('complication-heating-balloons) "COOLING BALLOONS MELT YOU.")
+  ;;   (('complication-drought) "ALL WATER, LAVA, AND DARK ECO ARE GONE.")
+  ;;   (('complication-ohko) "JAK IS LIMITED TO ONE HEALTH.")
+  ;;   (('complication-critical) "CELLS CAN ONLY BE COLLECTED AT ONE HEALTH.")
+  ;;   (('complication-glare) "JAK FREEZES WHEN LURKERS SEE HIM.")
+  ;;   (('complication-disassociate) "KILLING A LURKER DISMOUNTS FLUT FLUT.")
+  ;;   (('complication-bus-driver) "ZOOMER EXPLODES IF TOO SLOW.")
+  ;;   (('complication-fuel-shortage) "ALL POWER CELLS ARE GONE.")
+  ;;   (('complication-hidden-treasure) "ORBS ARE INVISIBLE.")
+  ;;   (('complication-wings-tied) "YOU CANNOT COLLECT CELLS WHILE ON FLUT FLUT.")
+  ;;   (('complication-jak-rabbit) "JUMP HEIGHTS ARE DOUBLED.")
+  ;;   (('rule-vendetta) "KILL A LURKER WITH RED ECO.")
+  ;;   (('rule-hands-on) "CRATES MAY ONLY BE BROKEN BY DIRECT CONTACT FROM JAK.")
+  ;;   (('rule-survivor) "STAY ALIVE.")
+  ;;   (('complication-eco-reserve) "YELLOW ECO PAUSES TIMER.")
+  ;;   (('complication-red-stop) "RED ECO PAUSES TIMER.")
+  ;;   (('rule-one-frame) "DO A ONE-FRAME.")
+  ;;   (('rule-distancing) "DO NOT GET WITHIN 8 METERS OF A SCOUT FLY.")
+  ;;   (('rule-red-light) "DO NOT MOVE.")
+  ;;   (('complication-rgyb) "BLUE AND YELLOW ECO ARE SWAPPED.")
+  ;;   (('complication-butter-fingers) "JAK CANNOT GRAB LEDGES.")
+  ;;   (('rule-for-billy) "PROTECT FARTHY\c12S SNACKS. DO NOT LEAVE BOGGY SWAMP.")
+  ;;   (('rule-cold-feet) "KEEP OFF THE ICE.")
+  ;;   (('complication-overclock) "CITADEL DISCS ARE FASTER.")
+  ;;   (('rule-speed) "REACH A SPEED OF 40 METERS PER SECOND.")
+  ;;   (('rule-math-quiz) "ANSWER CORRECTLY.       (USE D-PAD)")
+  ;;   (('rule-trivia) "ANSWER CORRECTLY.")
+  ;;   (('complication-bad-ping) (string-format "YOU HAVE ~D-MS INPUT DELAY." (mod-seconds->ms (-> *MOD-tuning-bank* bad-ping-input-delay))))
+  ;;   (('rule-green-pilled) "INCREASE YOUR HEALTH WITH GREEN ECO.")
+  ;;   (('rule-button-pusher) "PUSH A BUTTON.")
+  ;;   (('rule-loyal-customer) "BUY AN ORACLE CELL.")
+  ;;   (('complication-invisible-man) "JAK IS INVISIBLE.")
+  ;;   (('rule-cooked) "BURN JAK.")
+  ;;   (('complication-joyride) "HEY! THERE\c12S THE FLUT-FLUT!")
+  ;;   (('rule-sagging-sails) "MISS 3 FIVE-POUND FISH.")
+  ;;   (('rule-side-to-side) "DO NOT TOUCH THE MIDDLE PLATFORM.")
+  ;;   (('rule-landlubber) "STAY OUT OF THE WATER, MUD, AND TAR.")
+  ;;   (('complication-double-aphids) "DOUBLE THE APHIDS.")
+  ;;   (('complication-invert) "CONTROLS ARE INVERTED.")
+  ;;   (('complication-loose-pockets) "BONKING OR TAKING DAMAGE LOSES 20 ORBS.")
+  ;;   (('complication-twisted)
+  ;;    (let ((rolls-away (- (-> *MOD-rule-context-bank* twist-pending-count) (-> *MOD-stats-bank* rules-rolled))))
+  ;;      (if (> rolls-away 0)
+  ;;        (string-format "THE RULE ROLLED ~D RULES FROM NOW MUST BE BROKEN." rolls-away)
+  ;;        "A LATER RULE MUST BE BROKEN.")))
+  ;;   (('complication-vibe-check) "I LIKE YA CUT, G.")
+  ;;   (('complication-income-tax) "TIMER INCREMENTS ARE HALVED.")
+  ;;   (('rule-touch-grass) "DO THAT.")
+  ;;   (('rule-express-delivery) "RETURN THE MUSE.          OR SUFFER MY CURSE.")
+  ;;   (('rule-qte) "PRESS ")
+  ;;   (('complication-mirror) "THE WORLD IS MIRRORED.")
+  ;;   (('complication-no-double-jump) "JAK AND FLUT FLUT FORGOT HOW TO DOUBLE JUMP.")
+  ;;   (('rule-hang-time) "STAY AIRBORNE FOR 3 CONSECUTIVE SECONDS.")
+  ;;   (('complication-unbreakable) "SCOUT FLY CRATES CAN ONLY BE BROKEN BY ECO.")
+  ;;   (('complication-get-a-grip)
+  ;;    (let ((seconds (/ (the int (mod-apply-time-limit-multiplier (seconds 12))) (seconds 1))))
+  ;;      (string-format "FOR EVERY ~D SECONDS A LEDGE IS NOT GRABBED, YOU DIE." seconds)))
+  ;;   (('complication-fast-reel) "YOUR REEL SPEED HAS INCREASED!")
+  ;;   (('complication-palate-change) "EELS ARE GOOD, YELLOWS ARE BAD.")
+  ;;   (('complication-jak-be-nimble) "JAK BE QUICK.")
+  ;;   (('rule-no-harm) "DO NOT KILL ANY LURKERS.")
+  ;;   (('complication-soul-bond) "IF A LURKER DIES, YOU DIE TOO.")
+  ;;   (('complication-shifty) "JAK RANDOMLY TELEPORTS SHORT DISTANCES.")
+  ;;   (('complication-interference) "ECO PIXELATES THE SCREEN.")
+  ;;   (('complication-quicksand) "THE TIMER DRAINS TWICE AS FAST WHILE YOU\c12RE ON SAND.")
+  ;;   (('complication-lights-out) "SORRY, WERE YOU USING THAT?")
+  ;;   (('rule-supercharged) "COLLECT BLUE ECO.")
+  ;;   (('complication-half-price) "POWER CELLS ARE 50% OFF!")
+  ;;   (('rule-keep-rolling) "ROLL 30 TIMES.")
+  ;;   (('complication-energy-boost) "HAVE SOME ECO.")
+  ;;   (('rule-uncharted) "VISIT A LEVEL YOU HAVE NOT BEEN TO YET.")
+  ;;   (('rule-bonecracker) "KNOCK DOWN A BONE BRIDGE.")
+  ;;   (('rule-orb-hunt)
+  ;;    (if (-> *MOD-orb-hunt-bank* level)
+  ;;      (string-format "COLLECT THE HIDDEN ORB IN ~S." (mod-level-display-name (-> *MOD-orb-hunt-bank* level)))
+  ;;      "COLLECT THE HIDDEN ORB IN THIS LEVEL."))
+  ;;   (('rule-no-ledge) "DO NOT GRAB A LEDGE.")
+  ;;   (else "NO DESCRIPTION AVAILABLE.")
+  ;;   )
+  )
 
 (defun mod-rule-duration ((id symbol))
-  ;; (-> (mod-rule-info-get id) duration)
-  (case id
-    (('rule-grounded) (seconds 10)) ;; 10
-    (('rule-management) (seconds 90)) ;; 90
-    (('rule-die) (seconds 20)) ;; 20
-    (('rule-lurker-pressure) (seconds 45)) ;; 45
-    (('rule-hitlist) (seconds 50)) ;; 50
-    (('rule-double-kill) (seconds 45)) ;; 45
-    (('rule-sniper) (seconds 75)) ;; 75
-    (('rule-money-pressure) (seconds 45)) ;; 45
-    (('rule-fuel-pressure) (seconds 45)) ;; 45
-    (('rule-buzzer-pressure) (seconds 30)) ;; 30
-    (('rule-flop-this) (seconds 60)) ;; 60
-    (('complication-brittle-bones) (seconds 45)) ;; 45
-    (('complication-rotten-eggs) (seconds 20)) ;; 20
-    (('complication-eco-allergy) (seconds 45)) ;; 45
-    (('rule-keep-it-low) (seconds 90)) ;; 90
-    (('complication-sizeable) (seconds 60)) ;; 60
-    (('complication-cumbersome) (seconds 40)) ;; 40
-    (('complication-ohko) (seconds 60)) ;; 60
-    (('complication-critical) (seconds 60)) ;; 60
-    (('complication-heating-balloons) (seconds 20)) ;; 20
-    (('complication-glare) (seconds 45)) ;; 45
-    (('complication-disassociate) (seconds 45)) ;; 45
-    (('complication-bus-driver) (seconds 20)) ;; 20
-    (('complication-wings-tied) (seconds 60)) ;; 60
-    (('rule-survivor) (seconds 60)) ;; 60
-    (('complication-fuel-shortage) (seconds 30)) ;; 30
-    (('complication-hidden-treasure) (seconds 60)) ;; 60
-    (('complication-drought) (seconds 45)) ;; 45
-    (('complication-jak-rabbit) (seconds 45)) ;; 45
-    (('rule-vendetta) (seconds 35)) ;; 35
-    (('rule-hands-on) (seconds 60)) ;; 60
-    (('complication-eco-reserve) (seconds 45)) ;; 45
-    (('complication-red-stop) (seconds 60)) ;; 60
-    (('rule-one-frame) (seconds 45)) ;; 45
-    (('rule-distancing) (seconds 45)) ;; 45
-    (('rule-red-light) (seconds 5)) ;; 5
-    (('complication-rgyb) (seconds 30)) ;; 30
-    (('complication-butter-fingers) (seconds 60)) ;; 60
-    (('rule-for-billy) (seconds 130)) ;; 130
-    (('rule-cold-feet) (seconds 60)) ;; 60
-    (('complication-overclock) (seconds 45)) ;; 45
-    (('rule-speed) (seconds 60)) ;; 60
-    (('rule-math-quiz) (seconds 20)) ;; 20
-    (('rule-trivia) (seconds 15)) ;; 15
-    (('complication-bad-ping) (seconds 45)) ;; 45
-    (('rule-green-pilled) (seconds 60)) ;; 60
-    (('rule-button-pusher) (seconds 45)) ;; 45
-    (('rule-loyal-customer) (seconds 60)) ;; 60
-    (('complication-invisible-man) (seconds 45)) ;; 45
-    (('rule-cooked) (seconds 35)) ;; 35
-    (('complication-joyride) (seconds 30)) ;; 30
-    (('rule-sagging-sails) (seconds 30)) ;; 30
-    (('rule-side-to-side) (seconds 60)) ;; 60
-    (('rule-landlubber) (seconds 40)) ;; 40
-    (('complication-double-aphids) (seconds 40)) ;; 40
-    (('complication-invert) (seconds 20)) ;; 20
-    (('complication-loose-pockets) (seconds 60)) ;; 60
-    (('complication-twisted) (seconds 8)) ;; 8
-    (('complication-vibe-check) (seconds 4)) ;; 4
-    (('complication-income-tax) (seconds 30)) ;; 30
-    (('rule-express-delivery) (seconds 90)) ;; 90
-    (('rule-crate-break) (seconds 30)) ;; 30
-    (('rule-qte) (seconds 1.5)) ;; 1.5
-    (('rule-touch-grass) (seconds 15)) ;; 15
-    (('complication-mirror) (seconds 60)) ;; 60
-    (('complication-no-double-jump) (seconds 60)) ;; 60
-    (('rule-hang-time) (seconds 75)) ;; 75
-    (('complication-unbreakable) (seconds 45)) ;; 45
-    (('complication-get-a-grip) (seconds 40)) ;; 40
-    (('complication-fast-reel) (seconds 15)) ;; 15
-    (('complication-palate-change) (seconds 30)) ;; 30
-    (('complication-jak-be-nimble) (seconds 45)) ;; 45
-    (('rule-no-harm) (seconds 30)) ;; 30
-    (('complication-soul-bond) (seconds 40)) ;; 40
-    (('complication-shifty) (seconds 45)) ;; 45
-    (('complication-interference) (seconds 45)) ;; 45
-    (('complication-quicksand) (seconds 30)) ;; 30
-    (('complication-lights-out) (seconds 30)) ;; 30
-    (('rule-supercharged) (seconds 25)) ;; 25
-    (('complication-half-price) (seconds 20)) ;; 20
-    (('rule-keep-rolling) (seconds 35)) ;; 35
-    (('complication-energy-boost) (seconds 4)) ;; 4
-    (('rule-uncharted) (seconds 45)) ;; 45
-    (('rule-bonecracker) (seconds 45)) ;; 45
-    (('rule-orb-hunt) (seconds 105)) ;; 105
-    (('rule-no-ledge) (seconds 60)) ;; 60
-    (else (seconds 30))
-    )
+  (-> (mod-rule-info-get id) duration)
+  ;; (case id
+  ;;   (('rule-grounded) (seconds 10)) ;; 10
+  ;;   (('rule-management) (seconds 90)) ;; 90
+  ;;   (('rule-die) (seconds 20)) ;; 20
+  ;;   (('rule-kill-pressure) (seconds 45)) ;; 45
+  ;;   (('rule-hitlist) (seconds 50)) ;; 50
+  ;;   (('rule-double-kill) (seconds 45)) ;; 45
+  ;;   (('rule-sniper) (seconds 75)) ;; 75
+  ;;   (('rule-money-pressure) (seconds 45)) ;; 45
+  ;;   (('rule-fuel-pressure) (seconds 45)) ;; 45
+  ;;   (('rule-buzzer-pressure) (seconds 30)) ;; 30
+  ;;   (('rule-flop-this) (seconds 60)) ;; 60
+  ;;   (('complication-brittle-bones) (seconds 45)) ;; 45
+  ;;   (('complication-rotten-eggs) (seconds 20)) ;; 20
+  ;;   (('complication-eco-allergy) (seconds 45)) ;; 45
+  ;;   (('rule-keep-it-low) (seconds 90)) ;; 90
+  ;;   (('complication-sizeable) (seconds 60)) ;; 60
+  ;;   (('complication-cumbersome) (seconds 40)) ;; 40
+  ;;   (('complication-ohko) (seconds 60)) ;; 60
+  ;;   (('complication-critical) (seconds 60)) ;; 60
+  ;;   (('complication-heating-balloons) (seconds 20)) ;; 20
+  ;;   (('complication-glare) (seconds 45)) ;; 45
+  ;;   (('complication-disassociate) (seconds 45)) ;; 45
+  ;;   (('complication-bus-driver) (seconds 20)) ;; 20
+  ;;   (('complication-wings-tied) (seconds 60)) ;; 60
+  ;;   (('rule-survivor) (seconds 60)) ;; 60
+  ;;   (('complication-fuel-shortage) (seconds 30)) ;; 30
+  ;;   (('complication-hidden-treasure) (seconds 60)) ;; 60
+  ;;   (('complication-drought) (seconds 45)) ;; 45
+  ;;   (('complication-jak-rabbit) (seconds 45)) ;; 45
+  ;;   (('rule-vendetta) (seconds 35)) ;; 35
+  ;;   (('rule-hands-on) (seconds 60)) ;; 60
+  ;;   (('complication-eco-reserve) (seconds 45)) ;; 45
+  ;;   (('complication-red-stop) (seconds 60)) ;; 60
+  ;;   (('rule-one-frame) (seconds 45)) ;; 45
+  ;;   (('rule-distancing) (seconds 45)) ;; 45
+  ;;   (('rule-red-light) (seconds 5)) ;; 5
+  ;;   (('complication-rgyb) (seconds 30)) ;; 30
+  ;;   (('complication-butter-fingers) (seconds 60)) ;; 60
+  ;;   (('rule-for-billy) (seconds 130)) ;; 130
+  ;;   (('rule-cold-feet) (seconds 60)) ;; 60
+  ;;   (('complication-overclock) (seconds 45)) ;; 45
+  ;;   (('rule-speed) (seconds 60)) ;; 60
+  ;;   (('rule-math-quiz) (seconds 20)) ;; 20
+  ;;   (('rule-trivia) (seconds 15)) ;; 15
+  ;;   (('complication-bad-ping) (seconds 45)) ;; 45
+  ;;   (('rule-green-pilled) (seconds 60)) ;; 60
+  ;;   (('rule-button-pusher) (seconds 45)) ;; 45
+  ;;   (('rule-loyal-customer) (seconds 60)) ;; 60
+  ;;   (('complication-invisible-man) (seconds 45)) ;; 45
+  ;;   (('rule-cooked) (seconds 35)) ;; 35
+  ;;   (('complication-joyride) (seconds 30)) ;; 30
+  ;;   (('rule-sagging-sails) (seconds 30)) ;; 30
+  ;;   (('rule-side-to-side) (seconds 60)) ;; 60
+  ;;   (('rule-landlubber) (seconds 40)) ;; 40
+  ;;   (('complication-double-aphids) (seconds 40)) ;; 40
+  ;;   (('complication-invert) (seconds 20)) ;; 20
+  ;;   (('complication-loose-pockets) (seconds 60)) ;; 60
+  ;;   (('complication-twisted) (seconds 8)) ;; 8
+  ;;   (('complication-vibe-check) (seconds 4)) ;; 4
+  ;;   (('complication-income-tax) (seconds 30)) ;; 30
+  ;;   (('rule-express-delivery) (seconds 90)) ;; 90
+  ;;   (('rule-crate-break) (seconds 30)) ;; 30
+  ;;   (('rule-qte) (seconds 1.5)) ;; 1.5
+  ;;   (('rule-touch-grass) (seconds 15)) ;; 15
+  ;;   (('complication-mirror) (seconds 60)) ;; 60
+  ;;   (('complication-no-double-jump) (seconds 60)) ;; 60
+  ;;   (('rule-hang-time) (seconds 75)) ;; 75
+  ;;   (('complication-unbreakable) (seconds 45)) ;; 45
+  ;;   (('complication-get-a-grip) (seconds 40)) ;; 40
+  ;;   (('complication-fast-reel) (seconds 15)) ;; 15
+  ;;   (('complication-palate-change) (seconds 30)) ;; 30
+  ;;   (('complication-jak-be-nimble) (seconds 45)) ;; 45
+  ;;   (('rule-no-harm) (seconds 30)) ;; 30
+  ;;   (('complication-soul-bond) (seconds 40)) ;; 40
+  ;;   (('complication-shifty) (seconds 45)) ;; 45
+  ;;   (('complication-interference) (seconds 45)) ;; 45
+  ;;   (('complication-quicksand) (seconds 30)) ;; 30
+  ;;   (('complication-lights-out) (seconds 30)) ;; 30
+  ;;   (('rule-supercharged) (seconds 25)) ;; 25
+  ;;   (('complication-half-price) (seconds 20)) ;; 20
+  ;;   (('rule-keep-rolling) (seconds 35)) ;; 35
+  ;;   (('complication-energy-boost) (seconds 4)) ;; 4
+  ;;   (('rule-uncharted) (seconds 45)) ;; 45
+  ;;   (('rule-bonecracker) (seconds 45)) ;; 45
+  ;;   (('rule-orb-hunt) (seconds 105)) ;; 105
+  ;;   (('rule-no-ledge) (seconds 60)) ;; 60
+  ;;   (else (seconds 30))
+  ;;   )
   )
 
 (defun mod-rule-counter-goal ((id symbol))
-  ;; (-> (mod-rule-info-get id) counter-goal)
-  (case id
-    (('rule-lurker-pressure) 6)
-    (('rule-hitlist 'rule-sagging-sails 'rule-hang-time) 3)
-    (('rule-crate-break) 5)
-    (('rule-money-pressure) 20)
-    (('rule-keep-rolling) 30)
-    (('rule-double-kill 'rule-fuel-pressure
-                       'rule-sniper
-                       'rule-buzzer-pressure
-                       'rule-die
-                       'rule-one-frame
-                       'rule-vendetta
-                       'rule-for-billy
-                       'rule-speed
-                       'rule-green-pilled
-                       'rule-button-pusher
-                       'rule-loyal-customer
-                       'rule-cooked
-                       'rule-express-delivery
-                       'rule-qte
-                       'rule-touch-grass
-                       'rule-supercharged
-                       'rule-uncharted
-                       'rule-bonecracker
-                       'rule-orb-hunt)
-     1)
-    (else 0)))
+  (-> (mod-rule-info-get id) counter-goal)
+  ;; (case id
+  ;;   (('rule-kill-pressure) 6)
+  ;;   (('rule-hitlist 'rule-sagging-sails 'rule-hang-time) 3)
+  ;;   (('rule-crate-break) 5)
+  ;;   (('rule-money-pressure) 20)
+  ;;   (('rule-keep-rolling) 30)
+  ;;   (('rule-double-kill 'rule-fuel-pressure
+  ;;                      'rule-sniper
+  ;;                      'rule-buzzer-pressure
+  ;;                      'rule-die
+  ;;                      'rule-one-frame
+  ;;                      'rule-vendetta
+  ;;                      'rule-for-billy
+  ;;                      'rule-speed
+  ;;                      'rule-green-pilled
+  ;;                      'rule-button-pusher
+  ;;                      'rule-loyal-customer
+  ;;                      'rule-cooked
+  ;;                      'rule-express-delivery
+  ;;                      'rule-qte
+  ;;                      'rule-touch-grass
+  ;;                      'rule-supercharged
+  ;;                      'rule-uncharted
+  ;;                      'rule-bonecracker
+  ;;                      'rule-orb-hunt)
+  ;;    1)
+  ;;   (else 0)
+  ;;   )
+  )
 
 (defun mod-rule-type ((id symbol))
   ;; (-> *mod-rules* (mod-rule-index-from-id id) rule-type)
