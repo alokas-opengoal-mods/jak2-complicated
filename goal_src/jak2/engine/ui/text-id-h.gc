@@ -931,6 +931,8 @@
   (mod-hud-seed #x4037)
   (mod-hud-mod-name #x4038)
   (mod-hud-mod-desc #x4039)
+  (mod-progress-rule-options #x403a)
+  (mod-progress-complication-options #x403b)
 
   ;; Rules
   (unknown-rule-name #x5000)
@@ -941,8 +943,8 @@
   (rule-management-desc #x5005)
   (rule-die-name #x5006)
   (rule-die-desc #x5007)
-  (rule-survive-name #x5008)
-  (rule-survive-desc #x5009)
+  (rule-survivor-name #x5008)
+  (rule-survivor-desc #x5009)
   (rule-kill-pressure-name #x500a)
   (rule-kill-pressure-desc #x500b)
   (rule-hitlist-name #x500c)

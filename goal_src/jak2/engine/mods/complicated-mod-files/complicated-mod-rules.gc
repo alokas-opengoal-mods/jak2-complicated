@@ -354,7 +354,7 @@
   (case id
     (('rule-keep-it-low
       'rule-die
-      'rule-lurker-pressure
+      'rule-kill-pressure
       'rule-hitlist
       'rule-double-kill
       'rule-sniper

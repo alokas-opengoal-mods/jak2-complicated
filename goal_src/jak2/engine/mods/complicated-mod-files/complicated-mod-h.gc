@@ -13,8 +13,9 @@ Process of adding a new condition:
   3. Add name and description to game_custom_text_en-US.json and text-id-h.gc
   4. Add rule logic to complicated-mod-logic.gc and its trigger command where it's triggered
   5. Add rule trigger conditions to mod-rule-can-roll?
-  6. Add entries to complicated-menu and the file save/load methods
-  7. Anything else?
+  6. Add entries to complicated-mod-menu-h and the file save/load methods
+  7. Add entry to mod-condition-enabled?
+  8. Anything else?
 |#
 
 
@@ -28,8 +29,8 @@ Process of adding a new condition:
   (new 'static 'boxed-array :type symbol
     'rule-grounded
     'rule-die
-    ;; 'rule-survivor
-    ;; 'rule-lurker-pressure
+    'rule-survivor
+    'rule-kill-pressure
     ;; 'rule-hitlist
     ;; 'rule-crate-break
     ;; 'complication-brittle-bones
@@ -150,19 +151,31 @@ Process of adding a new condition:
       :rule-id 'rule-die
       :rule-type 'rule
       :duration (seconds 20)
+      :counter-goal 1
       :roll-weight 12
       :progress? #f
       )
     ;; rule-survivor
-    ;; (new 'static 'mod-rule
-    ;;   :name-text (text-id rule-survivor-name)
-    ;;   :desc-text (text-id rule-survivor-desc)
-    ;;   :rule-id 'rule-survivor
-    ;;   :rule-type 'rule
-    ;;   :duration (seconds 60)
-    ;;   :roll-weight 45
-    ;;   :progress? #f
-    ;;   )
+    (new 'static 'mod-rule
+      :name-text (text-id rule-survivor-name)
+      :desc-text (text-id rule-survivor-desc)
+      :rule-id 'rule-survivor
+      :rule-type 'rule
+      :duration (seconds 60)
+      :roll-weight 45
+      :progress? #f
+      )
+    ;; rule-kill-pressure
+    (new 'static 'mod-rule
+      :name-text (text-id rule-kill-pressure-name)
+      :desc-text (text-id rule-kill-pressure-desc)
+      :rule-id 'rule-kill-pressure
+      :rule-type 'rule
+      :duration (seconds 45)
+      :counter-goal 6
+      :roll-weight 69
+      :progress? #t
+      )
     ;; complication-brittle-bones
     (new 'static 'mod-rule
       :name-text (text-id complication-brittle-bones-name)

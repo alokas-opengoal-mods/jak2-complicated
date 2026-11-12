@@ -1461,6 +1461,7 @@
     )
   :trans (-> target-hit trans)
   :code (behavior ((arg0 symbol))
+    (runs-on-jak-death 'dying) ;; Mod change
     (set! (-> self control unknown-word04) (the-as uint #f))
     (set! (-> self control did-move-to-pole-or-max-jump-height)
           (the-as float (send-event (handle->process (-> self attack-info attacker)) 'target 'die arg0))

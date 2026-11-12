@@ -3306,6 +3306,7 @@
 
 (defmethod dying ((this enemy))
   "Cleans-up the enemy and any associated resources. Potentially spawns skull gems"
+  (runs-on-enemy-death this) ;; Mod change
   (when (not (logtest? (enemy-flag called-dying) (-> this enemy-flags)))
     (set! (-> this enemy-flags) (the-as enemy-flag (logior (enemy-flag called-dying) (-> this enemy-flags))))
     (play-damage-or-death-sound this 1)

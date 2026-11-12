@@ -256,7 +256,7 @@
   // Menu strings
   "4000": "Complicated Options",
   "4001": "Condition Toggles",
-  "4002": "Punishment Toggles",
+  "4002": "Punishments",
   "4003": "Timer Options",
   "4004": "Time Limit Multiplier",
   "4005": "Time Limit Multiplier description.",
@@ -308,10 +308,12 @@
   "4033": "Rule Broken!",
   "4034": "Twisted Rule!",
   "4035": "Pass!",
-  "4036": "Next Condition in ~S",
+  "4036": "New Condition:",
   "4037": "Seed: ~D",
   "4038": "A Complicated Mod",
   "4039": "A complicated mod with rules.",
+  "403a": "Rules",
+  "403b": "Complications",
   
   // Rules
   "5000": "Unknown rule",

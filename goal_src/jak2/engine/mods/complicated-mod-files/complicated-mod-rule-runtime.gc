@@ -263,8 +263,8 @@
 (define *mod-rule-conflict-pairs*
   (new 'static 'boxed-array :type symbol
     'rule-sniper 'rule-flop-this
-    'rule-lurker-pressure 'rule-no-harm
-    'rule-lurker-pressure 'complication-soul-bond
+    'rule-kill-pressure 'rule-no-harm
+    'rule-kill-pressure 'complication-soul-bond
     'rule-no-harm 'rule-sniper
     'complication-soul-bond 'rule-sniper
     'rule-hitlist 'rule-no-harm
@@ -299,7 +299,7 @@
     'rule-survivor 'complication-vibe-check
     'complication-rotten-eggs 'rule-loyal-customer
     'rule-orb-hunt 'complication-hidden-treasure
-    'complication-glare 'rule-lurker-pressure
+    'complication-glare 'rule-kill-pressure
     'rule-die 'rule-touch-grass
     'rule-hang-time 'rule-sniper
     'rule-money-pressure 'rule-buzzer-pressure
@@ -475,7 +475,7 @@
 
           ;; ;; Enemies
           ;; (('complication-glare 
-          ;;   'rule-lurker-pressure)
+          ;;   'rule-kill-pressure)
           ;;   (cond
           ;;     ((sparse-lurker-level? level-name)
           ;;       0

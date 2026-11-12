@@ -179,7 +179,7 @@ an orb |#
   (case death-event
     (('dying)
       ;; Code here runs immediately every time jak dies, before any death animation or death cutscene
-      ;; (mod-on-jak-death) ;; Mod change
+      (mod-on-jak-death) ;; Mod change
       )
     (('blackout)
       ;; Code here runs after jak dies (and any death cutscene finishes), during the blackout before he spawns
@@ -190,31 +190,35 @@ an orb |#
   (none)
   )
 
-(defun runs-on-enemy-death ((enemy process-drawable))
-  (mod-rule-fail! 'rule-no-harm)
-  (let* ((enemy-type (-> enemy type symbol))
-         (was-flop? (mod-enemy-killed-by-flop? enemy))
-         (was-red? (mod-enemy-killed-by-red-eco? enemy)))
-    (when (and (-> enemy root) *target*)
-      (let ((distance (vector-vector-distance (-> enemy root trans) (target-pos 0))))
-        (set! *last-kill-dist* distance)
-        (mod-rule-trigger-sniper (>= distance (meters 70)))
-        (when *debug-segment*
-          (format #t "distance: ~f type: ~a state: ~A hit: ~A~%"
-            distance
-            enemy-type
-            (-> enemy state name)
-            (mod-last-player-hit-mode enemy))
+(defun runs-on-enemy-death ((this enemy))
+  (format #t "Enemy killed!~%")
+  (when (type? (handle->process (-> this incoming attacker-handle)) target)
+    (mod-rule-fail! 'rule-no-harm)
+    (let* ((enemy-type (-> this type symbol))
+          (was-flop? (mod-enemy-killed-by-flop? this))
+          (was-red? (mod-enemy-killed-by-red-eco? this)))
+      (when (and (-> this root) *target*)
+        (let ((distance (vector-vector-distance (-> this root trans) (target-pos 0))))
+          (set! *last-kill-dist* distance)
+          (mod-rule-trigger-sniper (>= distance (meters 70)))
+          (when *debug-segment*
+            (format #t "distance: ~f type: ~a state: ~A hit: ~A~%"
+              distance
+              enemy-type
+              (-> this state name)
+              (mod-last-player-hit-mode this)
+              )
+            )
           )
         )
+      (mod-rule-counter-add-progress 'rule-kill-pressure 1)
+      (mod-rule-trigger-disassociate)
+      (mod-rule-trigger-double-kill)
+      (mod-rule-trigger-hitlist enemy-type)
+      (mod-rule-trigger-flop-this was-flop?)
+      (mod-rule-trigger-soul-bond)
+      (mod-rule-trigger-vendetta was-red?)
       )
-    (mod-rule-counter-add-progress 'rule-lurker-pressure 1)
-    (mod-rule-trigger-disassociate)
-    (mod-rule-trigger-double-kill)
-    (mod-rule-trigger-hitlist enemy-type)
-    (mod-rule-trigger-flop-this was-flop?)
-    (mod-rule-trigger-soul-bond)
-    (mod-rule-trigger-vendetta was-red?)
     )
   (none)
   )

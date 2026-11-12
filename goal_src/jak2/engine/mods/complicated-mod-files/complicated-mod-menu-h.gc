@@ -49,7 +49,7 @@
   (;; Rules
     (rule-grounded?                 symbol)
     (rule-die?                      symbol)
-    (rule-lurker-pressure?          symbol)
+    (rule-kill-pressure?          symbol)
     (rule-hitlist?                  symbol)
     (rule-crate-break?              symbol)
     (rule-keep-it-low?              symbol)
@@ -304,7 +304,7 @@
     (case id
       (('rule-grounded) (-> *complicated-settings* rule-grounded?))
       (('rule-die) (-> *complicated-settings* rule-die?))
-      (('rule-lurker-pressure) (-> *complicated-settings* rule-lurker-pressure?))
+      (('rule-kill-pressure) (-> *complicated-settings* rule-kill-pressure?))
       (('rule-hitlist) (-> *complicated-settings* rule-hitlist?))
       (('rule-crate-break) (-> *complicated-settings* rule-crate-break?))
       (('complication-brittle-bones) (-> *complicated-settings* complication-brittle-bones?))
@@ -418,6 +418,24 @@
     )
   )
 
+;; (defun rule-toggle-set-all! ((val symbol))
+;;   (dotimes (i (-> *condition-toggle-options* length))
+;;     (when (= (-> *condition-toggle-options* i option-type) (game-option-type on-off))
+;;       (set! (-> (the-as (pointer symbol) (-> *condition-toggle-options* i value-to-modify)) 0) val)))
+;;   (none))
+
+;; (defun complication-toggle-set-all! ((val symbol))
+;;   (dotimes (i (-> *condition-toggle-options* length))
+;;     (when (= (-> *condition-toggle-options* i option-type) (game-option-type on-off))
+;;       (set! (-> (the-as (pointer symbol) (-> *condition-toggle-options* i value-to-modify)) 0) val)))
+;;   (none))
+
+;; (defun punishment-toggle-set-all! ((val symbol))
+;;   (dotimes (i (-> *punishment-toggle-options* length))
+;;     (when (= (-> *punishment-toggle-options* i option-type) (game-option-type on-off))
+;;       (set! (-> (the-as (pointer symbol) (-> *punishment-toggle-options* i value-to-modify)) 0) val)))
+;;   (none))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MENU OPTIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -433,8 +451,10 @@
        :menu-options (new 'static 'boxed-array :type menu-option
        ,@options))))))
 
-(defmacro mod-page-conditions ()
-  `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-condition-options)
+
+
+(defmacro mod-page-rules ()
+  `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-rule-options)
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-grounded-name)
       :description (text-id rule-grounded-desc)
@@ -446,6 +466,44 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-die-name)
+      :description (text-id rule-die-desc)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-die?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-die?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-survivor-name)
+      :description (text-id rule-survivor-desc)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-survivor?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-survivor?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-kill-pressure-name)
+      :description (text-id rule-kill-pressure-desc)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-kill-pressure?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-kill-pressure?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    )
+  )
+
+(defmacro mod-page-complications ()
+  `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-complication-options)
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-brittle-bones-name)
       :description (text-id complication-brittle-bones-desc)
@@ -484,6 +542,14 @@
         ;; (complicated-settings-save)
         )
       )
+    )
+  )
+
+(defmacro mod-page-condition-toggles ()
+  `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-condition-options)
+    (mod-page-rules)
+    (mod-page-complications)
+    (mod-page-punishments)
     )
   )
 
@@ -716,8 +782,7 @@
 (defmacro mod-complicated-options ()
   `(progress-new-generic-link-to-scrolling-page (text-id mod-progress-complicated-options)
     (mod-page-timer)
-    (mod-page-conditions)
-    (mod-page-punishments)
+    (mod-page-condition-toggles)
     (mod-option-game-mode)
     (mod-option-difficulty)
     (mod-option-text-scale)
