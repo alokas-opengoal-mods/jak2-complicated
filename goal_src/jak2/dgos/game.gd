@@ -480,18 +480,19 @@
   "elec-gate.o"
   "cty-guard-turret-button.o"
   "entity-debug.o" ;; added
-
-  "complicated-mod-banks.o" ;; Mod change: added
-  "complicated-menu.o" ;; Mod change: added
-
   "mod-settings.o" ;; added ;;mod-base-change
   "mod-common-functions.o" ;; added
-
-  "complicated-mod-logic.o" ;; Mod change: added
-
   "orb-placer.o"  ;; added
+  
+  "complicated-mod-banks.o" ;; Mod change: added
+  "complicated-menu.o" ;; Mod change: added
+  "complicated-mod-h.o" ;; Mod change: added
+  "complicated-mod-logic.o" ;; Mod change: added
+  
+  "complicated-mod-draw.o" ;; Mod change: added
   "mod-custom-code.o" ;; added
   "path-editor-h.o" ;; added - path-editor-h
   "path-editor.o" ;; added - path-editor
   "mod-debug.o" ;; added
+  
  ))

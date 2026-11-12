@@ -365,7 +365,7 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
   )
 
 (defun text-id->string ((text text-id))
-  (the string (string-format (lookup-text! *common-text* text #f)))
+  (the string (lookup-text! *common-text* text #f))
   )
 
 (defun play-custom-sfx ((filename string) (volume float))

@@ -154,7 +154,7 @@
     (punishment-kick?               symbol)
     (punishment-pause?              symbol)   
 
-    ;; Timer options
+    ;; Complicated settings
     (countdown-start-seconds        float)
     (condition-delay-seconds        float)
     (time-limit-multiplier          float)
@@ -164,8 +164,6 @@
     (pass-credits-required          int8)
     (compliance-increment-seconds   float)
     (show-countup-timer?            symbol)
-
-    ;; other
     (difficulty                     symbol)
     (game-mode                      symbol)
     (text-scale                     float)
@@ -321,7 +319,7 @@
   `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-condition-options)
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-grounded-name)
-      :description (text-id rule-grounded-description)
+      :description (text-id rule-grounded-desc)
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-grounded?))
@@ -332,7 +330,7 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-brittle-bones-name)
-      :description (text-id complication-brittle-bones-description)
+      :description (text-id complication-brittle-bones-desc)
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-brittle-bones?))
@@ -348,7 +346,7 @@
   `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-punishment-options)
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-warp-name)
-      :description (text-id punishment-warp-description)
+      :description (text-id punishment-warp-desc)
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-warp?))
@@ -359,7 +357,7 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-fall-damage-name)
-      :description (text-id punishment-fall-damage-description)
+      :description (text-id punishment-fall-damage-desc)
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-fall-damage?))
@@ -563,8 +561,8 @@
     :show-decimal? #f
     :units #f
     :get-value-fn (lambda () (-> *complicated-settings* pass-credits-required))
-    :on-confirm (lambda ((val float))
-      (set! (-> *complicated-settings* pass-credits-required) (the int val))
+    :on-confirm (lambda ((val int))
+      (set! (-> *complicated-settings* pass-credits-required) val)
       ;; (complicated-settings-save)
       )
     )
@@ -580,8 +578,8 @@
     :show-decimal? #f
     :units #f
     :get-value-fn (lambda () (-> *complicated-settings* target-slot-count))
-    :on-confirm (lambda ((val float))
-      (set! (-> *complicated-settings* target-slot-count) (the int val))
+    :on-confirm (lambda ((val int))
+      (set! (-> *complicated-settings* target-slot-count) val)
       ;; (complicated-settings-save)
       )
     )

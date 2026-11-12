@@ -1,0 +1,347 @@
+;;-*-Lisp-*-
+(in-package goal)
+
+;; name: complicated-mod-h.gc
+;; name in dgo: complicated-mod-h
+;; dgos: TODO
+
+
+#|
+Process of adding a new condition:
+  1. Add an entry to *mod-rule-ids*
+  2. Add an entry to *mod-rules* to the same index as *mod-rule-ids*
+  3. Add name and description to game_custom_text_en-US.json and text-id-h.gc
+  4. Add rule logic to complicated-mod-logic.gc and its trigger command where it's triggered
+  5. Add rule trigger conditions to mod-rule-can-roll?
+  6. Add entries to complicated-menu and the file save/load methods
+  7. Anything else?
+|#
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; RULES & COMPLICATIONS ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; To add a new rule, append it to the end of this list. Do not reorder or
+;; insert in the middle. That remaps existing save files to the wrong rules.
+(define *mod-rule-ids*
+  (new 'static 'boxed-array :type symbol
+    'rule-grounded
+    'rule-die
+    ;; 'rule-survivor
+    ;; 'rule-lurker-pressure
+    ;; 'rule-hitlist
+    ;; 'rule-crate-break
+    'complication-brittle-bones
+    ;; 'complication-rotten-eggs
+    ;; 'rule-keep-it-low
+    ;; 'rule-money-pressure
+    ;; 'rule-fuel-pressure
+    ;; 'complication-eco-allergy
+    ;; 'complication-sizeable
+    ;; 'complication-ohko
+    ;; 'complication-glare
+    ;; 'complication-heating-balloons
+    'rule-flop-this
+    ;; 'complication-disassociate
+    ;; 'complication-bus-driver
+    ;; 'rule-buzzer-pressure
+    ;; 'complication-wings-tied
+    ;; 'complication-fuel-shortage
+    ;; 'complication-drought
+    ;; 'rule-management
+    ;; 'complication-jak-rabbit
+    ;; 'complication-hidden-treasure
+    ;; 'rule-vendetta
+    ;; 'rule-hands-on
+    ;; 'complication-eco-reserve
+    ;; 'rule-one-frame
+    ;; 'rule-distancing
+    ;; 'complication-red-stop
+    ;; 'rule-red-light
+    ;; 'complication-rgyb
+    ;; 'complication-butter-fingers
+    ;; 'rule-for-billy
+    ;; 'rule-sniper
+    ;; 'rule-cold-feet
+    ;; 'complication-overclock
+    ;; 'rule-speed
+    ;; 'rule-math-quiz
+    ;; 'rule-trivia
+    ;; 'complication-bad-ping
+    ;; 'rule-green-pilled
+    ;; 'rule-button-pusher
+    ;; 'complication-invisible-man
+    ;; 'rule-cooked
+    ;; 'complication-joyride
+    ;; 'complication-critical
+    ;; 'rule-sagging-sails
+    ;; 'rule-side-to-side
+    ;; 'complication-cumbersome
+    ;; 'rule-landlubber
+    ;; 'rule-loyal-customer
+    ;; 'complication-double-aphids
+    ;; 'complication-invert
+    ;; 'complication-loose-pockets
+    ;; 'complication-twisted
+    ;; 'complication-vibe-check
+    ;; 'complication-income-tax
+    ;; 'rule-double-kill
+    ;; 'rule-express-delivery
+    ;; 'rule-qte
+    ;; 'rule-touch-grass
+    ;; 'complication-mirror
+    ;; 'complication-no-double-jump
+    ;; 'rule-hang-time
+    ;; 'complication-unbreakable
+    ;; 'complication-get-a-grip
+    ;; 'complication-fast-reel
+    ;; 'complication-palate-change
+    ;; 'complication-jak-be-nimble
+    ;; 'rule-no-harm
+    ;; 'complication-soul-bond
+    ;; 'complication-shifty
+    ;; 'complication-interference
+    ;; 'complication-quicksand
+    ;; 'complication-lights-out
+    ;; 'rule-supercharged
+    ;; 'complication-half-price
+    ;; 'rule-keep-rolling
+    ;; 'complication-energy-boost
+    ;; 'rule-uncharted
+    ;; 'rule-bonecracker
+    ;; 'rule-orb-hunt
+    ;; 'rule-no-ledge
+    )
+  )
+
+(define *mod-rule-id-count* (-> *mod-rule-ids* length))
+
+(deftype mod-rule (basic)
+  ((name-text           text-id)
+   (desc-text           text-id)
+   (rule-id             symbol)
+   (rule-type           symbol)
+   (duration            time-frame)
+   (counter-goal        int16)
+   (roll-weight         int16)
+   (progress?           symbol)
+   )
+  )
+
+;; Rule constants info
+;; MUST BE IN THE SAME ORDER AS *mod-rule-ids*
+(define *mod-rules*
+  (new 'static 'boxed-array :type mod-rule
+    ;; rule-grounded
+    (new 'static 'mod-rule
+      :name-text (text-id rule-grounded-name)
+      :desc-text (text-id rule-grounded-desc)
+      :rule-id 'rule-grounded
+      :rule-type 'rule
+      :duration (seconds 10)
+      :roll-weight 27
+      :progress? #f
+      )
+    ;; rule-die
+    (new 'static 'mod-rule
+      :name-text (text-id rule-die-name)
+      :desc-text (text-id rule-die-desc)
+      :rule-id 'rule-die
+      :rule-type 'rule
+      :duration (seconds 20)
+      :roll-weight 12
+      :progress? #f
+      )
+    ;; rule-survivor
+    ;; (new 'static 'mod-rule
+    ;;   :name-text (text-id rule-survivor-name)
+    ;;   :desc-text (text-id rule-survivor-desc)
+    ;;   :rule-id 'rule-survivor
+    ;;   :rule-type 'rule
+    ;;   :duration (seconds 60)
+    ;;   :roll-weight 45
+    ;;   :progress? #f
+    ;;   )
+    ;; complication-brittle-bones
+    (new 'static 'mod-rule
+      :name-text (text-id complication-brittle-bones-name)
+      :desc-text (text-id complication-brittle-bones-desc)
+      :rule-id 'complication-brittle-bones
+      :rule-type 'complication
+      :duration (seconds 30)
+      :roll-weight 12
+      :progress? #f
+      )
+    ;; 'rule-flop-this
+    (new 'static 'mod-rule
+      :name-text (text-id rule-flop-this-name)
+      :desc-text (text-id rule-flop-this-desc)
+      :rule-id 'rule-flop-this
+      :rule-type 'rule
+      :duration (seconds 30)
+      :roll-weight 12
+      :progress? #f
+      )
+    )
+  )
+
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;      PUNISHMENTS      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Append new penalties only.
+(define *mod-punishment-ids*
+  (new 'static 'boxed-array :type symbol
+    ;; 'punishment-countdown
+    ;; 'punishment-fall-damage
+    'punishment-trip
+    ;; 'punishment-edge
+    ;; 'punishment-money
+    ;; 'punishment-warp
+    ;; 'punishment-revert-cell
+    ;; 'punishment-extra-rule
+    ;; 'punishment-crash
+    ;; 'punishment-delay
+    ;; 'punishment-blind
+    ;; 'punishment-iframes
+    ;; 'punishment-camera
+    ;; 'punishment-ohko
+    ;; 'punishment-reset
+    ;; 'punishment-kick
+    ;; 'punishment-pause
+    )
+  )
+
+(deftype mod-punishment (mod-rule)
+  ((timed?              symbol)
+   )
+  )
+
+;; Punishment constants info
+;; MUST BE IN THE SAME ORDER AS *mod-punishment-ids*
+(define *mod-punishments*
+  (new 'static 'boxed-array :type mod-punishment
+    ;; punishment-countdown
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-countdown-name)
+      ;; :desc-text (text-id punishment-countdown-desc)
+      :rule-id 'punishment-countdown
+      :duration (seconds 30)
+      :timed? #f
+      )
+    ;; punishment-fall-damage
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-fall-damage-name)
+      ;; :desc-text (text-id punishment-fall-damage-desc)
+      :rule-id 'punishment-fall-damage
+      :duration (seconds 120)
+      :timed? #t
+      )
+    ;; punishment-trip
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-trip-name)
+      ;; :desc-text (text-id punishment-trip-desc)
+      :rule-id 'punishment-trip
+      :duration (seconds 120)
+      :timed? #t
+      )
+    ;; punishment-delay
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-delay-name)
+      ;; :desc-text (text-id punishment-delay-desc)
+      :rule-id 'punishment-delay
+      :duration (seconds 60)
+      :timed? #t
+      )
+    ;; punishment-extra-rule
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-extra-rule-name)
+      ;; :desc-text (text-id punishment-extra-rule-desc)
+      :rule-id 'punishment-extra-rule
+      :timed? #f
+      )
+    ;; punishment-crash
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-crash-name)
+      ;; :desc-text (text-id punishment-crash-desc)
+      :rule-id 'punishment-crash
+      :timed? #f
+      )
+    ;; punishment-delay
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-delay-name)
+      ;; :desc-text (text-id punishment-delay-desc)
+      :rule-id 'punishment-delay
+      :duration (seconds 60)
+      :timed? #t
+      )
+    ;; punishment-blind
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-blind-name)
+      ;; :desc-text (text-id punishment-blind-desc)
+      :rule-id 'punishment-blind
+      :duration (seconds 10)
+      :timed? #t
+      )
+    ;; punishment-iframes
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-iframes-name)
+      ;; :desc-text (text-id punishment-iframes-desc)
+      :rule-id 'punishment-iframes
+      :duration (seconds 180)
+      :timed? #t
+      )
+    ;; punishment-camera
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-camera-name)
+      ;; :desc-text (text-id punishment-camera-desc)
+      :rule-id 'punishment-camera
+      :duration (seconds 120)
+      :timed? #t
+      )
+    ;; punishment-ohko
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-ohko-name)
+      ;; :desc-text (text-id punishment-ohko-desc)
+      :rule-id 'punishment-ohko
+      :duration (seconds 120)
+      :timed? #t
+      )
+    ;; punishment-reset
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-reset-name)
+      ;; :desc-text (text-id punishment-reset-desc)
+      :rule-id 'punishment-reset
+      :timed? #f
+      )
+    ;; punishment-kick
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-kick-name)
+      ;; :desc-text (text-id punishment-kick-desc)
+      :rule-id 'punishment-kick
+      :duration (seconds 180)
+      :timed? #t
+      )
+    ;; punishment-pause
+    (new 'static 'mod-punishment
+      ;; :name-text (text-id punishment-pause-name)
+      ;; :desc-text (text-id punishment-pause-desc)
+      :rule-id 'punishment-pause
+      :duration (seconds 180)
+      :timed? #t
+      )
+    )
+  )
+
+(define *mod-punishment-id-count* (length *mod-punishment-ids*))
