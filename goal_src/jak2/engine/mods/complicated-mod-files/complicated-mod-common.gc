@@ -312,3 +312,12 @@
 
 (defun mod-target-has-eco-type? ((eco-type pickup-type))
   (the symbol (and *target* (= (-> *target* fact eco-type) eco-type) (>= (-> *target* fact eco-level) 1.0))))
+
+
+(defun mod-punishment-info-get ((id symbol))
+  (-> *mod-punishments* (mod-punishment-index-from-id id))
+  )
+
+(defun mod-rule-info-get ((id symbol))
+  (-> *mod-rules* (mod-rule-index-from-id id))
+  )

@@ -18,10 +18,6 @@ Process of adding a new condition:
 |#
 
 
-
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; RULES & COMPLICATIONS ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -36,7 +32,7 @@ Process of adding a new condition:
     ;; 'rule-lurker-pressure
     ;; 'rule-hitlist
     ;; 'rule-crate-break
-    'complication-brittle-bones
+    ;; 'complication-brittle-bones
     ;; 'complication-rotten-eggs
     ;; 'rule-keep-it-low
     ;; 'rule-money-pressure
@@ -46,7 +42,7 @@ Process of adding a new condition:
     ;; 'complication-ohko
     ;; 'complication-glare
     ;; 'complication-heating-balloons
-    'rule-flop-this
+    ;; 'rule-flop-this
     ;; 'complication-disassociate
     ;; 'complication-bus-driver
     ;; 'rule-buzzer-pressure
@@ -203,23 +199,23 @@ Process of adding a new condition:
 ;; Append new penalties only.
 (define *mod-punishment-ids*
   (new 'static 'boxed-array :type symbol
-    ;; 'punishment-countdown
-    ;; 'punishment-fall-damage
+    'punishment-countdown
+    'punishment-fall-damage
     'punishment-trip
-    ;; 'punishment-edge
+    'punishment-edge
     ;; 'punishment-money
     ;; 'punishment-warp
     ;; 'punishment-revert-cell
-    ;; 'punishment-extra-rule
-    ;; 'punishment-crash
-    ;; 'punishment-delay
-    ;; 'punishment-blind
-    ;; 'punishment-iframes
-    ;; 'punishment-camera
-    ;; 'punishment-ohko
-    ;; 'punishment-reset
-    ;; 'punishment-kick
-    ;; 'punishment-pause
+    'punishment-extra-rule
+    'punishment-crash
+    'punishment-delay
+    'punishment-blind
+    'punishment-iframes
+    'punishment-camera
+    'punishment-ohko
+    'punishment-reset
+    'punishment-kick
+    'punishment-pause
     )
   )
 
@@ -234,109 +230,109 @@ Process of adding a new condition:
   (new 'static 'boxed-array :type mod-punishment
     ;; punishment-countdown
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-countdown-name)
-      ;; :desc-text (text-id punishment-countdown-desc)
+      :name-text (text-id punishment-countdown-name)
+      :desc-text (text-id punishment-countdown-desc)
       :rule-id 'punishment-countdown
       :duration (seconds 30)
       :timed? #f
       )
     ;; punishment-fall-damage
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-fall-damage-name)
-      ;; :desc-text (text-id punishment-fall-damage-desc)
+      :name-text (text-id punishment-fall-damage-name)
+      :desc-text (text-id punishment-fall-damage-desc)
       :rule-id 'punishment-fall-damage
       :duration (seconds 120)
       :timed? #t
       )
     ;; punishment-trip
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-trip-name)
-      ;; :desc-text (text-id punishment-trip-desc)
+      :name-text (text-id punishment-trip-name)
+      :desc-text (text-id punishment-trip-desc)
       :rule-id 'punishment-trip
       :duration (seconds 120)
       :timed? #t
       )
-    ;; punishment-delay
+    ;; punishment-edge
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-delay-name)
-      ;; :desc-text (text-id punishment-delay-desc)
-      :rule-id 'punishment-delay
-      :duration (seconds 60)
+      :name-text (text-id punishment-edge-name)
+      :desc-text (text-id punishment-edge-desc)
+      :rule-id 'punishment-edge
+      :duration (seconds 240)
       :timed? #t
       )
     ;; punishment-extra-rule
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-extra-rule-name)
-      ;; :desc-text (text-id punishment-extra-rule-desc)
+      :name-text (text-id punishment-extra-rule-name)
+      :desc-text (text-id punishment-extra-rule-desc)
       :rule-id 'punishment-extra-rule
       :timed? #f
       )
     ;; punishment-crash
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-crash-name)
-      ;; :desc-text (text-id punishment-crash-desc)
+      :name-text (text-id punishment-crash-name)
+      :desc-text (text-id punishment-crash-desc)
       :rule-id 'punishment-crash
       :timed? #f
       )
     ;; punishment-delay
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-delay-name)
-      ;; :desc-text (text-id punishment-delay-desc)
+      :name-text (text-id punishment-delay-name)
+      :desc-text (text-id punishment-delay-desc)
       :rule-id 'punishment-delay
       :duration (seconds 60)
       :timed? #t
       )
     ;; punishment-blind
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-blind-name)
-      ;; :desc-text (text-id punishment-blind-desc)
+      :name-text (text-id punishment-blind-name)
+      :desc-text (text-id punishment-blind-desc)
       :rule-id 'punishment-blind
       :duration (seconds 10)
       :timed? #t
       )
     ;; punishment-iframes
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-iframes-name)
-      ;; :desc-text (text-id punishment-iframes-desc)
+      :name-text (text-id punishment-iframes-name)
+      :desc-text (text-id punishment-iframes-desc)
       :rule-id 'punishment-iframes
       :duration (seconds 180)
       :timed? #t
       )
     ;; punishment-camera
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-camera-name)
-      ;; :desc-text (text-id punishment-camera-desc)
+      :name-text (text-id punishment-camera-name)
+      :desc-text (text-id punishment-camera-desc)
       :rule-id 'punishment-camera
       :duration (seconds 120)
       :timed? #t
       )
     ;; punishment-ohko
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-ohko-name)
-      ;; :desc-text (text-id punishment-ohko-desc)
+      :name-text (text-id punishment-ohko-name)
+      :desc-text (text-id punishment-ohko-desc)
       :rule-id 'punishment-ohko
       :duration (seconds 120)
       :timed? #t
       )
     ;; punishment-reset
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-reset-name)
-      ;; :desc-text (text-id punishment-reset-desc)
+      :name-text (text-id punishment-reset-name)
+      :desc-text (text-id punishment-reset-desc)
       :rule-id 'punishment-reset
       :timed? #f
       )
     ;; punishment-kick
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-kick-name)
-      ;; :desc-text (text-id punishment-kick-desc)
+      :name-text (text-id punishment-kick-name)
+      :desc-text (text-id punishment-kick-desc)
       :rule-id 'punishment-kick
       :duration (seconds 180)
       :timed? #t
       )
     ;; punishment-pause
     (new 'static 'mod-punishment
-      ;; :name-text (text-id punishment-pause-name)
-      ;; :desc-text (text-id punishment-pause-desc)
+      :name-text (text-id punishment-pause-name)
+      :desc-text (text-id punishment-pause-desc)
       :rule-id 'punishment-pause
       :duration (seconds 180)
       :timed? #t

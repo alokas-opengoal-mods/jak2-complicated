@@ -380,7 +380,6 @@
   "progress-generic-draw-pc.o" ;; added
   
   "complicated-mod-banks.o" ;; Mod change: added
-  "complicated-mod-menu-draw.o" ;; Mod change: added
 
   "ocean.o"
   "ocean-vu0.o"
@@ -493,6 +492,7 @@
   "complicated-mod-rule-runtime.o" ;; Mod change: added
   "complicated-mod-state.o" ;; Mod change: added
   "complicated-mod-draw.o" ;; Mod change: added
+  "complicated-mod-menu-draw.o" ;; Mod change: added
   
   "orb-placer.o" ;; added
   "mod-custom-code.o" ;; added

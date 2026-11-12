@@ -520,7 +520,3 @@
   (dotimes (slot *mod-rule-slot-count*)
     (set! (-> (-> *MOD-rule-slot-bank* slot-outcomes) slot) 'none))
   (none))
-
-(defun mod-rule-info-get ((id symbol))
-  (-> *mod-rules* (mod-rule-index-from-id id))
-  )

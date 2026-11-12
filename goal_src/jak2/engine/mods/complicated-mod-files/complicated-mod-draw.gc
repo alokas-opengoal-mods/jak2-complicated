@@ -337,7 +337,7 @@ This file is for the mod HUD draw functions
       (+! row (mod-scale-px text-box-height))
       )
 
-    ;; Draw punishment text
+    ;; Draw punishment header
     (when punishment
       (set! text-scale 0.3)
       (set! text-box-height (mod-text-box-relative-height text-scale 1))
@@ -354,19 +354,28 @@ This file is for the mod HUD draw functions
         )
       ;; (+! row (mod-scale-px text-box-height))
 
-      ;; Draw value
+      ;; Draw punishment description
       (set! text-box-height (mod-text-box-relative-height text-scale 2))
-      (mod-draw-text
-        (mod-punishment-name punishment)
-        (+ *mod-hud-x* (mod-scale-px 70))
-        row
-        (the int (* 0.8 *mod-hud-slot-width*))
-        text-box-height
-        (font-color red)
-        (mod-hud-flags)
-        text-scale
+      (let ((label (-> (mod-punishment-info-get punishment) desc-text))
+            (duration (-> (mod-punishment-info-get punishment) duration))
+            )
+        (mod-draw-text
+          (if (-> (mod-punishment-info-get id) timed?)
+            (string-format (text-id->string label)
+              (mod-duration-amount duration)
+              )
+            (text-id->string label)
+            )
+          (+ *mod-hud-x* (mod-scale-px 70))
+          row
+          (the int (* 0.8 *mod-hud-slot-width*))
+          text-box-height
+          (font-color red)
+          (mod-hud-flags)
+          text-scale
+          )
+          (+! row (mod-scale-px text-box-height))
         )
-      (+! row (mod-scale-px text-box-height))
       )
 
     ;; Draw rule progress counters
@@ -440,7 +449,7 @@ This file is for the mod HUD draw functions
         (mod-rule-draw-labeled-value!
           (text-id->string label)
           text-box-height
-          (font-color yellow)
+          (font-color progress)
           value
           row
           )
@@ -448,63 +457,6 @@ This file is for the mod HUD draw functions
       (+! row (mod-scale-px text-box-height))
       )
     )
-
-    ;; Draw distance text
-    ;; (when (eq? id 'rule-distancing)
-    ;;   (mod-rule-draw-labeled-value!
-    ;;     (text-id->string (text-id mod-hud-distance))
-    ;;     text-box-height
-    ;;     (font-color yellow)
-    ;;     (if (> *closest-buzzer-dist* (meters 40)) 
-    ;;       "-" 
-    ;;       (mod-tenths-str (/ *closest-buzzer-dist* (meters 1)))
-    ;;       )
-    ;;     row
-    ;;     )
-    ;;   )
-
-    ;; Draw sniper text
-    ;; (when (eq? id 'rule-sniper)
-    ;;   (set! row
-    ;;     (mod-rule-draw-labeled-value! buf
-    ;;       "LAST KILL: "
-    ;;       (font-color yellow)
-    ;;       (if (< *last-kill-dist* (meters 0)) 
-    ;;         "-" 
-    ;;         (mod-tenths-str (/ *last-kill-dist* (meters 1)))
-    ;;         )
-    ;;       row
-    ;;       )
-    ;;     )
-    ;;   )
-    
-    ;; Draw speed limit
-    ;; (when (or (eq? id 'complication-bus-driver) (eq? id 'rule-speed))
-    ;;   (let ((value-y (- row (mod-scale-px 2))))
-    ;;     (set! row
-    ;;       (mod-rule-draw-labeled-value! buf
-    ;;         "SPEED: "
-    ;;         (font-color yellow)
-    ;;         (if *target* 
-    ;;           (mod-tenths-str (/ (-> *target* control ctrl-xz-vel) (meters 1))) 
-    ;;           "-"
-    ;;           )
-    ;;         row
-    ;;         )
-    ;;       )
-    ;;     (if (mod-rule-active? 'complication-bus-driver)
-    ;;       (mod-draw-string-xy-scaled "/20.0" buf (mod-scale-px 96) value-y (font-color white) (mod-hud-flags) 0.4)
-    ;;       )
-    ;;     )
-    ;;   )
-
-    ;; Draw get a grip text
-    ;; (when (eq? id 'complication-get-a-grip)
-    ;;   (let* ((elapsed (- (current-time) (-> *MOD-rule-context-bank* get-a-grip-last-grab)))
-    ;;          (grip-left (max 0 (- (mod-apply-time-limit-multiplier (seconds 12)) elapsed))))
-    ;;     (set! row (mod-rule-draw-labeled-value! buf "DEATH: " (font-color red) (mod-format-time-frame grip-left 1 #f) row))))
-    
-
 
 ;;     ;; Draw math quiz
 ;;     (when (eq? id 'rule-math-quiz)
@@ -621,8 +573,8 @@ This file is for the mod HUD draw functions
 (defun mod-draw-timed-punishments ()
   (let ((row-count 0))
     (dotimes (slot *mod-timed-punishment-slot-count*)
-      (let ((punishment (-> (-> *MOD-punishment-bank* timed-punishments) slot)))
-        (when punishment
+      (let ((id (-> (-> *MOD-punishment-bank* timed-punishments) slot)))
+        (when id
           (let* ((time-left (max 0 (- (-> (-> *MOD-punishment-bank* timed-end-times) slot) (current-time))))
                 (text-scale 0.3)
                 (x (- SCREEN_WIDTH_UNITS (mod-scale-px 55)))
@@ -641,7 +593,8 @@ This file is for the mod HUD draw functions
               )
             ;; Draw label
             (mod-draw-text
-              (mod-timed-punishment-name punishment)
+              ;; (mod-timed-punishment-name punishment)
+              (text-id->string (-> (mod-punishment-info-get id) name-text))
               (- x (mod-scale-px 10))
               row
               100

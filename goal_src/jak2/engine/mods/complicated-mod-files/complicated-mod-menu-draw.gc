@@ -279,7 +279,8 @@ for the complicated menu page
           (set-alpha! desc-font-ctx alpha)
           (+! (-> desc-font-ctx origin y) 20)
 
-          (print-game-text (lookup-text! *common-text* (-> obj description) #f) desc-font-ctx #f 44 (bucket-id progress))
+          ;; (print-game-text (lookup-text! *common-text* (-> obj description) #f) desc-font-ctx #f 44 (bucket-id progress))
+          (print-game-text (text-id->string (-> obj description)) desc-font-ctx #f 44 (bucket-id progress))
           )
 
         ;; Draw option value

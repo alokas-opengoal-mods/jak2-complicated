@@ -356,13 +356,46 @@
 
   // Punishments
   "7000": "Lose Time",
-  "7001": "Lose ~D Seconds",
+  "7001": "Lose ~D__seconds",
 
   "7002": "Fall Damage",
-  "7003": "More fall damage for ~D minutes",
+  "7003": "More fall damage for ~D__minutes",
   
   "7004": "Trip",
-  "7005": "Trip randomly for ~D minutes",
+  "7005": "Trip randomly for ~D__minutes",
+  
+  "7008": "Ledgeless",
+  "7009": "No ledge grabs for ~D__minutes",
+
+  "700a": "Extra Conditions",
+  "700b": "+2 conditions",
+  
+  "700c": "Crash",
+  "700d": "Crash the game",
+  
+  "700e": "Input Delay",
+  "700f": "200ms input delay for ~D__minute",
+
+  "7010": "Blindness",
+  "7011": "Blind for ~D__seconds",
+  
+  "7012": "I-Frames",
+  "7013": "No invincibility frames for ~D__minutes",
+  
+  "7014": "Camera",
+  "7015": "Inverted camera for ~D__minutes",
+  
+  "7016": "One Tap",
+  "7017": "Any damage or bonk kills for ~D__minutes",
+  
+  "7018": "Reset",
+  "7019": "Reset the run",
+  
+  "701a": "No Spin",
+  "701b": "No spin kick for ~D__minutes",
+  
+  "701c": "Pause",
+  "701d": "Pause randomly for ~D__minutes",
   
   //
 
