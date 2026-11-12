@@ -7,6 +7,8 @@
 
 ;; DECOMP BEGINS
 
+(define-extern runs-on-enemy-death (function enemy none))
+
 (defmethod copy-enemy-info! ((this enemy-info) (obj-to-copy enemy-info))
   "Copies the given [[enemy-info]] into the current [[enemy-info]]"
   (mem-copy! (&-> this type) (&-> obj-to-copy type) 384)

@@ -358,99 +358,16 @@
   )
 
 (defun mod-rule-type ((id symbol))
-  ;; (-> *mod-rules* (mod-rule-index-from-id id) rule-type)
-  (case id
-    (('rule-keep-it-low
-      'rule-die
-      'rule-kill-pressure
-      'rule-hitlist
-      'rule-double-kill
-      'rule-sniper
-      'rule-crate-break
-      'rule-money-pressure
-      'rule-fuel-pressure
-      'rule-buzzer-pressure
-      'rule-flop-this
-      'rule-grounded
-      'rule-survivor
-      'rule-management
-      'rule-vendetta
-      'rule-hands-on
-      'rule-one-frame
-      'rule-distancing
-      'rule-red-light
-      'rule-for-billy
-      'rule-cold-feet
-      'rule-speed
-      'rule-math-quiz
-      'rule-trivia
-      'rule-green-pilled
-      'rule-button-pusher
-      'rule-loyal-customer
-      'rule-cooked
-      'rule-sagging-sails
-      'rule-side-to-side
-      'rule-landlubber
-      'rule-express-delivery
-      'rule-qte
-      'rule-touch-grass
-      'rule-hang-time
-      'rule-no-harm
-      'rule-supercharged
-      'rule-keep-rolling
-      'rule-uncharted
-      'rule-bonecracker
-      'rule-orb-hunt
-      'rule-no-ledge
+  (-> *mod-rules* (mod-rule-index-from-id id) rule-type)
+  )
+
+;; Grace period after activation during which a failure is ignored.
+(defun mod-rule-grace-period ((id symbol))
+  (let ((grace (-> (mod-rule-info-get id) grace-period)))
+    (if (> grace 0)
+      grace
+      (seconds 1.25) ;; default grace-period
       )
-      'rule)
-    (('complication-brittle-bones
-      'complication-rotten-eggs
-      'complication-eco-allergy
-      'complication-sizeable
-      'complication-cumbersome
-      'complication-ohko
-      'complication-critical
-      'complication-heating-balloons
-      'complication-glare
-      'complication-disassociate
-      'complication-bus-driver
-      'complication-wings-tied
-      'complication-fuel-shortage
-      'complication-jak-rabbit
-      'complication-hidden-treasure
-      'complication-drought
-      'complication-eco-reserve
-      'complication-red-stop
-      'complication-rgyb
-      'complication-butter-fingers
-      'complication-overclock
-      'complication-bad-ping
-      'complication-invisible-man
-      'complication-joyride
-      'complication-double-aphids
-      'complication-invert
-      'complication-loose-pockets
-      'complication-twisted
-      'complication-vibe-check
-      'complication-income-tax
-      'complication-mirror
-      'complication-no-double-jump
-      'complication-unbreakable
-      'complication-get-a-grip
-      'complication-fast-reel
-      'complication-palate-change
-      'complication-jak-be-nimble
-      'complication-soul-bond
-      'complication-shifty
-      'complication-interference
-      'complication-quicksand
-      'complication-lights-out
-      'complication-half-price
-      'complication-energy-boost
-      )
-      'complication)
-    (else 'unknown)
     )
   )
 

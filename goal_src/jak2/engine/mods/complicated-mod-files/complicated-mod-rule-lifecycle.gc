@@ -474,16 +474,6 @@
     )
   (none))
 
-;; Grace period after activation during which a failure is ignored.
-(defun mod-rule-grace-period ((id symbol))
-  (case id
-    (('rule-side-to-side) (seconds 2))
-    (('rule-qte) (seconds 0.7))
-    (('rule-red-light) (seconds 1.5))
-    (else (seconds 1.25))
-    )
-  )
-
 ;; Activate a condition in a slot. Useful!
 (defun mod-rule-activate-slot ((slot int) (id symbol))
   (when (and (>= slot 0) (< slot *mod-rule-slot-count*) id)

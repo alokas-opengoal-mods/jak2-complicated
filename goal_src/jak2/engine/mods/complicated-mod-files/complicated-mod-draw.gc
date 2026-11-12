@@ -641,7 +641,7 @@ This file is for the mod HUD draw functions
 
         (mod-draw-text
           timer
-          (+ *mod-hud-x* (mod-scale-px 120))
+          (+ *mod-hud-x* (mod-scale-px 105))
           y
           300
           text-box-height

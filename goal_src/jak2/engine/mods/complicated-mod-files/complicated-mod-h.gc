@@ -124,6 +124,7 @@ Process of adding a new condition:
    (rule-id             symbol)
    (rule-type           symbol)
    (duration            time-frame)
+   (grace-period        time-frame)
    (counter-goal        int16)
    (roll-weight         int16)
    (progress?           symbol)
