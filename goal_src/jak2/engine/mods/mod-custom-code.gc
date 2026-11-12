@@ -25,12 +25,15 @@ an orb |#
 
 (defun mod-debug-controls ()
   (when *debug-segment*
+    ;; Reroll slot 0
     (when (and (cpad-pressed? 0 circle) (cpad-hold? 0 right))
       (mod-rule-reroll-slot 0 #f)
       )
+    ;; Reroll slot 1
     (when (and (cpad-pressed? 0 circle) (cpad-hold? 0 left))
       (mod-rule-reroll-slot 1 #f)
       )
+    ;; Deactivate slot 0
     (when (and (cpad-pressed? 0 x) (cpad-hold? 0 right))
       (dotimes (s *mod-rule-slot-count*)
         (when (!= s 0)
@@ -39,18 +42,30 @@ an orb |#
         )
       (mod-rule-reroll-slot 0 #f)
       )
+    ;; Restart run
     (when (and (cpad-pressed? 0 circle) (cpad-hold? 0 l1) (cpad-hold? 0 r1))
       (mod-run-start)
       )
+    ;; Disable run
     (when (and (cpad-pressed? 0 triangle) (cpad-hold? 0 l1) (cpad-hold? 0 r1))
       (mod-run-reset)
       (kill-by-name "mod-rule-manager" *active-pool*)
       )
+    ;; Add time to global countdown
     (when (and (cpad-pressed? 0 circle) (cpad-hold? 0 up))
       (mod-global-countdown-add-seconds 20.0)
       )
+    ;; Remove time from global countdown
     (when (and (cpad-pressed? 0 circle) (cpad-hold? 0 down))
       (mod-global-countdown-add-seconds -20.0)
+      )
+    ;; Win the rule in slot 0
+    (when (and (cpad-hold? 0 up) (cpad-pressed? 0 triangle))
+      (mod-rule-resolve! 0 'success #t)
+      )
+    ;; Fail the rule in slot 0
+    (when (and (cpad-hold? 0 down) (cpad-pressed? 0 triangle))
+      (mod-rule-resolve! 0 'failed #t)
       )
     ;; ensure orb-placer is spawned/killed as requested, debug menu is updated
     (orb-placer-maintenance)
