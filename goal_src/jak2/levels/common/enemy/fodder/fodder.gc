@@ -440,6 +440,7 @@
 (defstate notice (fodder)
   :virtual #t
   :code (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (ja-channel-push! 1 (seconds 0.075))
     (let ((f30-0 (rnd-float-range self 0.8 1.2))
           (gp-0 (new 'stack-no-clear 'vector))

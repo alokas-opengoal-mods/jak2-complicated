@@ -603,6 +603,7 @@
 (defstate notice (rapid-gunner)
   :virtual #t
   :enter (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (logior! (-> self enemy-flags) (enemy-flag cam-attack-mode))
     (look-at-target! self (enemy-flag look-at-focus))
     (when (logtest? (-> self enemy-flags) (enemy-flag enable-on-notice))

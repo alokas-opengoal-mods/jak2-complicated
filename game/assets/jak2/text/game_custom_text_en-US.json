@@ -363,6 +363,9 @@
   "6002": "Weakling",
   "6003": "You're limited to 1 HP.",
 
+  "6004": "Glare",
+  "6005": "Jak freezes when enemies see him.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

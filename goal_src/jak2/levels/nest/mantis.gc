@@ -522,6 +522,7 @@
   :virtual #t
   :event enemy-event-handler
   :enter (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (let ((v1-0 self))
       (if (not (logtest? (enemy-flag enemy-flag36) (-> v1-0 enemy-flags)))
           (set! (-> v1-0 enemy-flags) (the-as enemy-flag (logior (enemy-flag enemy-flag38) (-> v1-0 enemy-flags))))

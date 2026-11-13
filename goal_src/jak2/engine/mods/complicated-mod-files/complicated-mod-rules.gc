@@ -758,6 +758,8 @@
 (defun mod-rule-can-roll? ((id symbol))
   (let ((is-pilot? (mod-target-on-mode? 'pilot))
         (is-mech? (mod-target-on-mode? 'mech))
+        (is-turret? (mod-target-on-mode? 'turret))
+        (is-racer? (mod-target-on-mode? 'racer))
         (is-indax? (mod-target-on-mode? 'indax))
         (checkpoint-name (current-checkpoint-name))
         (level-name (the symbol (current-level-name)))

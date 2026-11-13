@@ -1045,6 +1045,7 @@
       )
     )
   :code (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (ja-channel-push! 1 (seconds 0.1))
     (let ((f30-0 (rnd-float-range self 0.8 1.2))
           (a1-3 (-> self draw art-group data (-> *amphibian-global-info* notice-anim (rnd-int-count self 2))))

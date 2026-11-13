@@ -991,6 +991,7 @@
 (defstate notice (flamer)
   :virtual #t
   :enter (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (let ((t9-0 (-> (method-of-type nav-enemy notice) enter)))
       (if t9-0
           (t9-0)

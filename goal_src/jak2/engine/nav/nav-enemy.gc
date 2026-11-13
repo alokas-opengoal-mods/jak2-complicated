@@ -1693,6 +1693,7 @@
   :virtual #t
   :event enemy-event-handler
   :enter (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (let ((t9-0 (-> (method-of-type enemy notice) enter)))
       (if t9-0
           (t9-0)

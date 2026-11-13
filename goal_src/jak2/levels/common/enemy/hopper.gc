@@ -784,6 +784,7 @@
 (defstate notice (hopper)
   :virtual #t
   :code (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (ja-channel-push! 1 (seconds 0.075))
     (let ((f30-0 (rnd-float-range self 0.8 1.2))
           (gp-0 (new 'stack-no-clear 'vector))
@@ -809,6 +810,7 @@
 (defstate ambush (hopper)
   :virtual #t
   :enter (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (when (logtest? (-> self enemy-flags) (enemy-flag enable-on-notice))
       (logclear! (-> self enemy-flags) (enemy-flag enable-on-notice))
       (let ((gp-0 (-> self on-notice)))

@@ -107,6 +107,7 @@
 (defstate pop-up (cty-guard-turret-button)
   :virtual #t
   :code (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (ja-no-eval :group! cty-guard-turret-button-pop-up-ja :num! (seek! max 0.4) :frame-num 0.0)
     (until (ja-done? 0)
       (suspend)

@@ -642,6 +642,7 @@
         )
     )
   :code (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (ja :group! roboguard-ball-ja)
     (until #f
       (let ((a0-3 (-> self skel root-channel 0)))

@@ -419,6 +419,7 @@
 (defstate ambush (gun-buoy)
   :virtual #t
   :enter (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (let ((v1-0 self))
       (set! (-> v1-0 enemy-flags) (the-as enemy-flag (logior (enemy-flag enemy-flag37) (-> v1-0 enemy-flags))))
       )

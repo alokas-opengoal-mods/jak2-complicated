@@ -938,6 +938,7 @@
 (defstate notice (juicer)
   :virtual #t
   :code (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (ja-channel-push! 1 (seconds 0.075))
     (let ((s5-0 0))
       (let ((s4-0 (quaternion->matrix (new 'stack-no-clear 'matrix) (-> self root quat)))

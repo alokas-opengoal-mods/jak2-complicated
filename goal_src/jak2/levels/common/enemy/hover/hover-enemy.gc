@@ -434,6 +434,7 @@
 (defstate ambush (hover-enemy)
   :virtual #t
   :enter (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (logior! (-> self enemy-flags) (enemy-flag cam-attack-mode))
     (hover-enemy-method-140 self #f)
     (if (logtest? (-> self path flags) (path-control-flag not-found))
@@ -546,6 +547,7 @@
 (defstate notice (hover-enemy)
   :virtual #t
   :enter (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (let ((t9-0 (-> (method-of-type enemy notice) enter)))
       (if t9-0
           (t9-0)

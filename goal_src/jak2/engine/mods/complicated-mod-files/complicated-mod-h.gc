@@ -40,8 +40,8 @@ Process of adding a new condition:
     ;; 'rule-fuel-pressure
     ;; 'complication-eco-allergy
     ;; 'complication-sizeable
-    ;; 'complication-glare
     'complication-ohko
+    'complication-glare ;; figure out city guards later
     ;; 'complication-heating-balloons
     ;; 'rule-flop-this
     ;; 'complication-disassociate
@@ -127,7 +127,6 @@ Process of adding a new condition:
    (grace-period        time-frame)
    (counter-goal        int16)
    (roll-weight         int16)
-   (progress?           symbol)
    (progress?           symbol) ;; Whether to show the progress counter in HUD
    )
   )
@@ -239,6 +238,16 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 60)
       :roll-weight 45
+      :progress? #f
+      )
+    ;; complication-glare
+    (new 'static 'mod-rule
+      :name-text (text-id complication-glare-name)
+      :desc-text (text-id complication-glare-desc)
+      :rule-id 'complication-glare
+      :rule-type 'complication
+      :duration (seconds 45)
+      :roll-weight 72
       :progress? #f
       )
     ;; ;; 'rule-flop-this

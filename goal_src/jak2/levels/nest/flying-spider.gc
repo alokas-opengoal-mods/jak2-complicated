@@ -227,6 +227,7 @@
   :virtual #t
   :event enemy-event-handler
   :code (behavior ()
+    (mod-rule-trigger-glare) ;; Mod change
     (ja-no-eval :group! flying-spider-drop-down-ja :num! (seek!) :frame-num 0.0)
     (until (ja-done? 0)
       (suspend)
