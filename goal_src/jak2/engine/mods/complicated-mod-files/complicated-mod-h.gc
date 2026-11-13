@@ -11,7 +11,7 @@ Process of adding a new condition:
   1. Add an entry to *mod-rule-ids*
   2. Add an entry to *mod-rules* to the same index as *mod-rule-ids*
   3. Add name and description to game_custom_text_en-US.json and text-id-h.gc
-  4. Add rule logic to complicated-mod-logic.gc and its trigger command where it's triggered
+  4. Add rule logic to complicated-mod-runtime.gc/complicated-mod-lifecycle.gc and its trigger command where it's triggered
   5. Add rule trigger conditions to mod-rule-can-roll?
   6. Add entries to complicated-mod-menu-h and the file save/load methods
   7. Add entry to mod-condition-enabled?
@@ -43,7 +43,7 @@ Process of adding a new condition:
     'complication-ohko
     'complication-glare ;; figure out city guards later
     ;; 'complication-heating-balloons
-    ;; 'rule-flop-this
+    'rule-flop-this
     ;; 'complication-disassociate
     ;; 'complication-bus-driver
     ;; 'rule-buzzer-pressure
@@ -250,16 +250,16 @@ Process of adding a new condition:
       :roll-weight 72
       :progress? #f
       )
-    ;; ;; 'rule-flop-this
-    ;; (new 'static 'mod-rule
-    ;;   :name-text (text-id rule-flop-this-name)
-    ;;   :desc-text (text-id rule-flop-this-desc)
-    ;;   :rule-id 'rule-flop-this
-    ;;   :rule-type 'rule
-    ;;   :duration (seconds 30)
-    ;;   :roll-weight 12
-    ;;   :progress? #f
-    ;;   )
+    ;; 'rule-flop-this
+    (new 'static 'mod-rule
+      :name-text (text-id rule-flop-this-name)
+      :desc-text (text-id rule-flop-this-desc)
+      :rule-id 'rule-flop-this
+      :rule-type 'rule
+      :duration (seconds 60)
+      :roll-weight 80
+      :progress? #f
+      )
     )
   )
 

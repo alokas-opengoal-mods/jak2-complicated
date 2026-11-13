@@ -226,7 +226,7 @@
       (set! (-> *MOD-hit-bank* player-hit-write-idx) (mod (+ idx 1) 64))))
   (none))
 
-(defun mod-last-player-hit-mode ((enemy process-drawable))
+(defun mod-last-player-hit-mode ((enemy enemy))
   (let ((enemy-handle (process->handle (the-as process enemy))))
     ;; (format #t "[DEBUG] Looking up handle ~A for enemy ~A~%" enemy-handle (-> enemy type))
     (when enemy-handle
@@ -242,7 +242,7 @@
   ;; (format #t "[DEBUG] Hit-mode not found, returning #f~%")
   #f)
 
-(defun mod-enemy-killed-by-flop? ((enemy process-drawable))
+(defun mod-enemy-killed-by-flop? ((enemy enemy))
   (let ((hit-mode (mod-last-player-hit-mode enemy)))
     (if (or (= hit-mode 'flop) (= hit-mode 'flop-down))
       #t
@@ -261,7 +261,7 @@
   (set! (-> *MOD-rule-context-bank* red-shockwave-until) (+ (current-time) (seconds 0.5)))
   (none))
 
-(defun mod-enemy-killed-by-red-eco? ((enemy process-drawable))
+(defun mod-enemy-killed-by-red-eco? ((enemy enemy))
   (the symbol
        (or (eq? (mod-last-player-hit-mode enemy) 'eco-red)
            (and (< (current-time) (-> *MOD-rule-context-bank* red-shockwave-until))
@@ -320,7 +320,6 @@
     (('punishment-money)
       (set! (-> *game-info* money) (max 0.0 (- (current-orb-count) (-> *MOD-tuning-bank* money-punishment-loss))))
       )
-    
     (('punishment-crash)
       (play-custom-sfx sound-goodbye 40.0)
       (process-spawn-function process
@@ -334,7 +333,6 @@
           )
         )
       )
-
     (('punishment-warp)
       (process-spawn-function process
         (lambda ()
@@ -347,7 +345,6 @@
           )
         )
       )
-
     (('punishment-countdown)
       (when (-> *MOD-countdown-bank* active?)
         (set! (-> *MOD-countdown-bank* remaining-time)
@@ -355,19 +352,15 @@
           )
         )
       )
-
     ;; (('punishment-revert-cell) 
     ;;   (mod-revert-random-collected-cell)
     ;;   )
-
     (('punishment-blind) 
       ;; (set-blackout-frames (mod-punishment-duration punishment))
       )
-
     (('punishment-fall-damage) 
       (mod-set-punished-fall-damage!)
       )
-
     (('punishment-reset)
       (process-spawn-function process
         (lambda ()
@@ -376,11 +369,9 @@
           )
         )
       )
-
     (('punishment-delay) 
       ;; (input-delay-enable! #t (-> *MOD-tuning-bank* punishment-input-delay))
       )
-
     (('punishment-iframes) 
       (set! (-> *TARGET-bank* hit-invulnerable-timeout) (seconds 0))
       )
@@ -677,21 +668,6 @@
               (set! (-> (-> *MOD-rule-slot-bank* slot-progress) slot) 0)))))))
   (none))
 
-;; A master trigger for all rules
-;; (defmacro mod-rule-trigger ((rule symbol))
-;;   '(when (mod-rule-active?
-;;     (case rule
-;;       (('complication-brittle-bones)
-;;         (let ((roll (mod-rand-punish-int-range 0 100)))
-;;           ;; (format #t "Brittle Bones roll: ~D~%" roll)
-;;           (when (and *target* (< roll 10))
-;;             (send-event *target* 'attack #t (new 'static 'attack-info))
-;;             )
-;;           )
-;;         )
-;;       )
-;;     ))
-;;   )
 
 (defun mod-rule-trigger-brittle-bones ()
   (when (mod-rule-active? 'complication-brittle-bones)
@@ -750,7 +726,7 @@
 (defun mod-rule-trigger-glare ()
   (when (and *target* (mod-rule-active? 'complication-glare))
     (logior! (-> *target* mask) (process-mask sleep))
-    (set! (-> *MOD-rule-context-bank* mean-look-clear-time) (+ (current-time) (seconds 3))))
+    (set! (-> *MOD-rule-context-bank* mean-look-clear-time) (+ (current-time) (seconds 1.5))))
   (none))
 
 (defun mod-rule-update-shifty ()
@@ -859,6 +835,25 @@
       (and *target* (logtest? (-> *target* focus-status) (focus-status grabbed)))
       )
   )
+
+
+;; A master trigger for all rules
+;; (defun mod-rule-trigger ((id symbol))
+;;   (when (mod-rule-active? id)
+;;     (case id
+;;       (('complication-brittle-bones)
+;;         (mod-rule-trigger-brittle-bones)
+;;         )
+;;       (('rule-glare)
+;;         (mod-rule-trigger-glare)
+;;         )
+;;       (('complication-get-a-grip)
+;;         (mod-rule-trigger-get-a-grip)
+;;         )
+;;       )
+;;     )
+;;   )
+
 
 ;; Step a value until it differs from the answer and the other two options.
 (defun mod-trivia-dynamic-dedup ((val int) (answer int) (other1 int) (other2 int) (step int))
