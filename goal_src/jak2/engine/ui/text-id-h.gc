@@ -967,6 +967,8 @@
   (complication-brittle-bones-desc #x6001)
   (complication-ohko-name #x6002)
   (complication-ohko-desc #x6003)
+  (complication-glare-name #x6004)
+  (complication-glare-desc #x6005)
 
   ;; Punishments
   (punishment-countdown-name #x7000)
