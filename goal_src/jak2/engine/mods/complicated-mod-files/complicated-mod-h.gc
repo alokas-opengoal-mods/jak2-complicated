@@ -40,8 +40,8 @@ Process of adding a new condition:
     ;; 'rule-fuel-pressure
     ;; 'complication-eco-allergy
     ;; 'complication-sizeable
-    ;; 'complication-ohko
     ;; 'complication-glare
+    'complication-ohko
     ;; 'complication-heating-balloons
     ;; 'rule-flop-this
     ;; 'complication-disassociate
@@ -229,6 +229,16 @@ Process of adding a new condition:
       :duration (seconds 45)
       :roll-weight 45
       :counter-goal 1
+      :progress? #f
+      )
+    ;; complication-ohko
+    (new 'static 'mod-rule
+      :name-text (text-id complication-ohko-name)
+      :desc-text (text-id complication-ohko-desc)
+      :rule-id 'complication-ohko
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 45
       :progress? #f
       )
     ;; ;; 'rule-flop-this
