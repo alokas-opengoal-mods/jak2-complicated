@@ -959,6 +959,8 @@
   (rule-flop-this-desc #x5015)
   (rule-keep-it-low-name #x5016)
   (rule-keep-it-low-desc #x5017)
+  (rule-money-pressure-name #x5018)
+  (rule-money-pressure-desc #x5019)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)

@@ -105,12 +105,11 @@ an orb |#
   (none)
   )
 
-(defun runs-on-orb-pickup ((parent process-tree) (orb process))
+(defun runs-on-orb-pickup ()
   ;; Code here runs on ANY orb pickup
-  (mod-global-countdown-add-seconds (tier-1-increment-value))
+  ;; (mod-global-countdown-add-seconds (tier-1-increment-value))
   (mod-rule-trigger-rotten-eggs)
   (mod-on-orb-pickup 1)
-  ;; (mod-orb-hunt-on-orb-pickup orb)
   (none)
   )
 
@@ -118,14 +117,14 @@ an orb |#
 
 (defun runs-on-gem-pickup ()
   ;; Code here runs on any scout fly pickup
-  (mod-on-buzzer-pickup 1)
-  (mod-global-countdown-add-seconds (tier-2-increment-value))
+  ;; (mod-on-buzzer-pickup 1)
+  ;; (mod-global-countdown-add-seconds (tier-2-increment-value))
   (none)
   )
 
 (defun runs-on-task-close ()
-  (mod-global-countdown-add-seconds (tier-3-increment-value))
-  (mod-on-cell-pickup 1)
+  ;; (mod-global-countdown-add-seconds (tier-3-increment-value))
+  ;; (mod-on-cell-pickup 1)
   (none)
   )
 

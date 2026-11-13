@@ -22,6 +22,10 @@
 (declare-type eco collectable)
 (declare-type ammo collectable)
 
+;; Mod change
+(defun-extern runs-on-orb-pickup (none))
+(defun-extern runs-on-gem-pickup (none))
+
 (define-extern orb-placer-list-maintenace (function symbol none))
 
 ;; DECOMP BEGINS
@@ -430,6 +434,7 @@
      )
     (((pickup-type skill))
      (talker-spawn-func (-> *talker-speech* 16) *entity-pool* (target-pos 0) (the-as region #f))
+     (runs-on-orb-pickup) ;; Mod change
      )
     )
   (let ((s4-9 (handle->process arg0)))
