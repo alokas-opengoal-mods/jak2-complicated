@@ -35,8 +35,8 @@ Process of adding a new condition:
     'rule-crate-break
     'complication-brittle-bones
     ;; 'complication-rotten-eggs
-    ;; 'rule-keep-it-low
     ;; 'rule-money-pressure
+    'rule-keep-it-low
     ;; 'rule-fuel-pressure
     ;; 'complication-eco-allergy
     ;; 'complication-sizeable
@@ -208,6 +208,16 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 30)
       :roll-weight 12
+      :progress? #f
+      )
+    ;; rule-keep-it-low
+    (new 'static 'mod-rule
+      :name-text (text-id rule-keep-it-low-name)
+      :desc-text (text-id rule-keep-it-low-desc)
+      :rule-id 'rule-keep-it-low
+      :rule-type 'rule
+      :duration (seconds 90)
+      :roll-weight 55
       :progress? #f
       )
     ;; ;; 'rule-flop-this

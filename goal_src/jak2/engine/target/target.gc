@@ -2586,6 +2586,7 @@
     (logclear! (-> self control status) (collide-status on-surface on-ground touch-surface))
     (target-start-attack)
     (target-danger-set! 'spin-air #f)
+    (mod-rule-fail! 'rule-keep-it-low) ;; Mod change
     (set! (-> self control mod-surface) *jump-attack-mods*)
     (set! (-> self neck flex-blend) 0.0)
     (let ((f0-2 (vector-dot (-> self control dynam gravity-normal) (-> self control transv))))
