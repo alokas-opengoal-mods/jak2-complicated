@@ -31,7 +31,7 @@ Process of adding a new condition:
     'rule-die
     'rule-survivor
     'rule-kill-pressure
-    ;; 'rule-hitlist
+    'rule-hitlist
     ;; 'rule-crate-break
     ;; 'complication-brittle-bones
     ;; 'complication-rotten-eggs
@@ -177,26 +177,37 @@ Process of adding a new condition:
       :roll-weight 69
       :progress? #t
       )
-    ;; complication-brittle-bones
+    ;; rule-hitlist
     (new 'static 'mod-rule
-      :name-text (text-id complication-brittle-bones-name)
-      :desc-text (text-id complication-brittle-bones-desc)
-      :rule-id 'complication-brittle-bones
-      :rule-type 'complication
-      :duration (seconds 30)
-      :roll-weight 12
-      :progress? #f
-      )
-    ;; 'rule-flop-this
-    (new 'static 'mod-rule
-      :name-text (text-id rule-flop-this-name)
-      :desc-text (text-id rule-flop-this-desc)
-      :rule-id 'rule-flop-this
+      :name-text (text-id rule-hitlist-name)
+      :desc-text (text-id rule-hitlist-desc)
+      :rule-id 'rule-hitlist
       :rule-type 'rule
-      :duration (seconds 30)
-      :roll-weight 12
-      :progress? #f
+      :duration (seconds 50)
+      :counter-goal 3
+      :roll-weight 94
+      :progress? #t
       )
+    ;; ;; complication-brittle-bones
+    ;; (new 'static 'mod-rule
+    ;;   :name-text (text-id complication-brittle-bones-name)
+    ;;   :desc-text (text-id complication-brittle-bones-desc)
+    ;;   :rule-id 'complication-brittle-bones
+    ;;   :rule-type 'complication
+    ;;   :duration (seconds 30)
+    ;;   :roll-weight 12
+    ;;   :progress? #f
+    ;;   )
+    ;; ;; 'rule-flop-this
+    ;; (new 'static 'mod-rule
+    ;;   :name-text (text-id rule-flop-this-name)
+    ;;   :desc-text (text-id rule-flop-this-desc)
+    ;;   :rule-id 'rule-flop-this
+    ;;   :rule-type 'rule
+    ;;   :duration (seconds 30)
+    ;;   :roll-weight 12
+    ;;   :progress? #f
+    ;;   )
     )
   )
 
