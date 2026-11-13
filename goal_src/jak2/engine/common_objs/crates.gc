@@ -59,6 +59,7 @@
     )
   )
 
+(define-extern runs-on-crate-break (function crate symbol int none)) ;; Mod change
 
 (method-set! crate 12 (method-of-type process run-logic?))
 
@@ -814,6 +815,7 @@
       )
     )
   :code (behavior ((arg0 symbol) (arg1 int))
+    (runs-on-crate-break self 'break 1) ;; Mod change
     (logior! (-> self focus-status) (focus-status dead))
     (let ((v1-3 (-> (the-as collide-shape (-> self root)) root-prim)))
       (set! (-> v1-3 prim-core collide-as) (collide-spec))

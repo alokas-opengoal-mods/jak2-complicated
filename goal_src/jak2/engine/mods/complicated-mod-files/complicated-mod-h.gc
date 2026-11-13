@@ -32,8 +32,8 @@ Process of adding a new condition:
     'rule-survivor
     'rule-kill-pressure
     'rule-hitlist
-    ;; 'rule-crate-break
     ;; 'complication-brittle-bones
+    'rule-crate-break
     ;; 'complication-rotten-eggs
     ;; 'rule-keep-it-low
     ;; 'rule-money-pressure
@@ -128,6 +128,7 @@ Process of adding a new condition:
    (counter-goal        int16)
    (roll-weight         int16)
    (progress?           symbol)
+   (progress?           symbol) ;; Whether to show the progress counter in HUD
    )
   )
 
@@ -198,6 +199,17 @@ Process of adding a new condition:
     ;;   :roll-weight 12
     ;;   :progress? #f
     ;;   )
+    ;; rule-crate-break
+    (new 'static 'mod-rule
+      :name-text (text-id rule-crate-break-name)
+      :desc-text (text-id rule-crate-break-desc)
+      :rule-id 'rule-crate-break
+      :rule-type 'rule
+      :duration (seconds 30)
+      :counter-goal 1
+      :roll-weight 65
+      :progress? #f
+      )
     ;; ;; 'rule-flop-this
     ;; (new 'static 'mod-rule
     ;;   :name-text (text-id rule-flop-this-name)

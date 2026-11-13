@@ -223,10 +223,15 @@ an orb |#
   (none)
   )
 
-(defun runs-on-crate-break ((crate process-drawable) (event symbol) (amount int))
+(defun runs-on-crate-break ((crate crate) (event symbol) (amount int))
   ;; Code here runs when a crate enters its break flow.
-  (when (and crate (eq? event 'break))
-    (mod-on-crate-break amount)
+  (format #f "Crate broken!~%")
+  (when crate
+    (case event 
+      (('break)
+        (mod-on-crate-break amount)
+        )
+      )
     )
   (none)
   )
