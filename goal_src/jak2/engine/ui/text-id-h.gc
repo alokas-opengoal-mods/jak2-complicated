@@ -969,6 +969,8 @@
   (complication-ohko-desc #x6003)
   (complication-glare-name #x6004)
   (complication-glare-desc #x6005)
+  (complication-bus-driver-name #x6006)
+  (complication-bus-driver-desc #x6007)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

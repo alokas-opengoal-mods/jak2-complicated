@@ -394,16 +394,25 @@ This file is for the mod HUD draw functions
             )
           (('complication-bus-driver) 
             (set! label (text-id mod-hud-speed))
-            (if *target* 
-              (string-format "~D/20.0" (/ (-> *target* control ctrl-xz-vel) (meters 1)))
-              "-/20.0"
+            (set! value
+              (if *target* 
+                (string-format "~,,1f/~,,1f"
+                  (/ (-> *target* control ctrl-xz-vel) (meters 1))
+                  (/ (meters 25) (meters 1))
+                  )
+                (string-format "-/~,,1f"
+                  (/ (meters 25) (meters 1))
+                  )
+                )
               )
             )
           (('rule-speed) 
             (set! label (text-id mod-hud-speed))
-            (if *target* 
-              (mod-tenths-str (/ (-> *target* control ctrl-xz-vel) (meters 1))) 
-              "-"
+            (set! value
+              (if *target* 
+                (mod-tenths-str (/ (-> *target* control ctrl-xz-vel) (meters 1))) 
+                "-"
+                )
               )
             )
           (('complication-get-a-grip) 

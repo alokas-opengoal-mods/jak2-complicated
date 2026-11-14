@@ -366,6 +366,9 @@
   "6004": "Glare",
   "6005": "Jak freezes when enemies see him.",
 
+  "6006": "Roadhog",
+  "6007": "Vehicle explodes if it's too slow.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

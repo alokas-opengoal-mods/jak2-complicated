@@ -593,6 +593,17 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-bus-driver-name)
+      :description (text-id complication-bus-driver-desc)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-bus-driver?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-bus-driver?) val)
+        ;; (complicated-settings-save)
+        )
+      )
     )
   )
 

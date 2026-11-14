@@ -128,6 +128,7 @@
   :virtual #t
   :event vehicle-event-handler
   :enter (behavior ()
+    (set-time! (-> *MOD-rule-context-bank* bus-driver-activate-time)) ;; Mod change
     (set-setting! 'sound-flava #f 31.0 5)
     (set-time! (-> self state-time))
     (iterate-prims (-> self root) (lambda ((arg0 collide-shape-prim))
@@ -180,6 +181,14 @@
     (remove-setting! 'sound-flava)
     )
   :trans (behavior ()
+    ;; Mod change
+    (when (mod-rule-trigger-bus-driver)
+      (set! (-> self hit-points) 0.0)
+      ;; (go-virtual crash)
+      ;; (when (not (movie?))
+      ;;   (target-attack-up *target* 'attack 'explode)
+      ;;   )
+      )
     (when (time-elapsed? (-> self state-time) (seconds 0.1))
       (if (not *target*)
           (go-virtual waiting)

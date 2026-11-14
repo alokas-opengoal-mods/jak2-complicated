@@ -45,7 +45,7 @@ Process of adding a new condition:
     ;; 'complication-heating-balloons
     'rule-flop-this
     ;; 'complication-disassociate
-    ;; 'complication-bus-driver
+    'complication-bus-driver
     ;; 'rule-buzzer-pressure
     ;; 'complication-wings-tied
     ;; 'complication-fuel-shortage
@@ -237,7 +237,7 @@ Process of adding a new condition:
       :rule-id 'complication-ohko
       :rule-type 'complication
       :duration (seconds 60)
-      :roll-weight 45
+      :roll-weight 36
       :progress? #f
       )
     ;; complication-glare
@@ -259,6 +259,17 @@ Process of adding a new condition:
       :duration (seconds 60)
       :roll-weight 80
       :progress? #f
+      )
+    ;; 'complication-bus-driver
+    (new 'static 'mod-rule
+      :name-text (text-id complication-bus-driver-name)
+      :desc-text (text-id complication-bus-driver-desc)
+      :rule-id 'complication-bus-driver
+      :rule-type 'complication
+      :duration (seconds 30)
+      :grace-period (seconds 3)
+      :roll-weight 147
+      :progress? #t
       )
     )
   )
