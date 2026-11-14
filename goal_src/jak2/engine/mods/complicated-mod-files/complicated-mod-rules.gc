@@ -505,31 +505,63 @@
 
 
 ;; True in places where Jak is always on the zoomer.
-(defun sole-zoomer-level? ((level symbol))
-  ;; (or (string= (current-checkpoint-name) "firecanyon-start")
-  ;;     (eq? level 'rolling)
-  ;;     (string= (current-checkpoint-name) "ogre-race"))
-  #f
+;; (defun sole-zoomer-level? ((level symbol))
+;;   ;; (or (string= (current-checkpoint-name) "firecanyon-start")
+;;   ;;     (eq? level 'rolling)
+;;   ;;     (string= (current-checkpoint-name) "ogre-race"))
+;;   #f
+;;   )
+
+(defun city-level? ((level symbol))
+  (case level
+    (('ctygena
+      'ctygenb
+      'ctygenc
+      'ctysluma
+      'ctyslumb
+      'ctyslumc
+      'ctyport
+      'ctyfarma
+      'ctyfarmb
+      'ctyinda
+      'ctyindb
+      'ctymarka
+      'ctymarkb
+      'ctypal
+      'hideout)
+      #t
+      )
+    )
   )
 
 (defun sparse-enemy-level? ((level symbol))
   (case level
-    (('sewer)
-        (or (task-node-open? (game-task-node sewer-board-resolution))
-            (task-node-open? (game-task-node sewer-board-drain)))
-      )
     (('ruins)
-        (or (task-node-open? (game-task-node ruins-mech-resolution)))
+      (or (task-node-open? (game-task-node ruins-mech-resolution)))
       )
-    (('fortress)
-        (or 
-        ;; (task-node-open? (game-task-node sewer-mech-resolution))
-            (= (current-checkpoint-name) "fordumpa-start")
-            (= (current-checkpoint-name) "fordumpc-start")
-            (= (current-checkpoint-name) "fordumpc-movie")
-            (= (current-checkpoint-name) "fordumpc-explode")
-            )
+    (('sewer)
+      (or (task-node-open? (game-task-node sewer-board-resolution))
+          (task-node-open? (game-task-node sewer-board-drain))
+          )
       )
+    (('fortress
+      'forexita
+      'forexitb
+      )
+      (or 
+        (task-node-open? (game-task-node fortress-escape-introduction))
+        (task-node-open? (game-task-node fortress-escape-resolution))
+        (= (current-checkpoint-name) "fordumpa-start")
+        (= (current-checkpoint-name) "fordumpc-start")
+        (= (current-checkpoint-name) "fordumpc-movie")
+        (= (current-checkpoint-name) "fordumpc-explode")
+        )
+      )
+      (('gungame
+        'mincan
+        'prison)
+        #t
+        )
     )
   )
 
@@ -537,29 +569,137 @@
   (or (sparse-enemy-level? level)
     (case level
       (('ruins)
-          (or (task-node-open? (game-task-node ruins-mech-resolution))
-              (task-node-open? (game-task-node ruins-tower-resolution))
-              )
+        (or (task-node-open? (game-task-node ruins-mech-resolution))
+            (task-node-open? (game-task-node ruins-tower-resolution))
+            )
+        )
+      (('sewer)
+        (or (task-node-open? (game-task-node sewer-escort-resolution))
+            )
         )
       (('fortress)
-          #t
+        #t
         )
       )
     )
   )
 
-(defun sparse-crate-level? ((level symbol))
-  ;; (case level
-  ;;   (('village3
-  ;;     'jungleb 
-  ;;     'darkcave 
-  ;;     'lavatube 
-  ;;     'citadel 
-  ;;     'finalboss
-  ;;     ) #t)
-  ;;   (else #f)
-  ;;   )
-  #f
+(defun level-has-entity? ((e symbol))
+  (dotimes (i (-> *level* length))
+    (let ((level (-> *level* level i)))
+      (when (= (-> level status) 'active)
+        ;; actor entities
+        (let ((actors (-> level bsp actors)))
+          (when (nonzero? actors)
+            (dotimes (ii (-> actors length))
+              (let ((entity (-> actors data ii actor)))
+                (format #t "Level entity ~D: ~S~%" 
+                  ii 
+                  (the string (-> entity etype symbol))
+                  )
+                (when (and (= (-> entity etype symbol) e)
+                            (or (not (-> entity extra)) 
+                                (zero? (-> entity extra)) 
+                                (not (logtest? (-> entity extra perm status) (entity-perm-status dead)))
+                                ))
+                    (format #t "  Status: ~S" (the string (-> entity extra perm status)))
+                    (return #t)
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+
+
+
+
+(defun active-level-enemy-count ()
+  (let ((enemy-count 0))
+    (dotimes (i (-> *level* length))
+      (let ((lev (-> *level* level i)))
+        (when (= (-> lev status) 'active)
+          ;; actor entities
+          (let ((actors (-> lev bsp actors)))
+            (when (nonzero? actors)
+              (dotimes (ii (-> actors length))
+                (let ((entity (-> actors data ii actor)))
+                  (when (and (case (-> entity etype symbol) 
+                                (('amphibian
+                                  'fodder
+                                  'guard
+                                  'crimson-guard-level
+                                  'crimson-guard-hover
+                                  'metalmonk
+                                  'hopper
+                                  'centurion
+                                  'grunt
+                                  'flitter
+                                  'flamer
+                                  'wasp
+                                  'rapid-gunner
+                                  'shield-gunner
+                                  'grenadier
+                                  'flying-spider
+                                  'mantis
+                                  'ginsu
+                                  'jellyfish
+                                  'monster-frog
+                                  'tomb-baby-spider
+                                  'spyder
+                                  'juicer
+                                  'spydroid
+                                  ) #t)
+                                  )
+                              (or (not (-> entity extra))
+                                  (zero? (-> entity extra))
+                                  (not (logtest? (-> entity extra perm status) (entity-perm-status dead bit-0)))
+                                  )
+                              )
+                      (+! enemy-count 1)
+                      (format #t "Level enemy ~D: ~S~%"
+                        enemy-count 
+                        (the string (-> entity etype symbol))
+                        )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    (format #t "Level enemy count: ~D~%" enemy-count)
+    enemy-count
+    )
+  )
+
+(defun level-has-enough-enemies? ((count int))
+  (>= (active-level-enemy-count) count)
+  )
+
+(defun level-has-crate? ((level symbol))
+  (case level
+    (('gungame
+      'fortress
+      'palace
+      'palcab
+      'castle
+      'atoll
+      'strip
+      'mountain
+      'forest
+      'forest
+      )
+      #t
+      )
+    (('ruins)
+      (not (task-node-open? (game-task-node ruins-mech-resolution)))
+      )
+    )
   )
 
 (defun sparse-green-eco-level? ((level symbol))
@@ -658,28 +798,42 @@
 ;;          (not (mod-rule-uncharted-level-visited? (level-task-data-index lavatube)))))
 ;;     (else #f)))
 
-;; (defun launcher-level? ((level symbol))
-;;   (or (and (eq? level 'beach) (task-closed? (game-task jungle-eggtop) (task-status need-resolution)))
-;;       (case level
-;;         (('jungle 'jungleb 'swamp) #t)
-;;         (else #f))
-;;       (string= (current-checkpoint-name) "citadel-start")
-;;       (string= (current-checkpoint-name) "citadel-launch-start")
-;;       (string= (current-checkpoint-name) "citadel-launch-end"))
-;;       )
-
 (defun grass-level? ((level symbol))
-  ;; (case level
-  ;;   (('beach 'village1 'jungle 'village2) #t)
-  ;;   (else #f))
-  #t
+  (case level
+    (('ctypal
+      'caspad
+      'mountain
+      'forest)
+      #t
+      )
+    (('stadium)
+      (or
+        (= (current-checkpoint-name) "stadium-start")
+        (= (current-checkpoint-name) "stadium-burning-bush")
+        (= (current-checkpoint-name) "stadium-class1-res-end-movie")
+        (= (current-checkpoint-name) "stadium-class1-blimp-intro")
+        (= (current-checkpoint-name) "stadium-class1-blimp")
+        (= (current-checkpoint-name) "garage-start-skate")
+        (= (current-checkpoint-name) "garage-start-class3")
+        (= (current-checkpoint-name) "garage-class3-movie")
+        )
+      )
+    )
   )
 
 (defun sand-level? ((level symbol))
-  ;; (case level
-  ;;   (('training 'beach 'village1) #t)
-  ;;   (else #f))
-  #t
+  (case level
+    (('atoll
+      'ruins
+      'consite)
+      #t
+      )
+    (('nest)
+      (or
+        (= (current-checkpoint-name) "nest-start")
+        )
+      )
+    )
   )
 
 (defun no-drought-level? ((level symbol))
@@ -692,10 +846,46 @@
   )
 
 (defun water-level? ((level symbol))
-  ;; (case level
-  ;;   (('beach 'village1 'training 'misty 'jungle 'village2 'swamp 'sunken 'sunkenb) #t)
-  ;;   (else #f))
-  #t
+  (case level
+    (('ctygena
+      'ctygenb
+      'ctygenc
+      'ctyslumc
+      'ctypal
+      'ctyport
+      'ruins
+      'atoll
+      'sewer
+      'mountain
+      'forest
+      'tomba
+      'tombb
+      'tombc)
+      #t
+      )
+    (('stadium)
+      (not (or
+        (task-node-open? (game-task-node stadium-board1-board))
+        (task-node-open? (game-task-node stadium-board1-training))
+        (task-node-open? (game-task-node stadium-board1-training-judge))
+        (task-node-open? (game-task-node stadium-board1-done))
+        (task-node-open? (game-task-node stadium-board1-resolution))
+        (task-node-open? (game-task-node stadium-race-class3-race))
+        (task-node-open? (game-task-node stadium-race-class3-resolution))
+        (task-node-open? (game-task-node stadium-race-class2-race))
+        (task-node-open? (game-task-node stadium-race-class2-resolution))
+        (task-node-open? (game-task-node stadium-race-class1-race))
+        (task-node-open? (game-task-node stadium-race-class1-resolution))
+        (task-node-open? (game-task-node stadium-burning-bush-race-board-resolution))
+        (task-node-open? (game-task-node stadium-burning-bush-race-class3-resolution))
+        (task-node-open? (game-task-node stadium-burning-bush-race-class2-resolution))
+        (task-node-open? (game-task-node stadium-burning-bush-race-class1-resolution))
+        (task-node-open? (game-task-node stadium-burning-bush-race-class3-r-resolution))
+        (task-node-open? (game-task-node stadium-burning-bush-race-class2-r-resolution))
+        (task-node-open? (game-task-node stadium-burning-bush-race-class1-r-resolution))
+        ))
+      )
+    )
   )
 
 (defun button-level? ((level symbol))
@@ -757,725 +947,809 @@
 ;; Roll conditions for each rule
 (defun mod-rule-can-roll? ((id symbol))
   (let ((is-pilot? (mod-target-on-mode? 'pilot))
+        (is-racer? (mod-target-on-mode? 'racer))
         (is-mech? (mod-target-on-mode? 'mech))
         (is-turret? (mod-target-on-mode? 'turret))
-        (is-racer? (mod-target-on-mode? 'racer))
         (is-indax? (mod-target-on-mode? 'indax))
+        (is-minigame? (or (task-node-open? (game-task-node city-play-onin-game-resolution))
+                          (task-node-open? (game-task-node city-whack-resolution))
+                          ))
         (checkpoint-name (current-checkpoint-name))
-        (level-name (the symbol (current-level-name)))
+        (level-name (current-level-name))
         )
     (case id
       (('rule-grounded)
-        (not is-pilot?)
+        (or
+          (not is-pilot?)
+          (not is-racer?)
+          (not is-turret?)
+          (not is-minigame?)
+          )
         )
       (('rule-die)
+        (not is-minigame?)
         )
       (('rule-survivor)
+        (not is-minigame?)
         )
       (('rule-kill-pressure)
+        (or
+          (not (sparse-enemy-level? level-name))
+          (not is-racer?)
+          (not is-minigame?)
+          )
         )
       (('rule-hitlist)
-        (not (sparse-hitlist-level? level-name))
+        (or
+          (not (sparse-hitlist-level? level-name))
+          (not is-pilot?)
+          (not is-racer?)
+          (not is-turret?)
+          (not is-minigame?)
+          )
+        )
+      (('rule-crate-break)
+        (or 
+          ;; (level-has-entity? 'crate)
+          (level-has-crate? level-name)
+          )
+        )
+      (('complication-brittle-bones)
+        (or
+          (not is-pilot?)
+          (not is-racer?)
+          (not is-mech?)
+          (not is-turret?)
+          (not is-minigame?)
+          )
+        )
+      (('rule-keep-it-low)
+        (or
+          (not is-pilot?)
+          (not is-racer?)
+          (not is-mech?)
+          (not is-turret?)
+          (not is-minigame?)
+          )
+        )
+      (('rule-money-pressure)
+        (or 
+          (level-has-entity? 'skill)
+          (not is-minigame?)
+          )
+        )
+      ;; (('complication-ohko)
+      ;;   )
+      (('complication-glare)
+        (or
+          (not (sparse-enemy-level? level-name))
+          )
+        )
+      (('rule-flop-this)
+        (not (sparse-enemy-level? level-name))
+        )
+      (('complication-bus-driver)
+        (or
+          is-pilot?
+          is-racer?
+          )
         )
       (else #t)
       )
     )
   )
 
+
 ;; Roll weight for a condition.
 (defun mod-rule-roll-priority ((id symbol))
-  (if (not (mod-condition-enabled? id))
-    0
-    (let* ((checkpoint-name (current-checkpoint-name))
-           (level-name (the symbol (current-level-name)))
-           (on-racer (mod-target-on-mode? 'racer))
-           (on-flut (mod-target-on-mode? 'flut))
-          ;;  (fuel-left (- (mod-max-fuel-current-level) (mod-collected-fuel-current-level)))
-          ;;  (money-left (- (mod-max-money-current-level) (mod-collected-money-current-level)))
-          ;;  (buzzer-left (- 7 (mod-collected-buzzer-current-level)))
-           (fuel-left 100)
-           (money-left 100)
-           (buzzer-left 100)
-           (is-minigame (or (mod-target-on-mode? 'target-fishing) (mod-target-on-mode? 'target-billy-game)))
-          ;;  (is-klaww (and (not (task-closed? (game-task ogre-boss) (task-status need-resolution))) (string= checkpoint-name "ogre-start")))
-           (is-klaww #f)
-           (deep-lavatube (or (string= checkpoint-name "lavatube-middle") (string= checkpoint-name "lavatube-after-ribbon")))
-          ;;  (racer-lavatube (or (and on-racer (string= checkpoint-name "lavatube-start")) deep-lavatube)))
-           (racer-lavatube #f))
-      (if (mod-rule-twist-blocks? id)
-        0
-        (begin
-        (cond
-          ((mod-rule-conflicts-with-active? id) 0)
-          ;; Resources
-          )
-        ;; Check if rule meets its conditions,
-        ;; if #t then use the weight value defined in *mod-rules*,
-        ;; else don't roll that rule
-        (if (mod-rule-can-roll? id)
-          (-> (mod-rule-info-get id) roll-weight)
-          0
-          )
-        ;; (case id
-        ;;   (('rule-supercharged)
-        ;;     (if (string= checkpoint-name "snow-fort")
-        ;;       107
-        ;;       (if (or is-minigame
-        ;;               (and (mod-rule-active? 'complication-rgyb) (not (yellow-eco-level? level-name)))
-        ;;               (sparse-blue-eco-level? level-name))
-        ;;         0
-        ;;         64
-        ;;         )
-        ;;       )
-        ;;     )
-          
-          ;; ;; (('complication-critical) 
-          ;; ;;   (if (or is-minigame 
-          ;; ;;           (< fuel-left 1) 
-          ;; ;;           (eq? level-name 'finalboss)) 
-          ;; ;;     0 
-          ;; ;;     47
-          ;; ;;     )
-          ;; ;;   )
-          
-          ;; ;; (('rule-buzzer-pressure)
-          ;; ;;   (if (or (< buzzer-left 3)
-          ;; ;;           is-minigame
-          ;; ;;           is-klaww
-          ;; ;;           (eq? level-name 'jungleb)
-          ;; ;;           (eq? level-name 'robocave)
-          ;; ;;           (eq? level-name 'finalboss)
-          ;; ;;           (eq? level-name 'sunkenb))
-          ;; ;;     0
-          ;; ;;     47
-          ;; ;;     )
-          ;; ;;   )
-          
-          ;; ;; (('rule-fuel-pressure)
-          ;; ;;   (cond
-          ;; ;;     ((or (< fuel-left 1)
-          ;; ;;           (and (eq? level-name 'rolling) (< fuel-left 3))
-          ;; ;;           (and (eq? level-name 'swamp) (< fuel-left 3))
-          ;; ;;           (and (eq? level-name 'village1) (< fuel-left 3))
-          ;; ;;           (and (eq? level-name 'village2) (< fuel-left 3))
-          ;; ;;           (and (eq? level-name 'village3) (< fuel-left 4))
-          ;; ;;           (and (eq? level-name 'jungle) (< fuel-left 4))
-          ;; ;;           is-minigame
-          ;; ;;           (eq? level-name 'ogre)
-          ;; ;;           (eq? level-name 'firecanyon)
-          ;; ;;           (eq? level-name 'jungleb)
-          ;; ;;           (string= checkpoint-name "lavatube-start")
-          ;; ;;           racer-lavatube
-          ;; ;;           (eq? level-name 'finalboss))
-          ;; ;;       0)
-          ;; ;;     (else 53)
-          ;; ;;     )
-          ;; ;;   )
-          
-          ;; ;; (('rule-money-pressure)
-          ;; ;;   (if (or (<= money-left 50)
-          ;; ;;           is-minigame
-          ;; ;;           is-klaww (eq? level-name 'finalboss)
-          ;; ;;           (eq? level-name 'jungleb) deep-lavatube)
-          ;; ;;     0 
-          ;; ;;     45
-          ;; ;;     )
-          ;; ;;   )
-          
-          ;; ;; (('complication-hidden-treasure)
-          ;; ;;   (if (or is-klaww
-          ;; ;;           (eq? level-name 'finalboss)
-          ;; ;;           (string= checkpoint-name "firecanyon-start")
-          ;; ;;           deep-lavatube)
-          ;; ;;     0 
-          ;; ;;     50
-          ;; ;;     )
-          ;; ;;   )
-
-          ;; ;; (('rule-loyal-customer)
-          ;; ;;   (if (and (mod-cell-purchase-level? level-name)
-          ;; ;;             (not (mod-oracles-closed? level-name))
-          ;; ;;             (>= (+ (current-orb-count) money-left) (mod-cell-price-oracle))
-          ;; ;;             (<= (- (mod-cell-price-oracle) (current-orb-count)) 20))
-          ;; ;;     119
-          ;; ;;     0
-          ;; ;;     )
-          ;; ;;   )
-
-          ;; ;; Enemies
-          ;; (('complication-glare 
-          ;;   'rule-kill-pressure)
-          ;;   (cond
-          ;;     ((sparse-enemy-level? level-name)
-          ;;       0
-          ;;       )
-          ;;     ((eq? id 'complication-glare) 
-          ;;       72
-          ;;       )
-          ;;     (is-minigame 
-          ;;       0
-          ;;       )
-          ;;     (else 
-          ;;       69
-          ;;       )
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-hitlist) 
-          ;;   (if (or (sparse-hitlist-level? level-name)
-          ;;           is-minigame)
-          ;;     0
-          ;;     94
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-double-kill)
-          ;;   (if (or (sparse-enemy-level? level-name) 
-          ;;           is-minigame
-          ;;           is-klaww (eq? level-name 'finalboss) (eq? level-name 'sunkenb)) 
-          ;;     0 
-          ;;     72
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-no-harm) ;; disabled
-          ;;   (if (or (sparse-enemy-level? level-name)
-          ;;           is-minigame
-          ;;           is-klaww
-          ;;           (eq? level-name 'jungleb))
-          ;;     0
-          ;;     74
-          ;;     )
-          ;;   )
-          
-          ;; (('complication-soul-bond)
-          ;;   (if (or (sparse-enemy-level? level-name)
-          ;;           is-minigame
-          ;;           is-klaww
-          ;;           (eq? level-name 'jungleb)
-          ;;           (string= checkpoint-name "sunkenb-helix"))
-          ;;     0
-          ;;     60
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-sniper)
-          ;;   (if (or (case level-name
-          ;;             (('swamp 'beach 'snow 'robocave 'darkcave) #t)
-          ;;             (else #f))
-          ;;           ;; (and (eq? level-name 'maincave) (not (task-closed? (game-task cave-gnawers) (task-status need-resolution))))
-          ;;           )
-          ;;     100
-          ;;     0
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-flop-this)
-          ;;   (if (or (case level-name
-          ;;             (('training 'lavatube 'village3 'village2 'village1 'rolling 'ogre 'finalboss) #t)
-          ;;             (else #f))
-          ;;           (mod-target-on-mode? 'target-billy-game))
-          ;;     0
-          ;;     80
-          ;;     )
-          ;;   )
-          
-          ;; ;; (('rule-uncharted) 
-          ;; ;;   (if (mod-rule-uncharted-can-roll? level-name)
-          ;; ;;     250
-          ;; ;;     0
-          ;; ;;     )
-          ;; ;;   )
-          
-          ;; (('rule-vendetta) 
-          ;;   (if (or (sparse-enemy-level? level-name)
-          ;;           (not (red-eco-level? level-name))
-          ;;           on-racer
-          ;;           is-minigame)
-          ;;     0
-          ;;     190
-          ;;     )
-          ;;   )
-          
-          ;; ;; (('rule-bonecracker) 
-          ;; ;;   (if (and (eq? level-name 'misty)
-          ;; ;;            (not (mod-all-bone-bridges-down?)))
-          ;; ;;     422
-          ;; ;;     0
-          ;; ;;     )
-          ;; ;;   )
-          
-          ;; ;; (('rule-orb-hunt) 
-          ;; ;;   (if (or is-minigame 
-          ;; ;;           (<= (mod-orb-hunt-spot-count level-name) 0))
-          ;; ;;     0 
-          ;; ;;     35
-          ;; ;;     )
-          ;; ;;   )
-          
-          ;; (('complication-eco-reserve)
-          ;;   (cond
-          ;;     ((or (eq? level-name 'finalboss) is-klaww)
-          ;;       104
-          ;;       )
-          ;;     ((yellow-eco-level? level-name) 
-          ;;       43
-          ;;       )
-          ;;     (else 
-          ;;       0
-          ;;       )
-          ;;     )
-          ;;   )
-          
-          ;; (('complication-red-stop) ;; disabled
-          ;;   (if (red-eco-level? level-name) 
-          ;;     180
-          ;;     0
-          ;;     )
-          ;;   )
-          
-          ;; (('complication-ohko) ;; disabled
-          ;;   (if (mod-timed-punishment-active? 'punishment-ohko)
-          ;;     0 
-          ;;     36
-          ;;     )
-          ;;   ) 
-          
-          ;; (('complication-invisible-man) 
-          ;;   (if on-racer 
-          ;;     0 
-          ;;     50
-          ;;     )
-          ;;   )
-          
-          ;; ;; (('complication-double-aphids) ;; disabled
-          ;; ;;   (if (and (not (task-closed? (game-task jungle-plant) (task-status need-resolution))) 
-          ;; ;;            (eq? level-name 'jungleb))
-          ;; ;;     307 
-          ;; ;;     0
-          ;; ;;     )
-          ;; ;;   )
-
-          ;; ;; Crates
-          ;; (('rule-crate-break)
-          ;;   (if (or (eq? level-name 'ogre)
-          ;;           is-minigame
-          ;;           (string= checkpoint-name "sunkenb-helix")
-          ;;           (sparse-crate-level? level-name))
-          ;;     0
-          ;;     65
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-hands-on)
-          ;;   (case level-name
-          ;;     (('darkcave 'jungleb 'firecanyon 'finalboss 'village3 'ogre 'rolling 'lavatube) 
-          ;;       0
-          ;;       )
-          ;;     (else 
-          ;;       61
-          ;;       )
-          ;;     )
-          ;;   )
-          ;; ;; (('complication-unbreakable
-          ;; ;;   'rule-distancing
-          ;; ;;   )
-          ;; ;;   (if (or (< buzzer-left 1)
-          ;; ;;           is-klaww
-          ;; ;;           (eq? level-name 'training)
-          ;; ;;           (eq? level-name 'jungleb)
-          ;; ;;           (eq? level-name 'finalboss))
-          ;; ;;     0
-          ;; ;;     42
-          ;; ;;     )
-          ;; ;;   )
-          
-          ;; ;; Movement
-          ;; (('complication-no-double-jump) 
-          ;;   (if on-racer
-          ;;     0
-          ;;     (if on-flut
-          ;;       105
-          ;;       52
-          ;;       )
-          ;;     )
-          ;;   )
-          
-          ;; (('complication-jak-rabbit)
-          ;;   (if on-racer
-          ;;     0
-          ;;     48
-          ;;     )
-          ;;   )
-          
-          ;; (('complication-jak-be-nimble) 
-          ;;   (if (or on-racer on-flut) 
-          ;;     0
-          ;;     6
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-keep-rolling)
-          ;;   (if (or is-minigame
-          ;;           is-klaww
-          ;;           racer-lavatube
-          ;;           (sole-zoomer-level? level-name)
-          ;;           on-racer
-          ;;           on-flut)
-          ;;     0
-          ;;     68
-          ;;     )
-          ;;   )
-          
-          ;; (('complication-quicksand) 
-          ;;   (if (sand-level? level-name)
-          ;;     146
-          ;;     0
-          ;;     )
-          ;;   )
-          
-          ;; (('complication-invert)
-          ;;   36
-          ;;   )
-          
-          ;; (('complication-cumbersome) 
-          ;;   (if (or is-minigame
-          ;;           on-racer
-          ;;           on-flut
-          ;;           (< (current-orb-count) 20))
-          ;;     0
-          ;;     64
-          ;;     )
-          ;;   )
-          
-          ;; (('complication-shifty)
-          ;;   (if (or is-klaww 
-          ;;           is-minigame)
-          ;;     0
-          ;;     40
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-grounded)
-          ;;   (cond
-          ;;     ((or (eq? level-name 'training) 
-          ;;          (string= checkpoint-name "finalboss-fight")
-          ;;          is-minigame)
-          ;;       0
-          ;;       )
-          ;;     (is-klaww
-          ;;       15
-          ;;       )
-          ;;     (else 
-          ;;       27
-          ;;       )
-          ;;     )
-          ;;   )
-
-          ;; (('rule-die)
-          ;;   (if (or (eq? level-name 'training) 
-          ;;           (string= checkpoint-name "finalboss-fight"))
-          ;;     0
-          ;;     12
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-red-light)
-          ;;   24
-          ;;   )
-          
-          ;; (('complication-butter-fingers) ;; disabled
-          ;;   (if (or 
-          ;;           (sole-zoomer-level? level-name)
-          ;;           on-racer
-          ;;           on-flut
-          ;;           racer-lavatube)
-          ;;     0
-          ;;     52
-          ;;     )
-          ;;   )
-
-          ;; (('rule-keep-it-low)
-          ;;   (if (or racer-lavatube 
-          ;;           on-racer 
-          ;;           on-flut 
-          ;;           (sole-zoomer-level? level-name)
-          ;;           )
-          ;;     0
-          ;;     (if (mod-timed-punishment-active? 'punishment-kick)
-          ;;       0 
-          ;;       55
-          ;;       )
-          ;;     )
-          ;;   )
-
-          ;; (('complication-sizeable)
-          ;;   (if (or racer-lavatube
-          ;;           on-racer
-          ;;           on-flut
-          ;;           (sole-zoomer-level? level-name)
-          ;;           )
-          ;;     0
-          ;;     60
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-management)
-          ;;   (if (or racer-lavatube
-          ;;           on-racer
-          ;;           on-flut
-          ;;           (sole-zoomer-level? level-name)
-          ;;           )
-          ;;     0 
-          ;;     55
-          ;;     )
-          ;;   )
-          
-          ;; (('complication-bad-ping) 
-          ;;   (if (mod-timed-punishment-active? 'punishment-delay) 
-          ;;     0 
-          ;;     36
-          ;;     )
-          ;;   )
-          
-          ;; (('complication-loose-pockets)
-          ;;   (if (or (< (current-orb-count) 20) 
-          ;;           (eq? level-name 'finalboss) 
-          ;;           (eq? level-name 'citadel) 
-          ;;           (eq? level-name 'lavatube)) 
-          ;;     0 
-          ;;     52
-          ;;     )
-          ;;   )
-          
-          ;; (('rule-no-ledge)
-          ;;   (if (or on-racer
-          ;;           on-flut
-          ;;           (eq? level-name 'finalboss)
-          ;;           (sole-zoomer-level? level-name)
-          ;;           (mod-timed-punishment-active? 'punishment-edge))
-          ;;     0
-          ;;     50
-          ;;     )
-          ;;   )
-
-          ;; ;; Water
-          ;; ;; (('complication-drought)
-          ;; ;;  (cond
-          ;; ;;    ((no-drought-level? level-name) 0)
-          ;; ;;    ((or (eq? level-name 'rolling) (eq? level-name 'training)) 41)
-          ;; ;;    (else 87)))
-          
-          ;; ;; (('rule-landlubber)
-          ;; ;;  (if (and *target* (logtest? (-> *target* control status) (cshape-moving-flags on-water)))
-          ;; ;;    0
-          ;; ;;    (cond
-          ;; ;;      ((water-level? level-name) 95)
-          ;; ;;      ((or (eq? level-name 'misty)
-          ;; ;;           (and (not (task-closed? (game-task cave-dark-crystals) (task-status need-resolution))) (eq? level-name 'darkcave)))
-          ;; ;;       86)
-          ;; ;;      (else 0))))
-
-          ;; ;; Special
-          ;; ;; (('rule-hang-time) (if (or is-minigame (not (hang-time-level? level-name))) 0 71))
-          
-          ;; ;; (('complication-vibe-check)
-          ;; ;;  (cond
-          ;; ;;    ((or is-minigame (string= checkpoint-name "finalboss-fight")) 0)
-             
-          ;; ;;    ((eq? level-name 'citadel) 10)
-          ;; ;;    ((and *target* (< (-> (the-as fact-info-target (-> *target* fact)) health) 2.0)) 55)
-          ;; ;;    (else 24)))
-          
-          ;; ;; (('rule-express-delivery)
-          ;; ;;  (cond
-          ;; ;;    ((task-closed? (game-task misty-muse) (task-status need-resolution)) 0)
-             
-          ;; ;;    ((eq? level-name 'misty) 135)
-          ;; ;;    ((task-closed? (game-task misty-muse) (task-status need-introduction))
-          ;; ;;     200)
-          ;; ;;    (else 0)))
-          
-          ;; ;; (('rule-side-to-side) (if is-klaww 640 0))
-          
-          ;; ;; (('complication-mirror) (if is-klaww 0 37))
-          
-          ;; ;; (('complication-income-tax) (if (eq? level-name 'finalboss) 0 29))
-          
-          ;; ;; (('complication-half-price) (if (half-price-level? level-name) 40 0))
-          
-          ;; ;; (('rule-button-pusher)
-          ;; ;;  (if (or (not (button-level? level-name)) is-minigame) 0 (if (or (eq? level-name 'jungle) (eq? level-name 'village2)) 49 181)))
-          
-          ;; ;; (('rule-cooked)
-          ;; ;;  (if (or on-racer racer-lavatube (not (burn-level? level-name))) 0 (if (eq? level-name 'village1) 81 182)))
-          
-          ;; ;; (('complication-get-a-grip)
-          ;; ;;  (if (or (sole-zoomer-level? level-name)
-          ;; ;;          (string= checkpoint-name "swamp-cave1")
-          ;; ;;          (string= checkpoint-name "citadel-elevator")
-          ;; ;;          is-minigame
-          ;; ;;          (eq? level-name 'ogre)
-          ;; ;;          (eq? level-name 'finalboss)
-          ;; ;;          (eq? level-name 'lavatube)
-          ;; ;;          (mod-timed-punishment-active? 'punishment-edge)
-          ;; ;;          on-racer
-          ;; ;;          on-flut)
-          ;; ;;    0
-          ;; ;;    32))
-          
-          ;; ;; ((rule-green-pilled) (if (or (sparse-green-eco-level? level-name) is-minigame) 0 65))
-          
-          ;; ;; (('complication-joyride)
-          ;; ;;  (if (or on-racer
-          ;; ;;          on-flut
-          ;; ;;          is-minigame
-          ;; ;;          (eq? level-name 'finalboss)
-          ;; ;;          (and (mod-rule-active? 'rule-button-pusher) (or (eq? level-name 'sunken) (eq? level-name 'sunkenb)))
-          ;; ;;          (string= checkpoint-name "firecanyon-start")
-          ;; ;;          (eq? level-name 'lavatube))
-          ;; ;;    0
-          ;; ;;    54))
-
-          ;; ;; (('complication-fast-reel 'complication-palate-change)
-          ;; ;;  (if (and (mod-target-on-mode? 'target-fishing) (< (-> *MOD-rule-context-bank* fisher-missed) 15)) 1290 0))
-          
-          ;; ;; (('rule-sagging-sails)
-          ;; ;;  (if (and (mod-target-on-mode? 'target-fishing)
-          ;; ;;           (< (-> *MOD-rule-context-bank* fisher-missed) 5)
-          ;; ;;           (<= (-> *MOD-rule-context-bank* fisher-caught) 160)
-          ;; ;;           (>= (-> *MOD-rule-context-bank* fisher-caught) 20))
-          ;; ;;    1613
-          ;; ;;    0))
-          
-          ;; ;; (('rule-cold-feet)
-          ;; ;;  (if (and *target* (= (-> *target* control ground-pat material) (pat-material ice))) 0 (if (eq? level-name 'snow) 387 0)))
-          
-          ;; ;; (('rule-touch-grass)
-          ;; ;;  (if (or (and (eq? level-name 'jungleb) (task-closed? (game-task jungle-plant) (task-status need-resolution)))
-          ;; ;;          (and (not (or (mod-target-on-mode? 'target-fishing) (and *target* (= (-> *target* control ground-pat material) (pat-material grass)))))
-          ;; ;;               (grass-level? level-name)))
-          ;; ;;    87
-          ;; ;;    0))
-          
-          ;; ;; (('rule-math-quiz) (if (eq? level-name 'training) 0 22))
-          
-          ;; ;; (('rule-trivia) (if (eq? level-name 'training) 0 22))
-          
-          ;; ;; (('complication-overclock)
-          ;; ;;  (if (and (eq? level-name 'citadel) (not (string= checkpoint-name "citadel-elevator"))) 430 0))
-          
-          ;; ;; (('rule-one-frame)
-          ;; ;;  (cond
-          ;; ;;    ((or (mod-timed-punishment-active? 'punishment-kick) is-minigame) 0)
-          ;; ;;    ((or (eq? level-name 'robocave) (string= checkpoint-name "sunkenb-helix")) 83)
-             
-          ;; ;;    ((eq? level-name 'finalboss) 56)
-          ;; ;;    ((launcher-level? level-name) 109)
-          ;; ;;    (else 0)))
-          
-          ;; ;; (('rule-for-billy)
-          ;; ;;  (if (and (not (task-closed? (game-task swamp-billy) (task-status need-resolution)))
-          ;; ;;           (> (-> *MOD-countdown-bank* remaining-time) (seconds 240))
-          ;; ;;           (or (string= checkpoint-name "swamp-game")
-          ;; ;;               (string= checkpoint-name "swamp-cave2")
-          ;; ;;               (string= checkpoint-name "swamp-dock2")))
-          ;; ;;    242
-          ;; ;;    0))
-          
-          ;; ;; (('complication-rgyb)
-          ;; ;;  (if (or (mod-target-on-mode? 'target-billy-game)
-          ;; ;;          (eq? level-name 'jungleb)
-          ;; ;;          (eq? level-name 'training)
-          ;; ;;          (eq? level-name 'finalboss)
-          ;; ;;          (eq? level-name 'village3)
-          ;; ;;          is-klaww
-          ;; ;;          (string= checkpoint-name "lavatube-middle")
-          ;; ;;          (string= checkpoint-name "lavatube-start"))
-          ;; ;;    0
-          ;; ;;    48))
-          
-          ;; ;; (('rule-survivor)
-          ;; ;;  (cond
-          ;; ;;    ((or (eq? level-name 'training) (eq? level-name 'village1)) 0)
-             
-          ;; ;;    ((eq? level-name 'village2) 22)
-          ;; ;;    (else 45)))
-          
-          ;; ;; (('complication-eco-allergy)
-          ;; ;;  (cond
-          ;; ;;    ((or (eq? level-name 'finalboss) (eq? level-name 'village3)) 0)
-          ;; ;;    (is-klaww 16)
-          ;; ;;    (else 41)))
-          
-          ;; ;; (('complication-interference) (if (or (mod-target-on-mode? 'target-fishing) (eq? level-name 'village3)) 0 38)) ;; disabled
-          
-          ;; ;; (('complication-heating-balloons)
-          ;; ;;  (if (or (string= checkpoint-name "firecanyon-start") (and (eq? level-name 'lavatube) on-racer)) 439 0))
-          
-          ;; ;; (('complication-bus-driver) (if (or (string= checkpoint-name "firecanyon-start") on-racer) 147 0))
-          
-          ;; ;; (('rule-speed) ;; disabled
-          ;; ;;  (if (or (and (or (eq? level-name 'ogre) (eq? level-name 'firecanyon) (string= checkpoint-name "lavatube-start")) on-racer)
-          ;; ;;          (string= checkpoint-name "rolling-start"))
-          ;; ;;    159
-          ;; ;;    0))
-          
-          ;; ;; (('complication-rotten-eggs) (if (or is-klaww (eq? level-name 'finalboss) deep-lavatube) 0 36))
-          
-          ;; ;; (('complication-disassociate) (if (and on-flut (not (sparse-enemy-level? level-name))) 774 0))
-          
-          ;; ;; (('complication-wings-tied)
-          ;; ;;  (if (and on-flut (not (or (eq? level-name 'training) (eq? level-name 'finalboss)))) 366 0))
-          
-          ;; ;; (('complication-fuel-shortage)
-          ;; ;;  (if (or (eq? level-name 'training)
-          ;; ;;          (eq? level-name 'finalboss)
-          ;; ;;          (eq? level-name 'lavatube)
-          ;; ;;          (eq? level-name 'citadel)
-          ;; ;;          is-minigame
-          ;; ;;          ;;  (and (string= checkpoint-name "citadel-elevator")
-          ;; ;;          ;;       (task-closed? (game-task citadel-sage-green) (task-status need-resolution)))
-          ;; ;;          )
-          ;; ;;    0
-          ;; ;;    39))
-          
-          ;; (('complication-brittle-bones)
-          ;;  (cond
-          ;;    ((or (eq? level-name 'finalboss) is-klaww) 31)
-          ;;    (is-minigame 0)
-          ;;    (else 38)))
-          
-          ;; (('complication-twisted) 
-          ;;   36
-          ;;   )
-          
-          ;; (('rule-qte) 
-          ;;   32
-          ;;   )
-          
-          ;; ;; (('complication-energy-boost) 
-          ;; ;;   (if is-minigame
-          ;; ;;     0
-          ;; ;;     44
-          ;; ;;     )
-          ;; ;;   )
-          
-          ;; ;; (('complication-lights-out)
-          ;; ;;   (case level-name
-          ;; ;;     (('maincave 'robocave) 
-          ;; ;;       520
-          ;; ;;       )
-          ;; ;;     (else 
-          ;; ;;       0
-          ;; ;;       )
-          ;; ;;     )
-          ;; ;;   )
-
-          ;; (else 35)
-          ;; )
-          )
+  (cond
+    ((or (not (mod-condition-enabled? id))
+        (mod-rule-twist-blocks? id)
+        (mod-rule-conflicts-with-active? id)
         )
+      0
+    )
+    ((mod-rule-can-roll? id)
+      (-> (mod-rule-info-get id) roll-weight)
       )
+    (else 0)
     )
   )
+
+;; Roll weight for a condition.
+;; (defun mod-rule-roll-priority ((id symbol))
+;;   (if (not (mod-condition-enabled? id))
+;;     0
+;;     (let* ((checkpoint-name (current-checkpoint-name))
+;;            (level-name (the symbol (current-level-name)))
+;;            (on-racer (mod-target-on-mode? 'racer))
+;;            (on-flut (mod-target-on-mode? 'flut))
+;;           ;;  (fuel-left (- (mod-max-fuel-current-level) (mod-collected-fuel-current-level)))
+;;           ;;  (money-left (- (mod-max-money-current-level) (mod-collected-money-current-level)))
+;;           ;;  (buzzer-left (- 7 (mod-collected-buzzer-current-level)))
+;;            (fuel-left 100)
+;;            (money-left 100)
+;;            (buzzer-left 100)
+;;            (is-minigame (or (mod-target-on-mode? 'target-fishing) (mod-target-on-mode? 'target-billy-game)))
+;;           ;;  (is-klaww (and (not (task-closed? (game-task ogre-boss) (task-status need-resolution))) (string= checkpoint-name "ogre-start")))
+;;            (is-klaww #f)
+;;            (deep-lavatube (or (string= checkpoint-name "lavatube-middle") (string= checkpoint-name "lavatube-after-ribbon")))
+;;           ;;  (racer-lavatube (or (and on-racer (string= checkpoint-name "lavatube-start")) deep-lavatube)))
+;;            (racer-lavatube #f))
+;;       (if (mod-rule-twist-blocks? id)
+;;         0
+;;         (begin
+;;         (cond
+;;           ((mod-rule-conflicts-with-active? id) 0)
+;;           ;; Resources
+;;           )
+;;         ;; Check if rule meets its conditions,
+;;         ;; if #t then use the weight value defined in *mod-rules*,
+;;         ;; else don't roll that rule
+;;         (if (mod-rule-can-roll? id)
+;;           (-> (mod-rule-info-get id) roll-weight)
+;;           0
+;;           )
+;;         (case id
+;;           (('rule-supercharged)
+;;             (if (string= checkpoint-name "snow-fort")
+;;               107
+;;               (if (or is-minigame
+;;                       (and (mod-rule-active? 'complication-rgyb) (not (yellow-eco-level? level-name)))
+;;                       (sparse-blue-eco-level? level-name))
+;;                 0
+;;                 64
+;;                 )
+;;               )
+;;             )
+          
+;;           (('complication-critical) 
+;;             (if (or is-minigame 
+;;                     (< fuel-left 1) 
+;;                     (eq? level-name 'finalboss)) 
+;;               0 
+;;               47
+;;               )
+;;             )
+          
+;;           (('rule-buzzer-pressure)
+;;             (if (or (< buzzer-left 3)
+;;                     is-minigame
+;;                     is-klaww
+;;                     (eq? level-name 'jungleb)
+;;                     (eq? level-name 'robocave)
+;;                     (eq? level-name 'finalboss)
+;;                     (eq? level-name 'sunkenb))
+;;               0
+;;               47
+;;               )
+;;             )
+          
+;;           (('rule-fuel-pressure)
+;;             (cond
+;;               ((or (< fuel-left 1)
+;;                     (and (eq? level-name 'rolling) (< fuel-left 3))
+;;                     (and (eq? level-name 'swamp) (< fuel-left 3))
+;;                     (and (eq? level-name 'village1) (< fuel-left 3))
+;;                     (and (eq? level-name 'village2) (< fuel-left 3))
+;;                     (and (eq? level-name 'village3) (< fuel-left 4))
+;;                     (and (eq? level-name 'jungle) (< fuel-left 4))
+;;                     is-minigame
+;;                     (eq? level-name 'ogre)
+;;                     (eq? level-name 'firecanyon)
+;;                     (eq? level-name 'jungleb)
+;;                     (string= checkpoint-name "lavatube-start")
+;;                     racer-lavatube
+;;                     (eq? level-name 'finalboss))
+;;                 0)
+;;               (else 53)
+;;               )
+;;             )
+          
+;;           (('rule-money-pressure)
+;;             (if (or (<= money-left 50)
+;;                     is-minigame
+;;                     is-klaww (eq? level-name 'finalboss)
+;;                     (eq? level-name 'jungleb) deep-lavatube)
+;;               0 
+;;               45
+;;               )
+;;             )
+          
+;;           (('complication-hidden-treasure)
+;;             (if (or is-klaww
+;;                     (eq? level-name 'finalboss)
+;;                     (string= checkpoint-name "firecanyon-start")
+;;                     deep-lavatube)
+;;               0 
+;;               50
+;;               )
+;;             )
+
+;;           (('rule-loyal-customer)
+;;             (if (and (mod-cell-purchase-level? level-name)
+;;                       (not (mod-oracles-closed? level-name))
+;;                       (>= (+ (current-orb-count) money-left) (mod-cell-price-oracle))
+;;                       (<= (- (mod-cell-price-oracle) (current-orb-count)) 20))
+;;               119
+;;               0
+;;               )
+;;             )
+
+;;           ;; Enemies
+;;           (('complication-glare 
+;;             'rule-kill-pressure)
+;;             (cond
+;;               ((sparse-enemy-level? level-name)
+;;                 0
+;;                 )
+;;               ((eq? id 'complication-glare) 
+;;                 72
+;;                 )
+;;               (is-minigame 
+;;                 0
+;;                 )
+;;               (else 
+;;                 69
+;;                 )
+;;               )
+;;             )
+          
+;;           (('rule-hitlist) 
+;;             (if (or (sparse-hitlist-level? level-name)
+;;                     is-minigame)
+;;               0
+;;               94
+;;               )
+;;             )
+          
+;;           (('rule-double-kill)
+;;             (if (or (sparse-enemy-level? level-name) 
+;;                     is-minigame
+;;                     is-klaww (eq? level-name 'finalboss) (eq? level-name 'sunkenb)) 
+;;               0 
+;;               72
+;;               )
+;;             )
+          
+;;           (('rule-no-harm) ;; disabled
+;;             (if (or (sparse-enemy-level? level-name)
+;;                     is-minigame
+;;                     is-klaww
+;;                     (eq? level-name 'jungleb))
+;;               0
+;;               74
+;;               )
+;;             )
+          
+;;           (('complication-soul-bond)
+;;             (if (or (sparse-enemy-level? level-name)
+;;                     is-minigame
+;;                     is-klaww
+;;                     (eq? level-name 'jungleb)
+;;                     (string= checkpoint-name "sunkenb-helix"))
+;;               0
+;;               60
+;;               )
+;;             )
+          
+;;           (('rule-sniper)
+;;             (if (or (case level-name
+;;                       (('swamp 'beach 'snow 'robocave 'darkcave) #t)
+;;                       (else #f))
+;;                     ;; (and (eq? level-name 'maincave) (not (task-closed? (game-task cave-gnawers) (task-status need-resolution))))
+;;                     )
+;;               100
+;;               0
+;;               )
+;;             )
+          
+;;           (('rule-flop-this)
+;;             (if (or (case level-name
+;;                       (('training 'lavatube 'village3 'village2 'village1 'rolling 'ogre 'finalboss) #t)
+;;                       (else #f))
+;;                     (mod-target-on-mode? 'target-billy-game))
+;;               0
+;;               80
+;;               )
+;;             )
+          
+;;           (('rule-uncharted) 
+;;             (if (mod-rule-uncharted-can-roll? level-name)
+;;               250
+;;               0
+;;               )
+;;             )
+          
+;;           (('rule-vendetta) 
+;;             (if (or (sparse-enemy-level? level-name)
+;;                     (not (red-eco-level? level-name))
+;;                     on-racer
+;;                     is-minigame)
+;;               0
+;;               190
+;;               )
+;;             )
+          
+;;           (('rule-bonecracker) 
+;;             (if (and (eq? level-name 'misty)
+;;                      (not (mod-all-bone-bridges-down?)))
+;;               422
+;;               0
+;;               )
+;;             )
+          
+;;           (('rule-orb-hunt) 
+;;             (if (or is-minigame 
+;;                     (<= (mod-orb-hunt-spot-count level-name) 0))
+;;               0 
+;;               35
+;;               )
+;;             )
+          
+;;           (('complication-eco-reserve)
+;;             (cond
+;;               ((or (eq? level-name 'finalboss) is-klaww)
+;;                 104
+;;                 )
+;;               ((yellow-eco-level? level-name) 
+;;                 43
+;;                 )
+;;               (else 
+;;                 0
+;;                 )
+;;               )
+;;             )
+          
+;;           (('complication-red-stop) ;; disabled
+;;             (if (red-eco-level? level-name) 
+;;               180
+;;               0
+;;               )
+;;             )
+          
+;;           (('complication-ohko) ;; disabled
+;;             (if (mod-timed-punishment-active? 'punishment-ohko)
+;;               0 
+;;               36
+;;               )
+;;             ) 
+          
+;;           (('complication-invisible-man) 
+;;             (if on-racer 
+;;               0 
+;;               50
+;;               )
+;;             )
+          
+;;           (('complication-double-aphids) ;; disabled
+;;             (if (and (not (task-closed? (game-task jungle-plant) (task-status need-resolution))) 
+;;                      (eq? level-name 'jungleb))
+;;               307 
+;;               0
+;;               )
+;;             )
+
+;;           ;; Crates
+;;           (('rule-crate-break)
+;;             (if (or (eq? level-name 'ogre)
+;;                     is-minigame
+;;                     (string= checkpoint-name "sunkenb-helix")
+;;                     (sparse-crate-level? level-name))
+;;               0
+;;               65
+;;               )
+;;             )
+          
+;;           (('rule-hands-on)
+;;             (case level-name
+;;               (('darkcave 'jungleb 'firecanyon 'finalboss 'village3 'ogre 'rolling 'lavatube) 
+;;                 0
+;;                 )
+;;               (else 
+;;                 61
+;;                 )
+;;               )
+;;             )
+;;           (('complication-unbreakable
+;;             'rule-distancing
+;;             )
+;;             (if (or (< buzzer-left 1)
+;;                     is-klaww
+;;                     (eq? level-name 'training)
+;;                     (eq? level-name 'jungleb)
+;;                     (eq? level-name 'finalboss))
+;;               0
+;;               42
+;;               )
+;;             )
+          
+;;           ;; Movement
+;;           (('complication-no-double-jump) 
+;;             (if on-racer
+;;               0
+;;               (if on-flut
+;;                 105
+;;                 52
+;;                 )
+;;               )
+;;             )
+          
+;;           (('complication-jak-rabbit)
+;;             (if on-racer
+;;               0
+;;               48
+;;               )
+;;             )
+          
+;;           (('complication-jak-be-nimble) 
+;;             (if (or on-racer on-flut) 
+;;               0
+;;               6
+;;               )
+;;             )
+          
+;;           (('rule-keep-rolling)
+;;             (if (or is-minigame
+;;                     is-klaww
+;;                     racer-lavatube
+;;                     (sole-zoomer-level? level-name)
+;;                     on-racer
+;;                     on-flut)
+;;               0
+;;               68
+;;               )
+;;             )
+          
+;;           (('complication-quicksand) 
+;;             (if (sand-level? level-name)
+;;               146
+;;               0
+;;               )
+;;             )
+          
+;;           (('complication-invert)
+;;             36
+;;             )
+          
+;;           (('complication-cumbersome) 
+;;             (if (or is-minigame
+;;                     on-racer
+;;                     on-flut
+;;                     (< (current-orb-count) 20))
+;;               0
+;;               64
+;;               )
+;;             )
+          
+;;           (('complication-shifty)
+;;             (if (or is-klaww 
+;;                     is-minigame)
+;;               0
+;;               40
+;;               )
+;;             )
+          
+;;           (('rule-grounded)
+;;             (cond
+;;               ((or (eq? level-name 'training) 
+;;                    (string= checkpoint-name "finalboss-fight")
+;;                    is-minigame)
+;;                 0
+;;                 )
+;;               (is-klaww
+;;                 15
+;;                 )
+;;               (else 
+;;                 27
+;;                 )
+;;               )
+;;             )
+
+;;           (('rule-die)
+;;             (if (or (eq? level-name 'training) 
+;;                     (string= checkpoint-name "finalboss-fight"))
+;;               0
+;;               12
+;;               )
+;;             )
+          
+;;           (('rule-red-light)
+;;             24
+;;             )
+          
+;;           (('complication-butter-fingers) ;; disabled
+;;             (if (or 
+;;                     (sole-zoomer-level? level-name)
+;;                     on-racer
+;;                     on-flut
+;;                     racer-lavatube)
+;;               0
+;;               52
+;;               )
+;;             )
+
+;;           (('rule-keep-it-low)
+;;             (if (or racer-lavatube 
+;;                     on-racer 
+;;                     on-flut 
+;;                     (sole-zoomer-level? level-name)
+;;                     )
+;;               0
+;;               (if (mod-timed-punishment-active? 'punishment-kick)
+;;                 0 
+;;                 55
+;;                 )
+;;               )
+;;             )
+
+;;           (('complication-sizeable)
+;;             (if (or racer-lavatube
+;;                     on-racer
+;;                     on-flut
+;;                     (sole-zoomer-level? level-name)
+;;                     )
+;;               0
+;;               60
+;;               )
+;;             )
+          
+;;           (('rule-management)
+;;             (if (or racer-lavatube
+;;                     on-racer
+;;                     on-flut
+;;                     (sole-zoomer-level? level-name)
+;;                     )
+;;               0 
+;;               55
+;;               )
+;;             )
+          
+;;           (('complication-bad-ping) 
+;;             (if (mod-timed-punishment-active? 'punishment-delay) 
+;;               0 
+;;               36
+;;               )
+;;             )
+          
+;;           (('complication-loose-pockets)
+;;             (if (or (< (current-orb-count) 20) 
+;;                     (eq? level-name 'finalboss) 
+;;                     (eq? level-name 'citadel) 
+;;                     (eq? level-name 'lavatube)) 
+;;               0 
+;;               52
+;;               )
+;;             )
+          
+;;           (('rule-no-ledge)
+;;             (if (or on-racer
+;;                     on-flut
+;;                     (eq? level-name 'finalboss)
+;;                     (sole-zoomer-level? level-name)
+;;                     (mod-timed-punishment-active? 'punishment-edge))
+;;               0
+;;               50
+;;               )
+;;             )
+
+;;           Water
+;;           (('complication-drought)
+;;            (cond
+;;              ((no-drought-level? level-name) 0)
+;;              ((or (eq? level-name 'rolling) (eq? level-name 'training)) 41)
+;;              (else 87)))
+          
+;;           (('rule-landlubber)
+;;            (if (and *target* (logtest? (-> *target* control status) (cshape-moving-flags on-water)))
+;;              0
+;;              (cond
+;;                ((water-level? level-name) 95)
+;;                ((or (eq? level-name 'misty)
+;;                     (and (not (task-closed? (game-task cave-dark-crystals) (task-status need-resolution))) (eq? level-name 'darkcave)))
+;;                 86)
+;;                (else 0))))
+
+;;           Special
+;;           (('rule-hang-time) (if (or is-minigame (not (hang-time-level? level-name))) 0 71))
+          
+;;           (('complication-vibe-check)
+;;            (cond
+;;              ((or is-minigame (string= checkpoint-name "finalboss-fight")) 0)
+             
+;;              ((eq? level-name 'citadel) 10)
+;;              ((and *target* (< (-> (the-as fact-info-target (-> *target* fact)) health) 2.0)) 55)
+;;              (else 24)))
+          
+;;           (('rule-express-delivery)
+;;            (cond
+;;              ((task-closed? (game-task misty-muse) (task-status need-resolution)) 0)
+             
+;;              ((eq? level-name 'misty) 135)
+;;              ((task-closed? (game-task misty-muse) (task-status need-introduction))
+;;               200)
+;;              (else 0)))
+          
+;;           (('rule-side-to-side) (if is-klaww 640 0))
+          
+;;           (('complication-mirror) (if is-klaww 0 37))
+          
+;;           (('complication-income-tax) (if (eq? level-name 'finalboss) 0 29))
+          
+;;           (('complication-half-price) (if (half-price-level? level-name) 40 0))
+          
+;;           (('rule-button-pusher)
+;;            (if (or (not (button-level? level-name)) is-minigame) 0 (if (or (eq? level-name 'jungle) (eq? level-name 'village2)) 49 181)))
+          
+;;           (('rule-cooked)
+;;            (if (or on-racer racer-lavatube (not (burn-level? level-name))) 0 (if (eq? level-name 'village1) 81 182)))
+          
+;;           (('complication-get-a-grip)
+;;            (if (or (sole-zoomer-level? level-name)
+;;                    (string= checkpoint-name "swamp-cave1")
+;;                    (string= checkpoint-name "citadel-elevator")
+;;                    is-minigame
+;;                    (eq? level-name 'ogre)
+;;                    (eq? level-name 'finalboss)
+;;                    (eq? level-name 'lavatube)
+;;                    (mod-timed-punishment-active? 'punishment-edge)
+;;                    on-racer
+;;                    on-flut)
+;;              0
+;;              32))
+          
+;;           ((rule-green-pilled) (if (or (sparse-green-eco-level? level-name) is-minigame) 0 65))
+          
+;;           (('complication-joyride)
+;;            (if (or on-racer
+;;                    on-flut
+;;                    is-minigame
+;;                    (eq? level-name 'finalboss)
+;;                    (and (mod-rule-active? 'rule-button-pusher) (or (eq? level-name 'sunken) (eq? level-name 'sunkenb)))
+;;                    (string= checkpoint-name "firecanyon-start")
+;;                    (eq? level-name 'lavatube))
+;;              0
+;;              54))
+
+;;           (('complication-fast-reel 'complication-palate-change)
+;;            (if (and (mod-target-on-mode? 'target-fishing) (< (-> *MOD-rule-context-bank* fisher-missed) 15)) 1290 0))
+          
+;;           (('rule-sagging-sails)
+;;            (if (and (mod-target-on-mode? 'target-fishing)
+;;                     (< (-> *MOD-rule-context-bank* fisher-missed) 5)
+;;                     (<= (-> *MOD-rule-context-bank* fisher-caught) 160)
+;;                     (>= (-> *MOD-rule-context-bank* fisher-caught) 20))
+;;              1613
+;;              0))
+          
+;;           (('rule-cold-feet)
+;;            (if (and *target* (= (-> *target* control ground-pat material) (pat-material ice))) 0 (if (eq? level-name 'snow) 387 0)))
+          
+;;           (('rule-touch-grass)
+;;            (if (or (and (eq? level-name 'jungleb) (task-closed? (game-task jungle-plant) (task-status need-resolution)))
+;;                    (and (not (or (mod-target-on-mode? 'target-fishing) (and *target* (= (-> *target* control ground-pat material) (pat-material grass)))))
+;;                         (grass-level? level-name)))
+;;              87
+;;              0))
+          
+;;           (('rule-math-quiz) (if (eq? level-name 'training) 0 22))
+          
+;;           (('rule-trivia) (if (eq? level-name 'training) 0 22))
+          
+;;           (('complication-overclock)
+;;            (if (and (eq? level-name 'citadel) (not (string= checkpoint-name "citadel-elevator"))) 430 0))
+          
+;;           (('rule-one-frame)
+;;            (cond
+;;              ((or (mod-timed-punishment-active? 'punishment-kick) is-minigame) 0)
+;;              ((or (eq? level-name 'robocave) (string= checkpoint-name "sunkenb-helix")) 83)
+             
+;;              ((eq? level-name 'finalboss) 56)
+;;              ((launcher-level? level-name) 109)
+;;              (else 0)))
+          
+;;           (('rule-for-billy)
+;;            (if (and (not (task-closed? (game-task swamp-billy) (task-status need-resolution)))
+;;                     (> (-> *MOD-countdown-bank* remaining-time) (seconds 240))
+;;                     (or (string= checkpoint-name "swamp-game")
+;;                         (string= checkpoint-name "swamp-cave2")
+;;                         (string= checkpoint-name "swamp-dock2")))
+;;              242
+;;              0))
+          
+;;           (('complication-rgyb)
+;;            (if (or (mod-target-on-mode? 'target-billy-game)
+;;                    (eq? level-name 'jungleb)
+;;                    (eq? level-name 'training)
+;;                    (eq? level-name 'finalboss)
+;;                    (eq? level-name 'village3)
+;;                    is-klaww
+;;                    (string= checkpoint-name "lavatube-middle")
+;;                    (string= checkpoint-name "lavatube-start"))
+;;              0
+;;              48))
+          
+;;           (('rule-survivor)
+;;            (cond
+;;              ((or (eq? level-name 'training) (eq? level-name 'village1)) 0)
+             
+;;              ((eq? level-name 'village2) 22)
+;;              (else 45)))
+          
+;;           (('complication-eco-allergy)
+;;            (cond
+;;              ((or (eq? level-name 'finalboss) (eq? level-name 'village3)) 0)
+;;              (is-klaww 16)
+;;              (else 41)))
+          
+;;           (('complication-interference) (if (or (mod-target-on-mode? 'target-fishing) (eq? level-name 'village3)) 0 38)) ;; disabled
+          
+;;           (('complication-heating-balloons)
+;;            (if (or (string= checkpoint-name "firecanyon-start") (and (eq? level-name 'lavatube) on-racer)) 439 0))
+          
+;;           (('complication-bus-driver) (if (or (string= checkpoint-name "firecanyon-start") on-racer) 147 0))
+          
+;;           (('rule-speed) ;; disabled
+;;            (if (or (and (or (eq? level-name 'ogre) (eq? level-name 'firecanyon) (string= checkpoint-name "lavatube-start")) on-racer)
+;;                    (string= checkpoint-name "rolling-start"))
+;;              159
+;;              0))
+          
+;;           (('complication-rotten-eggs) (if (or is-klaww (eq? level-name 'finalboss) deep-lavatube) 0 36))
+          
+;;           (('complication-disassociate) (if (and on-flut (not (sparse-enemy-level? level-name))) 774 0))
+          
+;;           (('complication-wings-tied)
+;;            (if (and on-flut (not (or (eq? level-name 'training) (eq? level-name 'finalboss)))) 366 0))
+          
+;;           (('complication-fuel-shortage)
+;;            (if (or (eq? level-name 'training)
+;;                    (eq? level-name 'finalboss)
+;;                    (eq? level-name 'lavatube)
+;;                    (eq? level-name 'citadel)
+;;                    is-minigame
+;;                    ;;  (and (string= checkpoint-name "citadel-elevator")
+;;                    ;;       (task-closed? (game-task citadel-sage-green) (task-status need-resolution)))
+;;                    )
+;;              0
+;;              39))
+          
+;;           (('complication-brittle-bones)
+;;            (cond
+;;              ((or (eq? level-name 'finalboss) is-klaww) 31)
+;;              (is-minigame 0)
+;;              (else 38)))
+          
+;;           (('complication-twisted) 
+;;             36
+;;             )
+          
+;;           (('rule-qte) 
+;;             32
+;;             )
+          
+;;           (('complication-energy-boost) 
+;;             (if is-minigame
+;;               0
+;;               44
+;;               )
+;;             )
+          
+;;           (('complication-lights-out)
+;;             (case level-name
+;;               (('maincave 'robocave) 
+;;                 520
+;;                 )
+;;               (else 
+;;                 0
+;;                 )
+;;               )
+;;             )
+
+;;           (else 35)
+;;           )
+;;           )
+;;         )
+;;       )
+;;     )
+;;   )
