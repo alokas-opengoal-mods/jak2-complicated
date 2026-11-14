@@ -382,3 +382,30 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
       )
     )
   )
+
+(defun print-level-entities ()
+  (format #t "- PRINT LEVEL ENTITIES -~%")
+  (dotimes (i (-> *level* length))
+    (let ((level (-> *level* level i)))
+      (when (= (-> level status) 'active)
+        (format #t "~%LEVEL: ~S~%" (-> level name))
+        ;; actor entities
+        (let ((actors (-> level bsp actors)))
+          (when (nonzero? actors)
+            (dotimes (ii (-> actors length))
+              (let ((entity (-> actors data ii actor)))
+                (format #t "Level entity ~D: ~S~%" 
+                  ii 
+                  (the string (-> entity etype symbol))
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  (format #t "- END OF LEVEL ENTITIES -~%")
+  (none)
+  )
+
