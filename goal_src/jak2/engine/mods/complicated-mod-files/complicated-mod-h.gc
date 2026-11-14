@@ -51,7 +51,7 @@ Process of adding a new condition:
     ;; 'complication-fuel-shortage
     ;; 'complication-drought ;; skipping for now
     'rule-management
-    ;; 'complication-jak-rabbit
+    'complication-jak-rabbit
     ;; 'complication-hidden-treasure
     ;; 'rule-vendetta
     ;; 'rule-hands-on
@@ -279,6 +279,16 @@ Process of adding a new condition:
       :rule-type 'rule
       :duration (seconds 90)
       :roll-weight 55
+      :progress? #f
+      )
+    ;; complication-jak-rabbit
+    (new 'static 'mod-rule
+      :name-text (text-id complication-jak-rabbit-name)
+      :desc-text (text-id complication-jak-rabbit-desc)
+      :rule-id 'complication-jak-rabbit
+      :rule-type 'complication
+      :duration (seconds 45)
+      :roll-weight 48
       :progress? #f
       )
     )

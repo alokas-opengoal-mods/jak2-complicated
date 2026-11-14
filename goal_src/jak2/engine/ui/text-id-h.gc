@@ -971,6 +971,8 @@
   (complication-glare-desc #x6005)
   (complication-bus-driver-name #x6006)
   (complication-bus-driver-desc #x6007)
+  (complication-jak-rabbit-name #x600a)
+  (complication-jak-rabbit-desc #x600b)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

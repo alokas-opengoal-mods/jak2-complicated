@@ -369,6 +369,9 @@
   "6006": "Roadhog",
   "6007": "Vehicle explodes if it's too slow.",
 
+  "600a": "Jak Rabbit",
+  "600b": "Jump heights are doubled.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",
