@@ -49,8 +49,8 @@ Process of adding a new condition:
     ;; 'rule-buzzer-pressure
     ;; 'complication-wings-tied
     ;; 'complication-fuel-shortage
-    ;; 'complication-drought
-    ;; 'rule-management
+    ;; 'complication-drought ;; skipping for now
+    'rule-management
     ;; 'complication-jak-rabbit
     ;; 'complication-hidden-treasure
     ;; 'rule-vendetta
@@ -260,7 +260,7 @@ Process of adding a new condition:
       :roll-weight 80
       :progress? #f
       )
-    ;; 'complication-bus-driver
+    ;; complication-bus-driver
     (new 'static 'mod-rule
       :name-text (text-id complication-bus-driver-name)
       :desc-text (text-id complication-bus-driver-desc)
@@ -270,6 +270,16 @@ Process of adding a new condition:
       :grace-period (seconds 3)
       :roll-weight 147
       :progress? #t
+      )
+    ;; rule-management
+    (new 'static 'mod-rule
+      :name-text (text-id rule-management-name)
+      :desc-text (text-id rule-management-desc)
+      :rule-id 'rule-management
+      :rule-type 'rule
+      :duration (seconds 90)
+      :roll-weight 55
+      :progress? #f
       )
     )
   )

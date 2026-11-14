@@ -2343,6 +2343,7 @@
       )
     (target-start-attack)
     (target-danger-set! 'punch #f)
+    (mod-rule-fail! 'rule-management) ;; Mod change
     (initialize (-> self control impact-ctrl) self 22 3276.8 (-> self control root-prim prim-core collide-with))
     (let ((f26-0 (the-as number 0.0))
           (f30-0 1.0)

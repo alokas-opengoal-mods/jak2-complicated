@@ -547,6 +547,8 @@
     (('fortress
       'forexita
       'forexitb
+      'fordumpa
+      'fordumpc
       )
       (or 
         (task-node-open? (game-task-node fortress-escape-introduction))
@@ -577,7 +579,16 @@
         (or (task-node-open? (game-task-node sewer-escort-resolution))
             )
         )
-      (('fortress)
+      (('fortress
+        'forexita
+        'forexitb
+        'fordumpa
+        'fordumpb
+        'fordumpc
+        'forresca
+        'forrescb
+        'prison
+        )
         #t
         )
       )

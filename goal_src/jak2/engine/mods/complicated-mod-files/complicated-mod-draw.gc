@@ -285,7 +285,7 @@ This file is for the mod HUD draw functions
       (text-id->string (mod-rule-name id))
       *mod-hud-x*
       row
-      *mod-hud-slot-width*
+      250
       text-box-height
       (case (mod-rule-type id)
         (('rule) (font-color orange))
