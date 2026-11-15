@@ -375,56 +375,56 @@
 ;; Pairs of conditions that must never be active together.
 (define *mod-rule-conflict-pairs*
   (new 'static 'boxed-array :type symbol
-    'rule-sniper 'rule-flop-this
-    'rule-kill-pressure 'rule-no-harm
-    'rule-kill-pressure 'complication-soul-bond
-    'rule-no-harm 'rule-sniper
-    'complication-soul-bond 'rule-sniper
-    'rule-hitlist 'rule-no-harm
-    'rule-double-kill 'rule-no-harm
-    'complication-soul-bond 'complication-disassociate
-    'rule-hitlist 'complication-soul-bond
-    'rule-double-kill 'complication-soul-bond
-    'rule-buzzer-pressure 'rule-distancing
-    'complication-fuel-shortage 'rule-loyal-customer
-    'rule-grounded 'rule-hang-time
-    'rule-grounded 'rule-qte
-    'rule-die 'rule-survivor
-    'rule-red-light 'rule-qte
-    'rule-management 'rule-qte
-    'rule-management 'complication-joyride
-    'rule-keep-it-low 'complication-joyride
-    'complication-sizeable 'complication-joyride
-    'complication-butter-fingers 'complication-joyride
-    'rule-keep-rolling 'complication-joyride
-    'complication-get-a-grip 'complication-joyride
-    'rule-math-quiz 'rule-trivia
-    'rule-landlubber 'complication-drought
-    'rule-buzzer-pressure 'complication-unbreakable
-    'rule-fuel-pressure 'complication-fuel-shortage
-    'complication-rotten-eggs 'rule-money-pressure
-    'rule-green-pilled 'complication-eco-allergy
-    'complication-get-a-grip 'complication-butter-fingers
-    'rule-red-light 'complication-bus-driver
-    'complication-fuel-shortage 'complication-wings-tied
-    'rule-for-billy 'rule-express-delivery
-    'rule-survivor 'complication-ohko
-    'rule-survivor 'complication-vibe-check
-    'complication-rotten-eggs 'rule-loyal-customer
-    'rule-orb-hunt 'complication-hidden-treasure
-    'complication-glare 'rule-kill-pressure
-    'rule-die 'rule-touch-grass
-    'rule-hang-time 'rule-sniper
-    'rule-money-pressure 'rule-buzzer-pressure
-    'rule-for-billy 'rule-sniper
-    'rule-for-billy 'rule-buzzer-pressure
-    'rule-for-billy 'rule-fuel-pressure
-    'rule-for-billy 'rule-money-pressure
-    'rule-one-frame 'rule-hang-time
-    'complication-rotten-eggs 'rule-orb-hunt
-    'rule-no-ledge 'complication-get-a-grip
-    'rule-no-ledge 'complication-butter-fingers
-    'rule-grounded 'complication-get-a-grip
+    'rule-sniper                    'rule-flop-this
+    'rule-kill-pressure             'rule-no-harm
+    'rule-kill-pressure             'complication-soul-bond
+    'rule-no-harm                   'rule-sniper
+    'complication-soul-bond         'rule-sniper
+    'rule-hitlist                   'rule-no-harm
+    'rule-double-kill               'rule-no-harm
+    'complication-soul-bond         'complication-disassociate
+    'rule-hitlist                   'complication-soul-bond
+    'rule-double-kill               'complication-soul-bond
+    'rule-buzzer-pressure           'rule-distancing
+    'complication-fuel-shortage     'rule-loyal-customer
+    'rule-grounded                  'rule-hang-time
+    'rule-grounded                  'rule-qte
+    'rule-die                       'rule-survivor
+    'rule-red-light                 'rule-qte
+    'rule-management                'rule-qte
+    'rule-management                'complication-joyride
+    'rule-keep-it-low               'complication-joyride
+    'complication-sizeable          'complication-joyride
+    'complication-butter-fingers    'complication-joyride
+    'rule-keep-rolling              'complication-joyride
+    'complication-get-a-grip        'complication-joyride
+    'rule-math-quiz                 'rule-trivia
+    'rule-landlubber                'complication-drought
+    'rule-buzzer-pressure           'complication-unbreakable
+    'rule-fuel-pressure             'complication-fuel-shortage
+    'complication-rotten-eggs       'rule-money-pressure
+    'rule-green-pilled              'complication-eco-allergy
+    'complication-get-a-grip        'complication-butter-fingers
+    'rule-red-light                 'complication-bus-driver
+    'complication-fuel-shortage     'complication-wings-tied
+    'rule-for-billy                 'rule-express-delivery
+    'rule-survivor                  'complication-ohko
+    'rule-survivor                  'complication-vibe-check
+    'complication-rotten-eggs       'rule-loyal-customer
+    'rule-orb-hunt                  'complication-hidden-treasure
+    'complication-glare             'rule-kill-pressure
+    'rule-die                       'rule-touch-grass
+    'rule-hang-time                 'rule-sniper
+    'rule-money-pressure            'rule-buzzer-pressure
+    'rule-for-billy                 'rule-sniper
+    'rule-for-billy                 'rule-buzzer-pressure
+    'rule-for-billy                 'rule-fuel-pressure
+    'rule-for-billy                 'rule-money-pressure
+    'rule-one-frame                 'rule-hang-time
+    'complication-rotten-eggs       'rule-orb-hunt
+    'rule-no-ledge                  'complication-get-a-grip
+    'rule-no-ledge                  'complication-butter-fingers
+    'rule-grounded                  'complication-get-a-grip
     )
   )
 
@@ -561,7 +561,14 @@
       )
       (('gungame
         'mincan
-        'prison)
+        'prison
+        'tomba
+        'tombb
+        'tombc
+        'tombboss
+        'palcab
+        'palroof
+        )
         #t
         )
     )
@@ -579,8 +586,7 @@
         (or (task-node-open? (game-task-node sewer-escort-resolution))
             )
         )
-      (('fortress
-        'forexita
+      (('forexita
         'forexitb
         'fordumpa
         'fordumpb
@@ -588,6 +594,12 @@
         'forresca
         'forrescb
         'prison
+        'tomba
+        'tombb
+        'tombc
+        'tombboss
+        'castle
+        'casboss
         )
         #t
         )
@@ -695,20 +707,77 @@
 (defun level-has-crate? ((level symbol))
   (case level
     (('gungame
-      'fortress
-      'palace
+      'prison
+      'forexita
+      'forexitb
+      'fordumpa
+      'fordumpb
+      'fordumpc
+      'forresca
+      'forrescb
+      'palroof
+      'palent
+      'throne
       'palcab
       'castle
       'atoll
       'strip
       'mountain
       'forest
-      'forest
+      'drill
+      'drillmid
+      'tomba
+      'tombboss
+      'dig1
+      'dig3a
+      'dig3b
+      'nest
+      'nestb
       )
       #t
       )
     (('ruins)
       (not (task-node-open? (game-task-node ruins-mech-resolution)))
+      )
+    )
+  )
+
+(defun level-has-health-pack? ((level symbol))
+  (case level
+    (('prison
+      'forexita
+      'forexitb
+      'fordumpa
+      'fordumpb
+      'fordumpc
+      'forresca
+      'forrescb
+      'palroof
+      'palent
+      'palcab
+      'castle
+      'atoll
+      'strip
+      'mountain
+      'drill
+      'drillmid
+      'tomba
+      'tombboss
+      'dig1
+      'dig3a
+      'dig3b
+      'nest
+      )
+      #t
+      )
+    (('ruins)
+      (not (task-node-open? (game-task-node ruins-mech-resolution)))
+      )
+    (('forest)
+      (or
+        (not (task-node-open? (game-task-node forest-scouts-resolution)))
+        (not (task-node-open? (game-task-node forest-scouts-pegasus)))
+        )
       )
     )
   )
@@ -809,7 +878,7 @@
 ;;          (not (mod-rule-uncharted-level-visited? (level-task-data-index lavatube)))))
 ;;     (else #f)))
 
-(defun grass-level? ((level symbol))
+(defun level-has-grass? ((level symbol))
   (case level
     (('ctypal
       'caspad
@@ -832,7 +901,7 @@
     )
   )
 
-(defun sand-level? ((level symbol))
+(defun level-has-sand? ((level symbol))
   (case level
     (('atoll
       'ruins
@@ -856,7 +925,7 @@
   #f
   )
 
-(defun water-level? ((level symbol))
+(defun level-has-water? ((level symbol))
   (case level
     (('ctygena
       'ctygenb
@@ -923,12 +992,51 @@
 ;; (defun half-price-level? ((level symbol))
 ;;   (and (mod-cell-purchase-level? level) (not (mod-cells-purchased? level))))
 
-(defun burn-level? ((level symbol))
-  ;; (or (case level
-  ;;       (('firecanyon 'village1 'lavatube 'village3 'village2 'sunken 'sunkenb) #t)
-  ;;       (else #f))
-  ;;     (string= (current-checkpoint-name) "ogre-start"))
-  #t
+(defun level-can-burn? ((level symbol))
+  (case level
+    (('dig1
+      'dig3a
+      'dig3b
+      'ctysluma
+      'ctyslumb
+      'castle
+      )
+      #t
+      )
+    (('drillmid)
+      (or 
+        (task-node-open? (game-task-node drill-mech-started-smashing))
+        (task-node-open? (game-task-node drill-mech-resolution))
+        )
+      )
+    )
+  )
+
+(defun in-bossfight? ()
+  (or
+    (task-node-open? (game-task-node palace-boss-battle))
+    (task-node-open? (game-task-node palace-boss-resolution))
+    (task-node-open? (game-task-node tomb-boss-resolution))
+    (task-node-open? (game-task-node castle-boss-resolution))
+    (task-node-open? (game-task-node nest-boss-resolution))
+    )
+  )
+
+(defun in-race? ()
+  (or
+    (task-node-open? (game-task-node stadium-race-class3-race))
+    (task-node-open? (game-task-node stadium-race-class3-resolution))
+    (task-node-open? (game-task-node stadium-race-class2-race))
+    (task-node-open? (game-task-node stadium-race-class2-resolution))
+    (task-node-open? (game-task-node stadium-race-class1-race))
+    (task-node-open? (game-task-node stadium-race-class1-resolution))
+    (task-node-open? (game-task-node stadium-burning-bush-race-class3-resolution))
+    (task-node-open? (game-task-node stadium-burning-bush-race-class2-resolution))
+    (task-node-open? (game-task-node stadium-burning-bush-race-class1-resolution))
+    (task-node-open? (game-task-node stadium-burning-bush-race-class3-r-resolution))
+    (task-node-open? (game-task-node stadium-burning-bush-race-class2-r-resolution))
+    (task-node-open? (game-task-node stadium-burning-bush-race-class1-r-resolution))
+    )
   )
 
 
@@ -1045,6 +1153,47 @@
           is-racer?
           )
         )
+      (('rule-management)
+        (or
+          (not is-pilot?)
+          (not is-racer?)
+          (not is-turret?)
+          (not is-minigame?)
+          )
+        )
+      (('complication-jak-rabbit)
+        (or
+          (not is-pilot?)
+          (not is-racer?)
+          (not is-minigame?)
+          )
+        )
+      (('rule-red-light)
+        (or
+          (not is-minigame?)
+          )
+        )
+      (('complication-butter-fingers)
+        (or
+          (not is-pilot?)
+          (not is-racer?)
+          (not is-minigame?)
+          (not (in-bossfight?))
+          )
+        )
+      (('rule-sniper)
+        (or
+          (not (sparse-enemy-level? level-name))
+          (not is-minigame?)
+          (not (in-bossfight?))
+          (not (in-race?))
+          )
+        )
+      (('rule-green-pilled)
+        (or
+          (level-has-health-pack? level-name)
+          )
+        )
       (else #t)
       )
     )
@@ -1059,7 +1208,7 @@
         (mod-rule-conflicts-with-active? id)
         )
       0
-    )
+      )
     ((mod-rule-can-roll? id)
       (-> (mod-rule-info-get id) roll-weight)
       )
