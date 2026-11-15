@@ -199,7 +199,7 @@ an orb |#
       (when (and (-> this root) *target*)
         (let ((distance (vector-vector-distance (-> this root trans) (target-pos 0))))
           (set! *last-kill-dist* distance)
-          (mod-rule-trigger-sniper (>= distance (meters 70)))
+          (mod-rule-trigger-sniper (>= distance (meters 60)))
           (when *debug-segment*
             (format #t "distance: ~f type: ~a state: ~A hit: ~A~%"
               distance

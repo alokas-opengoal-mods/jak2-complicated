@@ -576,6 +576,17 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-sniper-name)
+      :description (text-id rule-sniper-desc)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-sniper?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-sniper?) val)
+        ;; (complicated-settings-save)
+        )
+      )
     )
   )
 

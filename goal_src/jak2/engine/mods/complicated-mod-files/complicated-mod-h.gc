@@ -63,7 +63,7 @@ Process of adding a new condition:
     ;; 'complication-rgyb
     'complication-butter-fingers
     ;; 'rule-for-billy
-    ;; 'rule-sniper
+    'rule-sniper
     ;; 'rule-cold-feet
     ;; 'complication-overclock
     ;; 'rule-speed
@@ -311,6 +311,17 @@ Process of adding a new condition:
       :duration (seconds 60)
       :roll-weight 52
       :progress? #f
+      )
+    ;; rule-sniper
+    (new 'static 'mod-rule
+      :name-text (text-id rule-sniper-name)
+      :desc-text (text-id rule-sniper-desc)
+      :rule-id 'rule-sniper
+      :rule-type 'rule
+      :duration (seconds 60)
+      :roll-weight 50
+      :counter-goal 1
+      :progress? #t
       )
     )
   )

@@ -387,8 +387,10 @@ This file is for the mod HUD draw functions
             (set! label (text-id mod-hud-last-kill))
             (set! value
               (if (< *last-kill-dist* (meters 0)) 
-                "-" 
-                (mod-tenths-str (/ *last-kill-dist* (meters 1)))
+                "-"
+                (string-format "~,,1fm"
+                  (/ *last-kill-dist* (meters 1))
+                  )
                 )
               )
             )

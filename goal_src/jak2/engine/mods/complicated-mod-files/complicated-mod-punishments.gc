@@ -127,6 +127,16 @@
     )
   )
 
+(defun mod-can-menu-pause? ()
+  (the symbol (and 
+    (progress-allowed?)
+    (not *progress-process*)
+    (not (mod-rule-active? 'rule-qte))
+    (not (mod-rule-active? 'rule-math-quiz))
+    (not (mod-rule-active? 'rule-trivia))
+    (not (mod-rule-active? 'rule-red-light))
+    )))
+
 (defun mod-update-timed-punishments ()
   (dotimes (slot *mod-timed-punishment-slot-count*)
     (let ((punishment (-> (-> *MOD-punishment-bank* timed-punishments) slot)))
@@ -384,15 +394,6 @@
   (set! (-> *TARGET-bank* fall-far-inc) (-> *MOD-tuning-bank* fall-damage-far-inc))
   (none))
 
-(defun mod-can-menu-pause? ()
-  (the symbol (and 
-    (progress-allowed?)
-    (not *progress-process*)
-    (not (mod-rule-active? 'rule-qte))
-    (not (mod-rule-active? 'rule-math-quiz))
-    (not (mod-rule-active? 'rule-trivia))
-    (not (mod-rule-active? 'rule-red-light))
-    )))
 
 ;; True if an active slot already has this punishment assigned.
 (defun mod-punishment-used-by-active-slot? ((punishment symbol))
@@ -431,7 +432,7 @@
                          10
                          (not (or (eq? rule-id 'rule-for-billy)
                                   (eq? rule-id 'rule-orb-hunt)
-                                  (and (eq? rule-id 'rule-sniper) (eq? (current-level-name) 'beach)))))
+                                  (eq? rule-id 'rule-sniper))))
     (consider-punishment punishment-fall-damage
                          10
                          (not (or (eq? (current-level-name) 'finalboss) (mod-target-on-racer-or-flut?))))
