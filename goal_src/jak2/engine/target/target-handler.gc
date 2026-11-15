@@ -1120,7 +1120,14 @@
         (label cfg-234)
         (b! (!= v1-0 'edge-grab) cfg-238 :delay (nop!))
         (b! (focus-test? self dead hit grabbed) cfg-237 :delay (set! v0-0 #f))
-        (set! v0-0 (go target-edge-grab))
+        ;; Mod change
+        (if (and (not (mod-timed-punishment-active? 'punishment-edge)) 
+                 (not (mod-rule-active? 'complication-butter-fingers))
+                 )
+          (set! v0-0 (go target-edge-grab))
+          )
+        ;; (set! v0-0 (go target-edge-grab))
+        
         (label cfg-237)
         (b! #t cfg-291 :delay (nop!))
         (label cfg-238)

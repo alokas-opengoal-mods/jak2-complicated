@@ -375,6 +375,9 @@
   "600a": "Jak Rabbit",
   "600b": "Jump heights are doubled.",
 
+  "600c": "Butterfingers",
+  "600d": "Jak cannot grab ledges.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

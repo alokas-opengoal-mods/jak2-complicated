@@ -975,6 +975,8 @@
   (complication-bus-driver-desc #x6007)
   (complication-jak-rabbit-name #x600a)
   (complication-jak-rabbit-desc #x600b)
+  (complication-butter-fingers-name #x600c)
+  (complication-butter-fingers-desc #x600d)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

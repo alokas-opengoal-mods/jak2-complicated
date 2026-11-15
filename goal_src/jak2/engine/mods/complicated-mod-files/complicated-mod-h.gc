@@ -61,7 +61,7 @@ Process of adding a new condition:
     ;; 'complication-red-stop
     'rule-red-light
     ;; 'complication-rgyb
-    ;; 'complication-butter-fingers
+    'complication-butter-fingers
     ;; 'rule-for-billy
     ;; 'rule-sniper
     ;; 'rule-cold-feet
@@ -300,6 +300,16 @@ Process of adding a new condition:
       :duration (seconds 5)
       :roll-weight 24
       :grace-period (seconds 1.5)
+      :progress? #f
+      )
+    ;; complication-butter-fingers
+    (new 'static 'mod-rule
+      :name-text (text-id complication-butter-fingers-name)
+      :desc-text (text-id complication-butter-fingers-desc)
+      :rule-id 'complication-butter-fingers
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 52
       :progress? #f
       )
     )
