@@ -963,6 +963,8 @@
   (rule-money-pressure-desc #x5019)
   (rule-red-light-name #x501c)
   (rule-red-light-desc #x501d)
+  (rule-green-pilled-name #x501e)
+  (rule-green-pilled-desc #x501f)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)

@@ -796,6 +796,7 @@
           )
         (set! (-> this health-pickup-time) (-> *display* game-clock frame-counter))
         (seek! (-> this health) (-> this health-max) arg1)
+        (mod-rule-counter-add-progress 'rule-green-pilled 1) ;; Mod change
         )
        (else
          (seek! (-> this health) 0.0 (- arg1))

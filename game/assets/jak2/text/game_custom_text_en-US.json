@@ -358,6 +358,9 @@
   "501c": "Red Light",
   "501d": "Do not move.",
 
+  "501e": "Green-Pilled",
+  "501f": "Increase your health with a health pack.",
+
 
   // Complications
   "6000": "Brittle Bones",
