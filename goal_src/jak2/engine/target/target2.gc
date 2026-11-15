@@ -998,6 +998,7 @@
 (defstate target-hit-ground-hard (target)
   :event target-standard-event-handler
   :enter (behavior ((arg0 float))
+    (mod-on-damage) ;; Mod change
     (set! (-> self control last-running-attack-end-time) 0)
     (set! (-> self control last-attack-end-time) 0)
     (set-forward-vel 0.0)

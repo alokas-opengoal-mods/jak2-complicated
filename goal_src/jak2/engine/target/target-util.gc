@@ -1327,6 +1327,7 @@
   (cond
     ((or (logtest? (-> self state-flags) (state-flags prevent-attack))
          (logtest? (-> self control current-surface flags) (surface-flag no-attack no-feet))
+         (mod-timed-punishment-active? 'punishment-kick) ;; Mod change
          )
      #f
      )

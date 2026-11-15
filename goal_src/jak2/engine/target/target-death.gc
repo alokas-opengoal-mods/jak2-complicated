@@ -923,6 +923,7 @@
       )
     )
   :code (behavior ((arg0 symbol) (arg1 attack-info))
+    (mod-on-damage) ;; Mod change
     (logclear! (-> self water flags) (water-flags jump-out))
     (set-time! (-> self state-time))
     (set! (-> self neck flex-blend) 0.0)
