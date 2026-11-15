@@ -70,7 +70,7 @@ Process of adding a new condition:
     ;; 'rule-math-quiz
     ;; 'rule-trivia
     ;; 'complication-bad-ping
-    ;; 'rule-green-pilled
+    'rule-green-pilled
     ;; 'rule-button-pusher
     ;; 'complication-invisible-man
     ;; 'rule-cooked
@@ -322,6 +322,17 @@ Process of adding a new condition:
       :roll-weight 50
       :counter-goal 1
       :progress? #t
+      )
+    ;; rule-green-pilled
+    (new 'static 'mod-rule
+      :name-text (text-id rule-green-pilled-name)
+      :desc-text (text-id rule-green-pilled-desc)
+      :rule-id 'rule-green-pilled
+      :rule-type 'rule
+      :duration (seconds 60)
+      :roll-weight 65
+      :counter-goal 1
+      :progress? #f
       )
     )
   )
