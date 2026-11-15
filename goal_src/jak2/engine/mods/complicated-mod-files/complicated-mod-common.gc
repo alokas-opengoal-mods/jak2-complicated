@@ -33,6 +33,7 @@
 (define sound-dmenu-pick "menu/dmenu-pick.wav")
 (define sound-dmenu-move "menu/dmenu-move.wav")
 (define sound-city-alarm "city-alarm.wav")
+(define sound-sksp0452 "voicelines/SKSP0452.wav")
 
 
 ;; COMMAND/FUNCTION REFERENCE

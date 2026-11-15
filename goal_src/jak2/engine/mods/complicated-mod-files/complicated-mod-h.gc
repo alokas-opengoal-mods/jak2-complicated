@@ -57,9 +57,9 @@ Process of adding a new condition:
     ;; 'rule-hands-on
     ;; 'complication-eco-reserve
     ;; 'rule-one-frame
-    ;; 'rule-distancing
+    ;; 'rule-distancing ;; skipping for now
     ;; 'complication-red-stop
-    ;; 'rule-red-light
+    'rule-red-light
     ;; 'complication-rgyb
     ;; 'complication-butter-fingers
     ;; 'rule-for-billy
@@ -289,6 +289,17 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 45)
       :roll-weight 48
+      :progress? #f
+      )
+    ;; rule-red-light
+    (new 'static 'mod-rule
+      :name-text (text-id rule-red-light-name)
+      :desc-text (text-id rule-red-light-desc)
+      :rule-id 'rule-red-light
+      :rule-type 'rule
+      :duration (seconds 5)
+      :roll-weight 24
+      :grace-period (seconds 1.5)
       :progress? #f
       )
     )

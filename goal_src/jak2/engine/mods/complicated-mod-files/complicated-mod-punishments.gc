@@ -397,7 +397,7 @@
     (not (mod-rule-active? 'rule-qte))
     (not (mod-rule-active? 'rule-math-quiz))
     (not (mod-rule-active? 'rule-trivia))
-    ;; (not (mod-rule-active? 'rule-red-light))
+    (not (mod-rule-active? 'rule-red-light))
     )))
 
 ;; True if an active slot already has this punishment assigned.
