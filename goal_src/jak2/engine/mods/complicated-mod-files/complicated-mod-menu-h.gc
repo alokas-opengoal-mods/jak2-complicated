@@ -761,6 +761,18 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-income-tax-name)
+      :desc (text-id complication-income-tax-desc)
+      :rule-id 'complication-income-tax
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-income-tax?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-income-tax?) val)
+        ;; (complicated-settings-save)
+        )
+      )
     )
   )
 

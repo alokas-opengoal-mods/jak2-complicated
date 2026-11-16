@@ -86,7 +86,7 @@ Process of adding a new condition:
     ;; 'complication-loose-pockets
     'complication-twisted
     'complication-vibe-check
-    ;; 'complication-income-tax
+    'complication-income-tax
     ;; 'rule-double-kill
     ;; 'rule-express-delivery
     ;; 'rule-qte
@@ -394,6 +394,16 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 4)
       :roll-weight 24
+      :progress? #f
+      )
+    ;; complication-income-tax
+    (new 'static 'mod-rule
+      :name-text (text-id complication-income-tax-name)
+      :desc-text (text-id complication-income-tax-desc)
+      :rule-id 'complication-income-tax
+      :rule-type 'complication
+      :duration (seconds 30)
+      :roll-weight 29
       :progress? #f
       )
     )

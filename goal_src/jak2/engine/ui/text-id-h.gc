@@ -991,6 +991,8 @@
   (complication-twisted-desc #x6015)
   (complication-vibe-check-name #x6016)
   (complication-vibe-check-desc #x6017)
+  (complication-income-tax-name #x6018)
+  (complication-income-tax-desc #x6019)
 
   ;; Punishments
   (punishment-countdown-name #x7000)
