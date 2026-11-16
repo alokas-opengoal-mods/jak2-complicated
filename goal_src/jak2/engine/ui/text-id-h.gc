@@ -989,6 +989,8 @@
   (complication-invert-desc #x6013)
   (complication-twisted-name #x6014)
   (complication-twisted-desc #x6015)
+  (complication-vibe-check-name #x6016)
+  (complication-vibe-check-desc #x6017)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

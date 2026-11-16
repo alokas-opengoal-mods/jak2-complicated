@@ -85,7 +85,7 @@ Process of adding a new condition:
     'complication-invert
     ;; 'complication-loose-pockets
     'complication-twisted
-    ;; 'complication-vibe-check
+    'complication-vibe-check
     ;; 'complication-income-tax
     ;; 'rule-double-kill
     ;; 'rule-express-delivery
@@ -384,6 +384,16 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 8)
       :roll-weight 36
+      :progress? #f
+      )
+    ;; complication-vibe-check
+    (new 'static 'mod-rule
+      :name-text (text-id complication-vibe-check-name)
+      :desc-text (text-id complication-vibe-check-desc)
+      :rule-id 'complication-vibe-check
+      :rule-type 'complication
+      :duration (seconds 4)
+      :roll-weight 24
       :progress? #f
       )
     )

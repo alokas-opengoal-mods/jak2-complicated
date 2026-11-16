@@ -749,6 +749,18 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-vibe-check-name)
+      :desc (text-id complication-vibe-check-desc)
+      :rule-id 'complication-vibe-check
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-vibe-check?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-vibe-check?) val)
+        ;; (complicated-settings-save)
+        )
+      )
     )
   )
 
