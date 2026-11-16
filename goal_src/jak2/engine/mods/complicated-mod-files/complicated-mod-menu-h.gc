@@ -457,7 +457,8 @@
   `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-rule-options)
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-grounded-name)
-      :description (text-id rule-grounded-desc)
+      :desc (text-id rule-grounded-desc)
+      :rule-id 'rule-grounded
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-grounded?))
@@ -468,7 +469,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-die-name)
-      :description (text-id rule-die-desc)
+      :desc (text-id rule-die-desc)
+      :rule-id 'rule-die
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-die?))
@@ -479,7 +481,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-survivor-name)
-      :description (text-id rule-survivor-desc)
+      :desc (text-id rule-survivor-desc)
+      :rule-id 'rule-survivor
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-survivor?))
@@ -490,7 +493,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-kill-pressure-name)
-      :description (text-id rule-kill-pressure-desc)
+      :desc (text-id rule-kill-pressure-desc)
+      :rule-id 'rule-kill-pressure
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-kill-pressure?))
@@ -501,7 +505,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-hitlist-name)
-      :description (text-id rule-hitlist-desc)
+      :desc (text-id rule-hitlist-desc)
+      :rule-id 'rule-hitlist
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-hitlist?))
@@ -512,7 +517,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-crate-break-name)
-      :description (text-id rule-crate-break-desc)
+      :desc (text-id rule-crate-break-desc)
+      :rule-id 'rule-crate-break
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-crate-break?))
@@ -523,7 +529,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-keep-it-low-name)
-      :description (text-id rule-keep-it-low-desc)
+      :desc (text-id rule-keep-it-low-desc)
+      :rule-id 'rule-keep-it-low
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-keep-it-low?))
@@ -534,7 +541,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-money-pressure-name)
-      :description (text-id rule-money-pressure-desc)
+      :desc (text-id rule-money-pressure-desc)
+      :rule-id 'rule-money-pressure
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-money-pressure?))
@@ -545,7 +553,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-flop-this-name)
-      :description (text-id rule-flop-this-desc)
+      :desc (text-id rule-flop-this-desc)
+      :rule-id 'rule-flop-this
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-flop-this?))
@@ -556,7 +565,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-management-name)
-      :description (text-id rule-management-desc)
+      :desc (text-id rule-management-desc)
+      :rule-id 'rule-management
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-management?))
@@ -567,7 +577,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-red-light-name)
-      :description (text-id rule-red-light-desc)
+      :desc (text-id rule-red-light-desc)
+      :rule-id 'rule-red-light
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-red-light?))
@@ -578,7 +589,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-sniper-name)
-      :description (text-id rule-sniper-desc)
+      :desc (text-id rule-sniper-desc)
+      :rule-id 'rule-sniper
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-sniper?))
@@ -589,7 +601,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-green-pilled-name)
-      :description (text-id rule-green-pilled-desc)
+      :desc (text-id rule-green-pilled-desc)
+      :rule-id 'rule-green-pilled
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-green-pilled?))
@@ -600,7 +613,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-button-pusher-name)
-      :description (text-id rule-button-pusher-desc)
+      :desc (text-id rule-button-pusher-desc)
+      :rule-id 'rule-button-pusher
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-button-pusher?))
@@ -611,7 +625,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-cooked-name)
-      :description (text-id rule-cooked-desc)
+      :desc (text-id rule-cooked-desc)
+      :rule-id 'rule-cooked
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* rule-cooked?))
@@ -628,7 +643,8 @@
   `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-complication-options)
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-brittle-bones-name)
-      :description (text-id complication-brittle-bones-desc)
+      :desc (text-id complication-brittle-bones-desc)
+      :rule-id 'complication-brittle-bones
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-brittle-bones?))
@@ -639,7 +655,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-ohko-name)
-      :description (text-id complication-ohko-desc)
+      :desc (text-id complication-ohko-desc)
+      :rule-id 'complication-ohko
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-ohko?))
@@ -650,7 +667,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-glare-name)
-      :description (text-id complication-glare-desc)
+      :desc (text-id complication-glare-desc)
+      :rule-id 'complication-glare
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-glare?))
@@ -661,7 +679,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-bus-driver-name)
-      :description (text-id complication-bus-driver-desc)
+      :desc (text-id complication-bus-driver-desc)
+      :rule-id 'complication-bus-driver
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-bus-driver?))
@@ -672,7 +691,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-jak-rabbit-name)
-      :description (text-id complication-jak-rabbit-desc)
+      :desc (text-id complication-jak-rabbit-desc)
+      :rule-id 'complication-jak-rabbit
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-jak-rabbit?))
@@ -683,7 +703,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-butter-fingers-name)
-      :description (text-id complication-butter-fingers-desc)
+      :desc (text-id complication-butter-fingers-desc)
+      :rule-id 'complication-butter-fingers
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-butter-fingers?))
@@ -694,7 +715,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-invisible-man-name)
-      :description (text-id complication-invisible-man-desc)
+      :desc (text-id complication-invisible-man-desc)
+      :rule-id 'complication-invisible-man
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-invisible-man?))
@@ -705,7 +727,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-invert-name)
-      :description (text-id complication-invert-desc)
+      :desc (text-id complication-invert-desc)
+      :rule-id 'complication-invert
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-invert?))
@@ -716,7 +739,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-twisted-name)
-      :description (text-id complication-twisted-desc)
+      :desc (text-id complication-twisted-desc)
+      :rule-id 'complication-twisted
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-twisted?))
@@ -733,7 +757,8 @@
   `(mod-progress-new-generic-link-to-scrolling-page (text-id mod-progress-punishment-options)
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-countdown-name)
-      :description (text-id punishment-countdown-desc)
+      :desc (text-id punishment-countdown-desc)
+      :rule-id 'punishment-countdown
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-countdown?))
@@ -744,7 +769,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-fall-damage-name)
-      :description (text-id punishment-fall-damage-desc)
+      :desc (text-id punishment-fall-damage-desc)
+      :rule-id 'punishment-fall-damage
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-fall-damage?))
@@ -755,7 +781,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-trip-name)
-      :description (text-id punishment-trip-desc)
+      :desc (text-id punishment-trip-desc)
+      :rule-id 'punishment-trip
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-trip?))
@@ -766,7 +793,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-edge-name)
-      :description (text-id punishment-edge-desc)
+      :desc (text-id punishment-edge-desc)
+      :rule-id 'punishment-edge
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-edge?))
@@ -777,7 +805,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-extra-rule-name)
-      :description (text-id punishment-extra-rule-desc)
+      :desc (text-id punishment-extra-rule-desc)
+      :rule-id 'punishment-extra-rule
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-extra-rule?))
@@ -788,7 +817,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-crash-name)
-      :description (text-id punishment-crash-desc)
+      :desc (text-id punishment-crash-desc)
+      :rule-id 'punishment-crash
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-crash?))
@@ -799,7 +829,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-delay-name)
-      :description (text-id punishment-delay-desc)
+      :desc (text-id punishment-delay-desc)
+      :rule-id 'punishment-delay
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-delay?))
@@ -810,7 +841,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-blind-name)
-      :description (text-id punishment-blind-desc)
+      :desc (text-id punishment-blind-desc)
+      :rule-id 'punishment-blind
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-blind?))
@@ -821,7 +853,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-iframes-name)
-      :description (text-id punishment-iframes-desc)
+      :desc (text-id punishment-iframes-desc)
+      :rule-id 'punishment-iframes
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-iframes?))
@@ -832,7 +865,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-camera-name)
-      :description (text-id punishment-camera-desc)
+      :desc (text-id punishment-camera-desc)
+      :rule-id 'punishment-camera
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-camera?))
@@ -843,7 +877,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-ohko-name)
-      :description (text-id punishment-ohko-desc)
+      :desc (text-id punishment-ohko-desc)
+      :rule-id 'punishment-ohko
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-ohko?))
@@ -854,7 +889,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-reset-name)
-      :description (text-id punishment-reset-desc)
+      :desc (text-id punishment-reset-desc)
+      :rule-id 'punishment-reset
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-reset?))
@@ -865,7 +901,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-kick-name)
-      :description (text-id punishment-kick-desc)
+      :desc (text-id punishment-kick-desc)
+      :rule-id 'punishment-kick
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-kick?))
@@ -876,7 +913,8 @@
       )
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id punishment-pause-name)
-      :description (text-id punishment-pause-desc)
+      :desc (text-id punishment-pause-desc)
+      :rule-id 'punishment-pause
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* punishment-pause?))
@@ -902,7 +940,7 @@
     (mod-option-countup-timer)
     (new 'static 'mod-menu-generic-slider-option
       :name (text-id mod-progress-countdown-start-time)
-      :description (text-id mod-progress-countdown-start-time-desc)
+      :desc (text-id mod-progress-countdown-start-time-desc)
       :min-value 5.0
       :max-value 600.0
       :step 5.0
@@ -916,7 +954,7 @@
       )
     (new 'static 'mod-menu-generic-slider-option
       :name (text-id mod-progress-time-limit-multiplier)
-      :description (text-id mod-progress-time-limit-multiplier-desc)
+      :desc (text-id mod-progress-time-limit-multiplier-desc)
       :min-value 0.5
       :max-value 2.0
       :step 0.01
@@ -930,7 +968,7 @@
       )
     (new 'static 'mod-menu-generic-slider-option
       :name (text-id mod-progress-tier-1-increment)
-      :description (text-id mod-progress-tier-1-increment-desc)
+      :desc (text-id mod-progress-tier-1-increment-desc)
       :min-value -10.0
       :max-value 30.0
       :step 1.0
@@ -944,7 +982,7 @@
       )
     (new 'static 'mod-menu-generic-slider-option
       :name (text-id mod-progress-tier-2-increment)
-      :description (text-id mod-progress-tier-2-increment-desc)
+      :desc (text-id mod-progress-tier-2-increment-desc)
       :min-value -60.0
       :max-value 60.0
       :step 1.0
@@ -958,7 +996,7 @@
       )
     (new 'static 'mod-menu-generic-slider-option
       :name (text-id mod-progress-tier-3-increment)
-      :description (text-id mod-progress-tier-3-increment-desc)
+      :desc (text-id mod-progress-tier-3-increment-desc)
       :min-value -30.0
       :max-value 120.0
       :step 1.0
@@ -972,7 +1010,7 @@
       )
     (new 'static 'mod-menu-generic-slider-option
       :name (text-id mod-progress-compliance-increment)
-      :description (text-id mod-progress-compliance-increment-desc)
+      :desc (text-id mod-progress-compliance-increment-desc)
       :min-value 0.0
       :max-value 30.0
       :step 1.0
@@ -986,7 +1024,7 @@
       )
     (new 'static 'mod-menu-generic-slider-option
       :name (text-id mod-progress-condition-delay)
-      :description (text-id mod-progress-condition-delay-desc)
+      :desc (text-id mod-progress-condition-delay-desc)
       :min-value 0.0
       :max-value 30.0
       :step 1.0
@@ -1025,7 +1063,7 @@
 (defmacro mod-option-difficulty ()
   '(new 'static 'mod-menu-generic-carousel-option
     :name (text-id mod-progress-difficulty)
-    :description (text-id mod-progress-difficulty-desc)
+    :desc (text-id mod-progress-difficulty-desc)
     :items (new 'static 'boxed-array :type text-id
       (text-id mod-progress-difficulty-1)
       (text-id mod-progress-difficulty-2)
@@ -1051,7 +1089,7 @@
 (defmacro mod-option-countup-timer ()
   '(new 'static 'mod-menu-generic-boolean-option
     :name (text-id mod-progress-countup-timer)
-    :description (text-id mod-progress-countup-timer-desc)
+    :desc (text-id mod-progress-countup-timer-desc)
     :truthy-text (text-id progress-on)
     :falsey-text (text-id progress-off)
     :get-value-fn (lambda () (-> *complicated-settings* show-countup-timer?))
@@ -1065,7 +1103,7 @@
 (defmacro mod-option-text-scale ()
   '(new 'static 'mod-menu-generic-slider-option
     :name (text-id mod-progress-text-scale)
-    :description (text-id mod-progress-text-scale-desc)
+    :desc (text-id mod-progress-text-scale-desc)
     :min-value 0.5
     :max-value 1.0
     :step 0.01
@@ -1082,7 +1120,7 @@
 (defmacro mod-option-pass-credits ()
   '(new 'static 'mod-menu-generic-slider-option
     :name (text-id mod-progress-pass-credits)
-    :description (text-id mod-progress-pass-credits-desc)
+    :desc (text-id mod-progress-pass-credits-desc)
     :min-value 1.0
     :max-value 100.0
     :step 1.0
@@ -1099,7 +1137,7 @@
 (defmacro mod-option-active-conditions ()
   '(new 'static 'mod-menu-generic-slider-option
     :name (text-id mod-progress-active-conditions)
-    :description (text-id mod-progress-active-conditions-desc)
+    :desc (text-id mod-progress-active-conditions-desc)
     :min-value 0.0
     :max-value 5.0
     :step 1.0

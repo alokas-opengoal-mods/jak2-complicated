@@ -260,6 +260,20 @@ This file is for the mod HUD draw functions
   )
 
 
+(defun mod-rule-description-format ((id symbol))
+  "Formatting for descriptions with value fields"
+  (case id
+    (('complication-twisted)
+      (string-format (text-id->string (mod-rule-description id))
+        (- (-> *MOD-rule-context-bank* twist-pending-count) (-> *MOD-stats-bank* rules-rolled))
+        )
+      )
+    (else
+      (text-id->string (mod-rule-description id))
+      )
+    )
+  )
+
 ;; Draw one slot's HUD block: name, description, punishment, progress, timer,
 ;; pass hint, plus extras for some rules (distance, last kill, etc).
 (defun mod-rule-desc-essential? ((id symbol))
@@ -304,7 +318,7 @@ This file is for the mod HUD draw functions
       (set! text-scale 0.35)
       (set! text-box-height (mod-text-box-relative-height text-scale 2))
       (mod-draw-text
-        (text-id->string (mod-rule-description id))
+        (mod-rule-description-format id)
         *mod-hud-x*
         row
         *mod-hud-slot-width*

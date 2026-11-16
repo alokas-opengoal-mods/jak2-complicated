@@ -4,7 +4,9 @@
 
 #|
 These are customized menu option draw methods from progress-generic-draw-pc.gc
-for the complicated menu page
+for the complicated menu page.
+
+TO-DO: cleanup repeated code in functions
 |#
 
 ;; (defglobalconstant DEBUG_PAGE_ROWS #f)
@@ -164,6 +166,27 @@ for the complicated menu page
 ;;   0)
 
 
+;; (defun mod-draw-menu-option-text ((obj menu-generic-option) (font-ctx font-context) (alpha float) (menu-part symbol))
+;;   (case menu-part
+;;     (('name)
+;;       (set-flags! font-ctx (font-flags kerning large))
+;;       (print-game-text (lookup-text! *common-text* (-> obj name) #f) font-ctx #f 44 (bucket-id progress))
+;;       )
+;;     (('description)
+;;       (let ((desc-font-ctx (new 'stack 'font-context *font-default-matrix* 0 0 0.0 (font-color white) (font-flags))))
+;;         (set-origin! desc-font-ctx (the int (-> font-ctx origin x)) (the int (-> font-ctx origin y)))
+;;         (set-flags! desc-font-ctx (font-flags kerning large))
+;;         (set-scale! desc-font-ctx 0.3)
+;;         (set-color! desc-font-ctx (font-color progress))
+;;         (set-alpha! desc-font-ctx alpha)
+;;         (+! (-> desc-font-ctx origin y) 20)
+;;         (print-game-text (lookup-text! *common-text* (-> obj desc) #f) desc-font-ctx #f 44 (bucket-id progress))
+;;         )
+;;       )
+;;     )
+;;   (none)
+;;   )
+
 
 (defmethod draw-option ((obj mod-menu-generic-scrolling-page) (progress progress) (font-ctx font-context) (arg3 int) (arg4 symbol))
   (when (or (zero? (-> obj mounted?)) (not (-> obj mounted?)))
@@ -279,8 +302,7 @@ for the complicated menu page
           (set-alpha! desc-font-ctx alpha)
           (+! (-> desc-font-ctx origin y) 20)
 
-          ;; (print-game-text (lookup-text! *common-text* (-> obj description) #f) desc-font-ctx #f 44 (bucket-id progress))
-          (print-game-text (text-id->string (-> obj description)) desc-font-ctx #f 44 (bucket-id progress))
+          (print-game-text (lookup-text! *common-text* (-> obj desc) #f) desc-font-ctx #f 44 (bucket-id progress))
           )
 
         ;; Draw option value
@@ -319,7 +341,7 @@ for the complicated menu page
               (set-alpha! desc-font-ctx alpha)
               (+! (-> desc-font-ctx origin y) 20)
 
-              (print-game-text (lookup-text! *common-text* (-> obj description) #f) desc-font-ctx #f 44 (bucket-id progress))
+              (print-game-text (lookup-text! *common-text* (-> obj desc) #f) desc-font-ctx #f 44 (bucket-id progress))
               )
             )
           (else
@@ -378,7 +400,7 @@ for the complicated menu page
           (set-alpha! desc-font-ctx alpha)
           (+! (-> desc-font-ctx origin y) 20)
           
-          (print-game-text (lookup-text! *common-text* (-> obj description) #f) desc-font-ctx #f 44 (bucket-id progress))
+          (print-game-text (lookup-text! *common-text* (-> obj desc) #f) desc-font-ctx #f 44 (bucket-id progress))
           )
         )
       ((and (nonzero? (-> obj should-disable?))
@@ -404,7 +426,7 @@ for the complicated menu page
           (set-alpha! desc-font-ctx alpha)
           (+! (-> desc-font-ctx origin y) 20)
           
-          (print-game-text (lookup-text! *common-text* (-> obj description) #f) desc-font-ctx #f 44 (bucket-id progress))
+          (print-game-text (lookup-text! *common-text* (-> obj desc) #f) desc-font-ctx #f 44 (bucket-id progress))
           )
         )
       )
@@ -505,7 +527,7 @@ for the complicated menu page
         ;;   (set-alpha! desc-font-ctx alpha)
         ;;   (+! (-> desc-font-ctx origin y) 20)
 
-        ;;   (print-game-text (lookup-text! *common-text* (-> obj description) #f) desc-font-ctx #f 44 (bucket-id progress))
+        ;;   (print-game-text (lookup-text! *common-text* (-> obj desc) #f) desc-font-ctx #f 44 (bucket-id progress))
         ;;   )
 
         ;; Draw option value
@@ -548,7 +570,7 @@ for the complicated menu page
             ;;   (set-alpha! desc-font-ctx alpha)
             ;;   (+! (-> desc-font-ctx origin y) 20)
 
-            ;;   (print-game-text (lookup-text! *common-text* (-> obj description) #f) desc-font-ctx #f 44 (bucket-id progress))
+            ;;   (print-game-text (lookup-text! *common-text* (-> obj desc) #f) desc-font-ctx #f 44 (bucket-id progress))
             ;;   )
             )
           (else
@@ -614,7 +636,7 @@ for the complicated menu page
           (set-alpha! desc-font-ctx alpha)
           (+! (-> desc-font-ctx origin y) 20)
           
-          (print-game-text (lookup-text! *common-text* (-> obj description) #f) desc-font-ctx #f 44 (bucket-id progress))
+          (print-game-text (lookup-text! *common-text* (-> obj desc) #f) desc-font-ctx #f 44 (bucket-id progress))
           )
 
         ;; Draw option value
@@ -677,7 +699,7 @@ for the complicated menu page
               (set-alpha! desc-font-ctx alpha)
               (+! (-> desc-font-ctx origin y) 20)
               
-              (print-game-text (lookup-text! *common-text* (-> obj description) #f) desc-font-ctx #f 44 (bucket-id progress))
+              (print-game-text (lookup-text! *common-text* (-> obj desc) #f) desc-font-ctx #f 44 (bucket-id progress))
               )
             )
           (else
