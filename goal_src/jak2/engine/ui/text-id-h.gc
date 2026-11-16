@@ -967,6 +967,8 @@
   (rule-green-pilled-desc #x501f)
   (rule-button-pusher-name #x5020)
   (rule-button-pusher-desc #x5021)
+  (rule-cooked-name #x5022)
+  (rule-cooked-desc #x5023)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)

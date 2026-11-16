@@ -73,7 +73,7 @@ Process of adding a new condition:
     'rule-green-pilled
     'rule-button-pusher
     'complication-invisible-man
-    ;; 'rule-cooked
+    'rule-cooked
     ;; 'complication-joyride
     ;; 'complication-critical
     ;; 'rule-sagging-sails
@@ -353,6 +353,17 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 45)
       :roll-weight 50
+      :progress? #f
+      )
+    ;; rule-cooked
+    (new 'static 'mod-rule
+      :name-text (text-id rule-cooked-name)
+      :desc-text (text-id rule-cooked-desc)
+      :rule-id 'rule-cooked
+      :rule-type 'rule
+      :duration (seconds 35)
+      :roll-weight 50
+      :counter-goal 1
       :progress? #f
       )
     )

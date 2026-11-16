@@ -364,6 +364,9 @@
   "5020": "Interaction Man",
   "5021": "Interact with a button or a switch.",
 
+  "5022": "Cooked",
+  "5023": "Burn or melt Jak.",
+
 
   // Complications
   "6000": "Brittle Bones",
@@ -384,8 +387,8 @@
   "600c": "Butterfingers",
   "600d": "Jak cannot grab ledges.",
 
-  "6010": "Invisible Man",
-  "6011": "Jak is invisible.",
+  "6010": "Invisibility",
+  "6011": "You are invisible.",
 
   // Punishments
   "7000": "Lose Time",

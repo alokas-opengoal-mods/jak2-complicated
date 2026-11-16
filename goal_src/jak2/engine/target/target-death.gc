@@ -577,6 +577,7 @@
   (let ((v1-26 (-> arg0 mode)))
     (cond
       ((or (= v1-26 'burn) (or (= v1-26 'burnup) (= v1-26 'lava)))
+       (mod-rule-counter-add-progress 'rule-cooked 1) ;; Mod change
        (if (not (handle->process (-> self burn-proc)))
            (set! (-> self burn-proc)
                  (ppointer->handle (process-spawn-function process process-drawable-burn-effect 1200 :to self))
@@ -1005,6 +1006,7 @@
                 )
               )
              (('lava 'melt)
+              (mod-rule-counter-add-progress 'rule-cooked 1) ;; Mod change
               (pickup-collectable! (-> self fact) (pickup-type health) -1000.0 (the-as handle #f))
               (part-tracker-spawn :to *entity-pool* :group group-lava-death :mat-joint (-> self control trans))
               (set! (-> sv-32 angle) 'lava)

@@ -1081,8 +1081,8 @@
 
 ;; Roll conditions for each rule
 (defun mod-rule-can-roll? ((id symbol))
-  (let ((is-pilot? (mod-target-on-mode? 'pilot))
-        (is-racer? (mod-target-on-mode? 'racer))
+  (let ((is-pilot? (or (mod-target-on-mode? 'pilot)
+                       (mod-target-on-mode? 'racer)))
         (is-mech? (mod-target-on-mode? 'mech))
         (is-turret? (mod-target-on-mode? 'turret))
         (is-indax? (mod-target-on-mode? 'indax))
@@ -1094,9 +1094,8 @@
         )
     (case id
       (('rule-grounded)
-        (or
+        (and
           (not is-pilot?)
-          (not is-racer?)
           (not is-turret?)
           (not is-minigame?)
           )
@@ -1108,97 +1107,98 @@
         (not is-minigame?)
         )
       (('rule-kill-pressure)
-        (or
+        (and
           (not (sparse-enemy-level? level-name))
-          (not is-racer?)
+          (not (in-race?))
           (not is-minigame?)
           )
         )
       (('rule-hitlist)
-        (or
+        (and
           (not (sparse-hitlist-level? level-name))
           (not is-pilot?)
-          (not is-racer?)
           (not is-turret?)
           (not is-minigame?)
           )
         )
       (('rule-crate-break)
-        (or 
+        (and 
           ;; (level-has-entity? 'crate)
           (level-has-crate? level-name)
           )
         )
       (('complication-brittle-bones)
-        (or
-          (not is-pilot?)
-          (not is-racer?)
+        (and
           (not is-mech?)
           (not is-turret?)
           (not is-minigame?)
+          (not (in-race?))
           )
         )
       (('rule-keep-it-low)
-        (or
+        (and
           (not is-pilot?)
-          (not is-racer?)
           (not is-mech?)
           (not is-turret?)
           (not is-minigame?)
           )
         )
       (('rule-money-pressure)
-        (or 
+        (and 
           (level-has-entity? 'skill)
           (not is-minigame?)
           )
         )
-      ;; (('complication-ohko)
-      ;;   )
+      (('complication-ohko)
+        (not is-minigame?)
+        )
       (('complication-glare)
-        (or
+        (and
           (not (sparse-enemy-level? level-name))
+          (not (in-race?))
+          (not is-minigame?)
           )
         )
       (('rule-flop-this)
-        (not (sparse-enemy-level? level-name))
+        (and
+          (not (sparse-enemy-level? level-name))
+          (not (in-race?))
+          (not (in-bossfight?))
+          (not is-minigame?)
+          )
         )
       (('complication-bus-driver)
-        (or
+        (and
           is-pilot?
-          is-racer?
           )
         )
       (('rule-management)
-        (or
+        (and
           (not is-pilot?)
-          (not is-racer?)
           (not is-turret?)
           (not is-minigame?)
           )
         )
       (('complication-jak-rabbit)
-        (or
+        (and
           (not is-pilot?)
-          (not is-racer?)
           (not is-minigame?)
           )
         )
       (('rule-red-light)
-        (or
+        (and
           (not is-minigame?)
           )
         )
       (('complication-butter-fingers)
-        (or
+        (and
           (not is-pilot?)
-          (not is-racer?)
           (not is-minigame?)
           (not (in-bossfight?))
           )
         )
       (('rule-sniper)
-        (or
+        (and
           (not (sparse-enemy-level? level-name))
           (not is-minigame?)
           (not (in-bossfight?))
@@ -1206,22 +1206,20 @@
           )
         )
       (('rule-green-pilled)
-        (or
+        (and
           (level-has-health-pack? level-name)
           )
         )
       (('rule-button-pusher)
-        (or
+        (and
           (level-has-button? level-name)
           )
         )
-      (('complication-invisible-man)
-        (or
-          (and 
-            (not is-turret?)
-            (task-node-open? (game-task-node drill-ship-resolution))
-            )
-          (not is-minigame?)
+      ;; (('complication-invisible-man)
+      ;;   )
+      (('rule-cooked)
+        (and
+          (level-can-burn? level-name)
           )
         )
       (else #t)
