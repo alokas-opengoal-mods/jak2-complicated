@@ -393,6 +393,9 @@
   "6012": "Inverted",
   "6013": "Controls are inverted.",
 
+  "6014": "Twisted",
+  "6015": "The rule rolled ~D rules from now must be broken.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

@@ -714,6 +714,17 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-twisted-name)
+      :description (text-id complication-twisted-desc)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-twisted?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-twisted?) val)
+        ;; (complicated-settings-save)
+        )
+      )
     )
   )
 

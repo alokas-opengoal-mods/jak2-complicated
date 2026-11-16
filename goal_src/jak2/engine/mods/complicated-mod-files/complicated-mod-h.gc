@@ -84,7 +84,7 @@ Process of adding a new condition:
     ;; 'complication-double-aphids
     'complication-invert
     ;; 'complication-loose-pockets
-    ;; 'complication-twisted
+    'complication-twisted
     ;; 'complication-vibe-check
     ;; 'complication-income-tax
     ;; 'rule-double-kill
@@ -373,6 +373,16 @@ Process of adding a new condition:
       :rule-id 'complication-invert
       :rule-type 'complication
       :duration (seconds 20)
+      :roll-weight 36
+      :progress? #f
+      )
+    ;; complication-twisted
+    (new 'static 'mod-rule
+      :name-text (text-id complication-twisted-name)
+      :desc-text (text-id complication-twisted-desc)
+      :rule-id 'complication-twisted
+      :rule-type 'complication
+      :duration (seconds 8)
       :roll-weight 36
       :progress? #f
       )

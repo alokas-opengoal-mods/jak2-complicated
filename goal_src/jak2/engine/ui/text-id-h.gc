@@ -987,6 +987,8 @@
   (complication-invisible-man-desc #x6011)
   (complication-invert-name #x6012)
   (complication-invert-desc #x6013)
+  (complication-twisted-name #x6014)
+  (complication-twisted-desc #x6015)
 
   ;; Punishments
   (punishment-countdown-name #x7000)
