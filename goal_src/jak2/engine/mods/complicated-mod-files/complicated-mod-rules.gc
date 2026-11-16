@@ -1215,6 +1215,15 @@
           (level-has-button? level-name)
           )
         )
+      (('complication-invisible-man)
+        (or
+          (and 
+            (not is-turret?)
+            (task-node-open? (game-task-node drill-ship-resolution))
+            )
+          (not is-minigame?)
+          )
+        )
       (else #t)
       )
     )

@@ -981,6 +981,8 @@
   (complication-jak-rabbit-desc #x600b)
   (complication-butter-fingers-name #x600c)
   (complication-butter-fingers-desc #x600d)
+  (complication-invisible-man-name #x6010)
+  (complication-invisible-man-desc #x6011)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

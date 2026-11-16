@@ -72,7 +72,7 @@ Process of adding a new condition:
     ;; 'complication-bad-ping
     'rule-green-pilled
     'rule-button-pusher
-    ;; 'complication-invisible-man
+    'complication-invisible-man
     ;; 'rule-cooked
     ;; 'complication-joyride
     ;; 'complication-critical
@@ -343,6 +343,16 @@ Process of adding a new condition:
       :duration (seconds 45)
       :roll-weight 49
       :counter-goal 1
+      :progress? #f
+      )
+    ;; complication-invisible-man
+    (new 'static 'mod-rule
+      :name-text (text-id complication-invisible-man-name)
+      :desc-text (text-id complication-invisible-man-desc)
+      :rule-id 'complication-invisible-man
+      :rule-type 'complication
+      :duration (seconds 45)
+      :roll-weight 50
       :progress? #f
       )
     )

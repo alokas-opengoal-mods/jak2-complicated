@@ -384,6 +384,9 @@
   "600c": "Butterfingers",
   "600d": "Jak cannot grab ledges.",
 
+  "6010": "Invisible Man",
+  "6011": "Jak is invisible.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

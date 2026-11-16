@@ -2222,6 +2222,10 @@
              (not (logtest? (surface-flag gun-inactive gun-hide gun-off laser-hide) (-> self control current-surface flags))
                   )
              )
+        ;; Mod change
+        (when (mod-rule-active? 'complication-invisible-man)
+          (set! (-> self gun laser-active?) #f)
+          )
        (when (and (not (and (not (logtest? (surface-flag gun-inactive gun-hide gun-off) (-> self control current-surface flags)))
                             (time-elapsed? (-> self gun gun-get-on-time) (seconds 0.1))
                             (>= (current-time) (-> self gun surpress-time))

@@ -21,6 +21,7 @@
 (define-extern mod-rule-on-jump (function none))
 (define-extern mod-rule-start-red-shockwave! (function none))
 (define-extern runs-on-jak-death (function symbol none))
+(define-extern runs-on-jak-spawn (function none))
 ;; (define-extern runs-on-enemy-death (function enemy none))
 ;; (define-extern runs-on-crate-break (function crate symbol int none))
 

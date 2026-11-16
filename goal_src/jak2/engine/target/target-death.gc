@@ -342,6 +342,7 @@
          (when a2-26
            (set! (-> s5-8 quad) (-> a2-26 extra trans quad))
            (+! (-> s5-8 y) 9011.2)
+           (runs-on-jak-spawn) ;; Mod change: warp gate spawn
            (go target-warp-in s5-8 (-> arg0 trans) (the-as target a2-26))
            )
          )
@@ -395,6 +396,7 @@
       )
     (ja-channel-set! 1)
     (ja :group! jakb-stance-loop-ja)
+    (runs-on-jak-spawn) ;; Mod change
     (suspend)
     (logior! (-> self control status) (collide-status on-surface on-ground touch-surface))
     (when (-> self mode-cache)
