@@ -248,6 +248,7 @@
 (defstate turn (sew-valve)
   :virtual #t
   :enter (behavior ()
+    (mod-on-button-press) ;; Mod change
     (set! (-> self joint enable) #t)
     (set! (-> self spin-rate) 196608.0)
     (logclear! (-> self mask) (process-mask actor-pause))

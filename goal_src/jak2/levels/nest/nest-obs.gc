@@ -63,6 +63,7 @@
 (defstate down (nest-switch)
   :virtual #t
   :enter (behavior ()
+    (mod-on-button-press) ;; Mod change
     (set-time! (-> self state-time))
     (set! (-> self set-camera) #f)
     )

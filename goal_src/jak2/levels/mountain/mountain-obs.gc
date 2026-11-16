@@ -2704,6 +2704,7 @@
 (defstate pressed (mtn-button)
   :virtual #t
   :code (behavior ((arg0 symbol))
+    (mod-on-button-press) ;; Mod change
     (when (not arg0)
       (let ((gp-0 (-> self on-activate)))
         (if gp-0

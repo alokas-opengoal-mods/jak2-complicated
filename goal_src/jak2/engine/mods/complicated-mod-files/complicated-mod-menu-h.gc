@@ -598,6 +598,17 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-button-pusher-name)
+      :description (text-id rule-button-pusher-desc)
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-button-pusher?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-button-pusher?) val)
+        ;; (complicated-settings-save)
+        )
+      )
     )
   )
 

@@ -1076,6 +1076,7 @@
 (defstate going-down (drill-switch)
   :virtual #t
   :enter (behavior ()
+    (mod-on-button-press) ;; Mod change
     (let ((t9-0 (-> (method-of-type basebutton going-down) enter)))
       (if t9-0
           (t9-0)

@@ -965,6 +965,8 @@
   (rule-red-light-desc #x501d)
   (rule-green-pilled-name #x501e)
   (rule-green-pilled-desc #x501f)
+  (rule-button-pusher-name #x5020)
+  (rule-button-pusher-desc #x5021)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)

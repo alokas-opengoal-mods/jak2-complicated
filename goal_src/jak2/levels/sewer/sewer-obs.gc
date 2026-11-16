@@ -805,6 +805,7 @@
   :enter (behavior ()
     (set! (-> self light-state) #t)
     (sound-play "sew-light-switc")
+    (mod-on-button-press) ;; Mod change
     )
   :code (behavior ()
     (ja-no-eval :group! sew-light-switch-idle-ja :num! (seek!) :frame-num 0.0)

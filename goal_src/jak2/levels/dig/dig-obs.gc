@@ -767,6 +767,7 @@
   :virtual #t
   :code (behavior ()
     (sound-play "dig-button")
+    (mod-on-button-press) ;; Mod change
     (until (= (-> self root trans y) (-> self down-y))
       (seek! (-> self root trans y) (-> self down-y) (* 16384.0 (seconds-per-frame)))
       (logior! (-> self skel status) (joint-control-status sync-math))

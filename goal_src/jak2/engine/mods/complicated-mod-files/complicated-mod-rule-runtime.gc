@@ -830,6 +830,13 @@
     )
   )
 
+(defun mod-rule-trigger-button-pusher ()
+  (when (mod-rule-active? 'rule-button-pusher)
+    (mod-rule-counter-add-progress 'rule-button-pusher 1)
+    )
+  (none)
+  )
+
 (defun mod-rule-update-speed ()
   (when (and *target* (mod-rule-active? 'rule-speed) (>= (-> *target* control ctrl-xz-vel) (meters 40)))
     (mod-rule-counter-add-progress 'rule-speed 1))
@@ -852,6 +859,14 @@
       (pickup-collectable! (-> *target* fact) (pickup-type eco-green) (the-as float -1000.0) (the-as handle #f))
       (if (mod-target-on-mode? 'racer) (target-attack-up *target* 'attack 'explode))))
   (none))
+
+
+(defun mod-on-button-press ()
+  (format #t "Button pressed!~%")
+  (mod-rule-trigger-button-pusher)
+  (none)
+  )
+
 
 (defun global-countdown-paused? ()
   (or (movie?)

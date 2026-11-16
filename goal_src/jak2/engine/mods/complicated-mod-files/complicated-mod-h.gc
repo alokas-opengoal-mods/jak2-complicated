@@ -71,7 +71,7 @@ Process of adding a new condition:
     ;; 'rule-trivia
     ;; 'complication-bad-ping
     'rule-green-pilled
-    ;; 'rule-button-pusher
+    'rule-button-pusher
     ;; 'complication-invisible-man
     ;; 'rule-cooked
     ;; 'complication-joyride
@@ -331,6 +331,17 @@ Process of adding a new condition:
       :rule-type 'rule
       :duration (seconds 60)
       :roll-weight 65
+      :counter-goal 1
+      :progress? #f
+      )
+    ;; rule-button-pusher
+    (new 'static 'mod-rule
+      :name-text (text-id rule-button-pusher-name)
+      :desc-text (text-id rule-button-pusher-desc)
+      :rule-id 'rule-button-pusher
+      :rule-type 'rule
+      :duration (seconds 45)
+      :roll-weight 49
       :counter-goal 1
       :progress? #f
       )

@@ -198,6 +198,7 @@
            (when (and (-> self track-flag) (= (-> self speed) (-> self target-speed)))
              (set! (-> self target-speed) (- (-> self target-speed)))
              (sound-play "cas-shot-switch")
+             (mod-on-button-press) ;; Mod change
              )
            )
          )
@@ -1322,6 +1323,7 @@
            (let* ((s5-0 (the-as object (-> block param 0)))
                   (s4-0 (-> (the-as touching-shapes-entry s5-0) head))
                   )
+             (mod-on-button-press) ;; Mod change
              (while s4-0
                (let ((a0-2 (get-touched-prim s4-0 (the-as collide-shape (-> self root)) (the-as touching-shapes-entry s5-0))))
                  (when (= (-> a0-2 prim-id) 1)

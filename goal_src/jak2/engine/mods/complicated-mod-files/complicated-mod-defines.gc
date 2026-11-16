@@ -14,6 +14,7 @@
 (define-extern mod-rule-active? (function symbol symbol))
 (define-extern mod-timed-punishment-active? (function symbol symbol))
 (define-extern mod-on-damage (function none))
+(define-extern mod-on-button-press (function none))
 (define-extern mod-record-player-hit (function process symbol none))
 (define-extern mod-rule-counter-add-progress (function symbol int none))
 (define-extern mod-rule-fail! (function symbol none))

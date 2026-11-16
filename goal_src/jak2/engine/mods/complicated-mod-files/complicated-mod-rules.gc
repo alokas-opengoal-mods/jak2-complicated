@@ -969,16 +969,31 @@
     )
   )
 
-(defun button-level? ((level symbol))
-  ;; (or (case level
-  ;;       (('jungle 'citadel 'village2) #t)
-  ;;       (else #f))
-  ;;     (and (eq? level 'jungleb) (not (task-complete? *game-info* (game-task jungle-eggtop))))
-  ;;     (and (eq? level 'snow)
-  ;;          (or (not (task-complete? *game-info* (game-task jungle-eggtop)))
-  ;;              (task-complete? *game-info* (game-task beach-flutflut))))
-  ;;     (and (not (mod-target-on-mode? 'flut)) (or (eq? level 'sunken) (eq? level 'sunkenb))))
-  #t
+(defun level-has-button? ((level symbol))
+  (case level
+    (('sewer
+      'mountain
+      'tomba
+      'tombb
+      'tombc
+      'castle
+      ;; 'nest ;; only 1 switch in the beginning
+      )
+      #t
+      )
+    (('drillmid)
+      (not (task-node-open? (game-task-node drill-ship-resolution)))
+      )
+    (('dig3a 'dig3b)
+      (task-node-open? (game-task-node dig-find-totem-raise-log))
+      )
+    (('ctysluma
+      'ctyslumb
+      'ctyinda
+      'ctyindb)
+      (task-node-open? (game-task-node city-power-resolution))
+      )
+    )
   )
 
 ;; True if all villager and oracle cells in the area are bought.
@@ -1193,6 +1208,11 @@
       (('rule-green-pilled)
         (or
           (level-has-health-pack? level-name)
+          )
+        )
+      (('rule-button-pusher)
+        (or
+          (level-has-button? level-name)
           )
         )
       (else #t)

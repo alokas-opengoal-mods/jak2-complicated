@@ -254,6 +254,9 @@
   )
 
 (defmethod press! ((this basebutton) (pressed? symbol))
+  (when pressed?
+    (mod-on-button-press) ;; Mod change
+    )
   (if pressed?
       (logior! (-> this button-status) (button-status pressed))
       (logclear! (-> this button-status) (button-status pressed))
