@@ -87,7 +87,7 @@ Process of adding a new condition:
     'complication-twisted
     'complication-vibe-check
     'complication-income-tax
-    ;; 'rule-double-kill
+    'rule-double-kill
     ;; 'rule-express-delivery
     ;; 'rule-qte
     ;; 'rule-touch-grass
@@ -404,6 +404,17 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 30)
       :roll-weight 29
+      :progress? #f
+      )
+    ;; rule-double-kill
+    (new 'static 'mod-rule
+      :name-text (text-id rule-double-kill-name)
+      :desc-text (text-id rule-double-kill-desc)
+      :rule-id 'rule-double-kill
+      :rule-type 'rule
+      :duration (seconds 45)
+      :roll-weight 50
+      :counter-goal 1
       :progress? #f
       )
     )
