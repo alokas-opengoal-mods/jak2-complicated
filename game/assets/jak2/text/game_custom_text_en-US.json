@@ -390,6 +390,9 @@
   "6010": "Invisibility",
   "6011": "You are invisible.",
 
+  "6012": "Inverted",
+  "6013": "Controls are inverted.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

@@ -82,7 +82,7 @@ Process of adding a new condition:
     ;; 'rule-landlubber
     ;; 'rule-loyal-customer
     ;; 'complication-double-aphids
-    ;; 'complication-invert
+    'complication-invert
     ;; 'complication-loose-pockets
     ;; 'complication-twisted
     ;; 'complication-vibe-check
@@ -364,6 +364,16 @@ Process of adding a new condition:
       :duration (seconds 35)
       :roll-weight 50
       :counter-goal 1
+      :progress? #f
+      )
+    ;; complication-invert
+    (new 'static 'mod-rule
+      :name-text (text-id complication-invert-name)
+      :desc-text (text-id complication-invert-desc)
+      :rule-id 'complication-invert
+      :rule-type 'complication
+      :duration (seconds 20)
+      :roll-weight 36
       :progress? #f
       )
     )
