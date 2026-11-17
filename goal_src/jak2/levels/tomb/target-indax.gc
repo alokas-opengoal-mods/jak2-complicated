@@ -780,6 +780,7 @@
                   (not (logtest? (water-flags touch-water) (-> self water flags)))
                   (not (logtest? (state-flags prevent-jump prevent-double-jump) (-> self state-flags)))
                   )
+             (not (mod-rule-active? 'complication-no-double-jump)) ;; Mod change
              )
         (go
           target-indax-double-jump

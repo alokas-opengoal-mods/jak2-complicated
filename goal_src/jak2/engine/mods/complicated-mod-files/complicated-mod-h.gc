@@ -92,7 +92,7 @@ Process of adding a new condition:
     ;; 'rule-qte
     ;; 'rule-touch-grass
     'complication-mirror
-    ;; 'complication-no-double-jump
+    'complication-no-double-jump
     ;; 'rule-hang-time
     ;; 'complication-unbreakable
     ;; 'complication-get-a-grip
@@ -425,6 +425,16 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 60)
       :roll-weight 37
+      :progress? #f
+      )
+    ;; complication-no-double-jump
+    (new 'static 'mod-rule
+      :name-text (text-id complication-no-double-jump-name)
+      :desc-text (text-id complication-no-double-jump-desc)
+      :rule-id 'complication-no-double-jump
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 52
       :progress? #f
       )
     )

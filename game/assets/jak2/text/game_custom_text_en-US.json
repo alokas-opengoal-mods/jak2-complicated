@@ -365,7 +365,7 @@
   "5021": "Interact with a button or a switch.",
 
   "5022": "Cooked",
-  "5023": "Burn or melt Jak.",
+  "5023": "Burn or melt yourself.",
 
 
   // Complications
@@ -376,7 +376,7 @@
   "6003": "You're limited to 1 HP.",
 
   "6004": "Glare",
-  "6005": "Jak freezes when enemies see him.",
+  "6005": "You freeze when enemies see you.",
 
   "6006": "Roadhog",
   "6007": "Vehicle explodes if it's too slow.",
@@ -385,7 +385,7 @@
   "600b": "Jump heights are doubled.",
 
   "600c": "Butterfingers",
-  "600d": "Jak cannot grab ledges.",
+  "600d": "You cannot grab ledges.",
 
   "6010": "Invisibility",
   "6011": "You are invisible.",
@@ -404,6 +404,9 @@
 
   "601a": "Mirrored",
   "601b": "The world is mirrored.",
+
+  "601c": "One and Done",
+  "601d": "You forgot how to double jump.",
 
   // Punishments
   "7000": "Lose Time",

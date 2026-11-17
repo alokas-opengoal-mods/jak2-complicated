@@ -995,6 +995,8 @@
   (complication-income-tax-desc #x6019)
   (complication-mirror-name #x601a)
   (complication-mirror-desc #x601b)
+  (complication-no-double-jump-name #x601c)
+  (complication-no-double-jump-desc #x601d)
 
   ;; Punishments
   (punishment-countdown-name #x7000)
