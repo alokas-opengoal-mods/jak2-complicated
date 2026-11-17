@@ -1165,6 +1165,8 @@
           (not (in-race?))
           (not (in-bossfight?))
           (not is-minigame?)
+          (not is-indax?)
+          (not is-mech?)
           )
         )
       (('complication-bus-driver)
@@ -1213,6 +1215,7 @@
       (('rule-button-pusher)
         (and
           (level-has-button? level-name)
+          (not is-indax?)
           )
         )
       ;; (('complication-invisible-man)
@@ -1225,7 +1228,10 @@
       ;; (('complication-twisted)
       ;;   )
       (('complication-vibe-check)
-        (> (-> *target* fact health) 2.0)
+        (and
+          (> (-> *target* fact health) 2.0)
+          (not is-mech?)
+          )
         )
       (('complication-income-tax)
         (not (in-bossfight?))

@@ -202,6 +202,7 @@
   )
 
 (defbehavior target-indax-jump-event-handler target ((arg0 process) (arg1 int) (arg2 symbol) (arg3 event-message-block))
+  (mod-rule-on-jump) ;; Mod change
   (let ((s2-0 (new 'stack-no-clear 'vector)))
     (cond
       ((and (= arg2 'touched)
@@ -1048,6 +1049,7 @@
     (target-indax-exit)
     )
   :code (behavior ()
+    (mod-rule-fail! 'rule-management) ;; Mod change
     (if (logtest? (water-flags touch-water) (-> self water flags))
         (sound-play "swim-stroke")
         )
@@ -1289,6 +1291,7 @@
     )
   :trans (-> target-indax-hit trans)
   :code (behavior ((arg0 symbol))
+    (runs-on-jak-death 'dying) ;; Mod change
     (set! (-> self control unknown-word04) (the-as uint #f))
     (set! (-> self control did-move-to-pole-or-max-jump-height)
           (the-as float (send-event (handle->process (-> self attack-info attacker)) 'target 'die arg0))

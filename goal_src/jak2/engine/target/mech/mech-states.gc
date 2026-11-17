@@ -493,6 +493,7 @@
       )
     )
   :enter (behavior ()
+    (mod-rule-fail! 'rule-management) ;; Mod change
     (set-time! (-> self state-time))
     (set! (-> self control mod-surface) *mech-punch-mods*)
     (set! (-> self mech state-impact? 0) #f)
@@ -798,6 +799,7 @@
 (defstate target-mech-jump (target)
   :event (-> target-mech-falling event)
   :enter (behavior ((arg0 float) (arg1 float) (arg2 surface))
+    (mod-rule-on-jump) ;; Mod change
     (set-time! (-> self state-time))
     (logclear! (-> self control status) (collide-status on-surface on-ground touch-surface))
     (let* ((v1-4 *game-info*)
@@ -1028,6 +1030,7 @@
     )
   :trans (-> target-mech-hit trans)
   :code (behavior ((arg0 symbol))
+    (runs-on-jak-death 'dying) ;; Mod change
     (set! (-> self mech stick-off) (the-as basic #t))
     (set! (-> self control unknown-word04) (the-as uint #f))
     (set! (-> self control did-move-to-pole-or-max-jump-height)
@@ -2191,6 +2194,7 @@
 (defstate target-mech-carry-jump (target)
   :event (-> target-mech-carry-falling event)
   :enter (behavior ((arg0 float) (arg1 float) (arg2 symbol))
+    (mod-rule-on-jump) ;; Mod change
     (set-time! (-> self state-time))
     (init-var-jump arg0 arg1 #t #f (-> self control transv) 2.0)
     (logclear! (-> self control status) (collide-status on-surface on-ground touch-surface))

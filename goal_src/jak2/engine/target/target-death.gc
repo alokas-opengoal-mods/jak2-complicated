@@ -348,6 +348,7 @@
          )
        )
       ((logtest? (continue-flags indax) (-> arg0 flags))
+       (runs-on-jak-spawn) ;; Mod change: daxter spawn
        (go target-indax-start (the-as handle #f))
        )
       ((logtest? (continue-flags record-path) (-> arg0 flags))
