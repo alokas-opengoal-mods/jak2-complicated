@@ -1289,6 +1289,13 @@
           (not is-minigame?)
           )
         )
+      (('complication-soul-bond)
+        (and
+          (not (in-race?))
+          (not (in-bossfight?))
+          (not is-minigame?)
+          )
+        )
       (else #t)
       )
     )

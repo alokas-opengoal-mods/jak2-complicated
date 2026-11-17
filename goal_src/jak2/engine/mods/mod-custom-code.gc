@@ -176,7 +176,10 @@ an orb |#
   )
 
 (defun runs-on-jak-spawn ()
-  ;; Code here runs every time jak spawns (loading a file new game or death)   
+  ;; Code here runs every time jak spawns (loading a file new game or death)
+  (if (-> *MOD-tuning-bank* soul-bond-triggered?)
+    (set! (-> *MOD-tuning-bank* soul-bond-triggered?) #f)
+    )
   (mod-rule-trigger-get-a-grip)
   (if (mod-rule-active? 'complication-invisible-man)
     (mod-rule-reapply-slot-visual-effect 'complication-invisible-man)
@@ -204,7 +207,9 @@ an orb |#
 
 (defun runs-on-enemy-death ((this enemy))
   (format #t "Enemy killed!~%")
-  (when (type? (handle->process (-> this incoming attacker-handle)) target)
+  (when (or (type? (handle->process (-> this incoming attacker-handle)) target)
+            (type? (handle->process (-> this incoming attacker-handle)) turret)
+            )
     (let* ((enemy-type (-> this type symbol))
           (was-flop? (mod-enemy-killed-by-flop? this))
           (was-red? (mod-enemy-killed-by-red-eco? this)))

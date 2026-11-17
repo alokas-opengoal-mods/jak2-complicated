@@ -15,6 +15,7 @@
    (fall-damage-far-inc                     float)
    (punishment-input-delay                  float)
    (bad-ping-input-delay                    float)
+   (soul-bond-triggered?                    symbol)
    )
   )
 
@@ -29,6 +30,7 @@
     :fall-damage-far-inc (meters 10.0)
     :punishment-input-delay 0.2
     :bad-ping-input-delay 0.12
+    :soul-bond-triggered? #f
     )
   )
 

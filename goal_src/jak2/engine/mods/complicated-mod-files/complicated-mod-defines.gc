@@ -32,7 +32,7 @@
 (define-extern mod-rule-trigger-glare (function none))
 (define-extern mod-rule-trigger-bus-driver (function symbol))
 (define-extern mod-rule-trigger-get-a-grip (function none))
-
+(define-extern *mod-soul-bond-triggered?* symbol)
 ;; (define-extern *last-launch-time* (int))
 (define *last-launch-time* 0)
 

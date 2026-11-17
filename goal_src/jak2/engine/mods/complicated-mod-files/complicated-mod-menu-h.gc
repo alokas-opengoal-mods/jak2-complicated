@@ -861,6 +861,18 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-soul-bond-name)
+      :desc (text-id complication-soul-bond-desc)
+      :rule-id 'complication-soul-bond
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-soul-bond?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-soul-bond?) val)
+        ;; (complicated-settings-save)
+        )
+      )
     )
   )
 

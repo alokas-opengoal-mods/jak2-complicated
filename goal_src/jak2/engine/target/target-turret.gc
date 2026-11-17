@@ -1138,6 +1138,13 @@
     (send-event (handle->process (-> self hud)) 'hide-and-die)
     )
   :trans (behavior ()
+    ;; Mod change
+    (when (and (mod-rule-active? 'complication-soul-bond)
+               (-> *MOD-tuning-bank* soul-bond-triggered?)
+               )
+      (set! (-> self health) 0.0)
+      )
+      
     (if (<= (the int (-> self health)) 0)
         (go-virtual die)
         )

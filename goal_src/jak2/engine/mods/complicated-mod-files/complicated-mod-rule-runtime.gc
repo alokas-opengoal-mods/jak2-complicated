@@ -799,7 +799,19 @@
 
 (defun mod-rule-trigger-soul-bond ()
   (when (mod-rule-active? 'complication-soul-bond)
-    (send-event *target* 'attack-invinc #f (static-attack-info ((mode (if (mod-target-on-mode? 'flut) 'endlessfall 'melt))))))
+    (format #t "Triggered soul-bond!~%")
+    (set! (-> *MOD-tuning-bank* soul-bond-triggered?) #t)
+    (send-event *target* 'attack-invinc #f
+      (cond 
+        ((= (-> *target* state name) 'target-turret-stance)
+          (static-attack-info ((mode 'turret)))
+          )
+        (else
+          (static-attack-info ((mode 'melt)))
+          )
+        )
+      )
+    )
   (none))
 
 (defun mod-rule-trigger-hitlist ((enemy-type symbol))

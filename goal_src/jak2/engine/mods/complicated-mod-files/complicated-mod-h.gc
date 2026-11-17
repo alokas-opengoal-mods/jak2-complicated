@@ -100,7 +100,7 @@ Process of adding a new condition:
     ;; 'complication-palate-change
     'complication-jak-be-nimble
     'rule-no-harm
-    ;; 'complication-soul-bond
+    'complication-soul-bond
     ;; 'complication-shifty
     ;; 'complication-interference
     ;; 'complication-quicksand
@@ -481,6 +481,16 @@ Process of adding a new condition:
       :rule-type 'rule
       :duration (seconds 30)
       :roll-weight 50
+      :progress? #f
+      )
+    ;; complication-soul-bond
+    (new 'static 'mod-rule
+      :name-text (text-id complication-soul-bond-name)
+      :desc-text (text-id complication-soul-bond-desc)
+      :rule-id 'complication-soul-bond
+      :rule-type 'complication
+      :duration (seconds 40)
+      :roll-weight 60
       :progress? #f
       )
     )
