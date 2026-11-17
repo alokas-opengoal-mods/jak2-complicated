@@ -483,6 +483,13 @@
   "mod-settings.o" ;; added ;;mod-base-change
   "mod-common-functions.o" ;; added
 
+  "target-indax.o"
+  "mech-part.o"
+  "mech.o"
+  "target-mech.o"
+  "mech-states.o"
+  "grunt-mech.o"
+
   "complicated-mod-h.o" ;; Mod change: added
   "complicated-mod-common.o" ;; Mod change: added
   "complicated-mod-rules.o" ;; Mod change: added

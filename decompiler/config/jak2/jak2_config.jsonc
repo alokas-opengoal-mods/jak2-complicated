@@ -139,6 +139,17 @@
   // whether or not to dump out music files to decompiler_out/<game>/audio/music
   "rip_music": false,
 
+  // art groups that should always be possible to access, e.g. "common_art_groups": ["eichar-racer+0-ag", "racer-ag", "ef-plane-ag"]
+  "common_art_groups": [
+    "jak-mech+0-ag",
+    "grunt-mech-anims+0-ag",
+    "jak-indax+0-ag"
+    ],
+
+  // tpages that should always be possible to access, e.g. "common_tpages": [1119],
+  "common_tpages": [
+    ],
+
   ////////////////////////////
   // PATCHING OPTIONS
   ////////////////////////////

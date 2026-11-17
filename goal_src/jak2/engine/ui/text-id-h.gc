@@ -1003,6 +1003,8 @@
   (complication-no-double-jump-desc #x601d)
   (complication-get-a-grip-name #x601e)
   (complication-get-a-grip-desc #x601f)
+  (complication-jak-be-nimble-name #x6020)
+  (complication-jak-be-nimble-desc #x6021)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

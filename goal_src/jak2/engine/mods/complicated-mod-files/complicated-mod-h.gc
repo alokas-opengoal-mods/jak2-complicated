@@ -98,7 +98,7 @@ Process of adding a new condition:
     'complication-get-a-grip
     ;; 'complication-fast-reel
     ;; 'complication-palate-change
-    ;; 'complication-jak-be-nimble
+    'complication-jak-be-nimble
     ;; 'rule-no-harm
     ;; 'complication-soul-bond
     ;; 'complication-shifty
@@ -462,6 +462,16 @@ Process of adding a new condition:
       :roll-weight 30
       :time-goal (seconds 10.0)
       :progress? #t
+      )
+    ;; complication-jak-be-nimble
+    (new 'static 'mod-rule
+      :name-text (text-id complication-jak-be-nimble-name)
+      :desc-text (text-id complication-jak-be-nimble-desc)
+      :rule-id 'complication-jak-be-nimble
+      :rule-type 'complication
+      :duration (seconds 40)
+      :roll-weight 10
+      :progress? #f
       )
     )
   )
