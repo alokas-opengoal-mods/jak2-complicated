@@ -785,6 +785,18 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-mirror-name)
+      :desc (text-id complication-mirror-desc)
+      :rule-id 'complication-mirror
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-mirror?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-mirror?) val)
+        ;; (complicated-settings-save)
+        )
+      )
     )
   )
 

@@ -1238,6 +1238,8 @@
           (not is-minigame?)
           )
         )
+      ;; (('complication-mirror)
+      ;;   )
       (else #t)
       )
     )

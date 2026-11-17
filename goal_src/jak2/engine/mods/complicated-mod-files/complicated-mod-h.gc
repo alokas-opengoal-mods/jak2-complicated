@@ -91,7 +91,7 @@ Process of adding a new condition:
     ;; 'rule-express-delivery
     ;; 'rule-qte
     ;; 'rule-touch-grass
-    ;; 'complication-mirror
+    'complication-mirror
     ;; 'complication-no-double-jump
     ;; 'rule-hang-time
     ;; 'complication-unbreakable
@@ -415,6 +415,16 @@ Process of adding a new condition:
       :duration (seconds 45)
       :roll-weight 50
       :counter-goal 1
+      :progress? #f
+      )
+    ;; complication-mirror
+    (new 'static 'mod-rule
+      :name-text (text-id complication-mirror-name)
+      :desc-text (text-id complication-mirror-desc)
+      :rule-id 'complication-mirror
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 37
       :progress? #f
       )
     )

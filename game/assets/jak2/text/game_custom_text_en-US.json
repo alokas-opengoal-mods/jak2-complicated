@@ -402,6 +402,9 @@
   "6018": "Income Tax",
   "6019": "Timer increments are halved.",
 
+  "601a": "Mirrored",
+  "601b": "The world is mirrored.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

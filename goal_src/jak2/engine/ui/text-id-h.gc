@@ -993,6 +993,8 @@
   (complication-vibe-check-desc #x6017)
   (complication-income-tax-name #x6018)
   (complication-income-tax-desc #x6019)
+  (complication-mirror-name #x601a)
+  (complication-mirror-desc #x601b)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

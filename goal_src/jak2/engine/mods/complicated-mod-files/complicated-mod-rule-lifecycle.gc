@@ -115,7 +115,6 @@
 (defun mod-rule-reapply-slot-visual-effect ((id symbol))
   (case id
     (('complication-mirror) 
-      ;; (set! *mod-mirror-active?* #t)
       (logior! (-> *game-info* secrets) (game-secrets hflip-screen))
       )
     ;; (('complication-hidden-treasure) 
@@ -369,7 +368,6 @@
           ;;   (mod-refresh-money-actors #t)
           ;;   )
           (('complication-mirror) 
-            ;; (set! *mod-mirror-active?* #f)
             (logclear! (-> *game-info* secrets) (game-secrets hflip-screen))
             )
           (('complication-cumbersome) 
