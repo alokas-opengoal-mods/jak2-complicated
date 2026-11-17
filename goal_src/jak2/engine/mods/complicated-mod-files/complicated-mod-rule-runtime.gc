@@ -888,7 +888,12 @@
       ;; (task-complete? *game-info* (game-task finalboss-movies))
       (and *setting-control* (-> *setting-control* user-current movie))
       ;; (and *target* (logtest? (-> *target* state-flags) (state-flags grabbed)))
-      (and *target* (logtest? (-> *target* focus-status) (focus-status grabbed)))
+      (and *target*
+           (logtest? (-> *target* focus-status) (focus-status grabbed))
+           (!= (-> *target* state name) 'target-turret-stance)
+           (not (task-node-open? (game-task-node city-play-onin-game-resolution)))
+           (not (task-node-open? (game-task-node city-whack-resolution)))
+           )
       )
   )
 

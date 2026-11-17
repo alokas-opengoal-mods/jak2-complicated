@@ -1592,7 +1592,9 @@
             (when (not *debug-unkillable*)
               ;; og:preserve-this for damage numbers cheat
               ;; Mod change
-              (when (type? (handle->process (-> this incoming attacker-handle)) target)
+              (when (or (type? (handle->process (-> this incoming attacker-handle)) target)
+                        (type? (handle->process (-> this incoming attacker-handle)) turret)
+                        )
                 (mod-rule-fail! 'rule-no-harm)
                 )
               (#cond
