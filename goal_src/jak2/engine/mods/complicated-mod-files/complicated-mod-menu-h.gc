@@ -168,6 +168,7 @@
     (game-mode                      symbol)
     (text-scale                     float)
     (target-slot-count              int8)
+    (ban-hover?                     symbol)
   )
   (:methods
     (reset (_type_) int)
@@ -198,6 +199,7 @@
   (set! (-> obj game-mode) 'timed)
   (set! (-> obj text-scale) 1.0)
   (set! (-> obj target-slot-count) 1)
+  (set! (-> obj ban-hover?) #t)
   0
   )
 
@@ -251,6 +253,7 @@
 ;;               (("game-mode") (set! (-> obj game-mode) (file-stream-read-symbol file)))
 ;;               (("text-scale") (set! (-> obj text-scale) (file-stream-read-symbol file)))
 ;;               (("target-slot-count") (set! (-> obj target-slot-count) (file-stream-read-int file)))
+;;               (("ban-hover?") (set! (-> obj ban-hover?) (file-stream-read-int file)))
 ;;               )
 ;;             )
 ;;           )
@@ -278,6 +281,7 @@
 ;;     (format file "  (game-mode ~A)~%" (-> obj game-mode))
 ;;     (format file "  (text-scale ~F)~%" (-> obj text-scale))
 ;;     (format file "  (target-slot-count ~D)~%" (-> obj target-slot-count))
+;;     (format file "  (ban-hover? ~D)~%" (-> obj ban-hover?))
 ;;     (format file "  )~%")
 ;;     )
 ;;   0
@@ -1233,6 +1237,20 @@
     )
   )
 
+(defmacro mod-option-ban-hover ()
+  '(new 'static 'mod-menu-generic-boolean-option
+    :name (text-id mod-progress-ban-hover-name)
+    :desc (text-id mod-progress-ban-hover-desc)
+    :truthy-text (text-id progress-on)
+    :falsey-text (text-id progress-off)
+    :get-value-fn (lambda () (-> *complicated-settings* ban-hover?))
+    :on-confirm (lambda ((val symbol))
+      (set! (-> *complicated-settings* ban-hover?) val)
+      ;; (complicated-settings-save)
+      )
+    )
+  )
+
 (defmacro mod-complicated-options ()
   `(progress-new-generic-link-to-scrolling-page (text-id mod-progress-complicated-options)
     (mod-page-timer)
@@ -1242,6 +1260,7 @@
     (mod-option-text-scale)
     (mod-option-pass-credits)
     (mod-option-active-conditions)
+    (mod-option-ban-hover)
     (mod-option-restore-defaults)
     )
   )

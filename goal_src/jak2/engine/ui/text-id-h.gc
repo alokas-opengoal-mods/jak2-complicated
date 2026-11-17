@@ -933,6 +933,8 @@
   (mod-hud-mod-desc #x4039)
   (mod-progress-rule-options #x403a)
   (mod-progress-complication-options #x403b)
+  (mod-progress-ban-hover-name #x403c)
+  (mod-progress-ban-hover-desc #x403d)
 
   ;; Rules
   (unknown-rule-name #x5000)

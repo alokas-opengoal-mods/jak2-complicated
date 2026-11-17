@@ -84,6 +84,19 @@ an orb |#
     (orb-placer-maintenance)
     )
 
+  ;; Mod change: Hover ban measures
+  (when (and (board-hovering?)
+             (-> *complicated-settings* ban-hover?)
+             )
+    (send-event *target* 'attack #f 
+      (static-attack-info
+        ((id (new-attack-id))
+         (mode 'explode))
+         )
+      )
+    (play-custom-sfx sound-green-light 100.0)
+    )
+
   ;; (draw-complicated-mod-title)
   ;; (mod-rule-update-qte)
 
