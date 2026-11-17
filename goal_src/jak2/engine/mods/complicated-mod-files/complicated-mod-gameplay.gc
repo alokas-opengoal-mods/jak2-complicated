@@ -309,13 +309,11 @@
 (define-extern *indax-walk-mods* surface)
 (define-extern *indax-jump-mods* surface)
 (define-extern *indax-double-jump-mods* surface)
-
 (define-extern *mech-walk-mods* surface)
 (define-extern *mech-jump-mods* surface)
 (define-extern *mech-pickup-mods* surface)
 (define-extern *mech-carry-walk-mods* surface)
 (define-extern *mech-carry-jump-mods* surface)
-
 (define-extern *board-walk-mods* surface)
 (define-extern *board-duck-mods* surface)
 (define-extern *board-air-mods* surface)

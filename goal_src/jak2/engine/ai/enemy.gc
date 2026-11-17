@@ -1591,6 +1591,10 @@
             0
             (when (not *debug-unkillable*)
               ;; og:preserve-this for damage numbers cheat
+              ;; Mod change
+              (when (type? (handle->process (-> this incoming attacker-handle)) target)
+                (mod-rule-fail! 'rule-no-harm)
+                )
               (#cond
                 (PC_PORT
                   (let ((old-hp (-> this hit-points))

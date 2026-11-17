@@ -205,7 +205,6 @@ an orb |#
 (defun runs-on-enemy-death ((this enemy))
   (format #t "Enemy killed!~%")
   (when (type? (handle->process (-> this incoming attacker-handle)) target)
-    (mod-rule-fail! 'rule-no-harm)
     (let* ((enemy-type (-> this type symbol))
           (was-flop? (mod-enemy-killed-by-flop? this))
           (was-red? (mod-enemy-killed-by-red-eco? this)))

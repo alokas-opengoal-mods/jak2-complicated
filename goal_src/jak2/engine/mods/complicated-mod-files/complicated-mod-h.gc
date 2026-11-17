@@ -99,7 +99,7 @@ Process of adding a new condition:
     ;; 'complication-fast-reel
     ;; 'complication-palate-change
     'complication-jak-be-nimble
-    ;; 'rule-no-harm
+    'rule-no-harm
     ;; 'complication-soul-bond
     ;; 'complication-shifty
     ;; 'complication-interference
@@ -471,6 +471,16 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 40)
       :roll-weight 10
+      :progress? #f
+      )
+    ;; rule-no-harm
+    (new 'static 'mod-rule
+      :name-text (text-id rule-no-harm-name)
+      :desc-text (text-id rule-no-harm-desc)
+      :rule-id 'rule-no-harm
+      :rule-type 'rule
+      :duration (seconds 30)
+      :roll-weight 50
       :progress? #f
       )
     )

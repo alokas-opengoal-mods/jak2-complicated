@@ -973,6 +973,8 @@
   (rule-cooked-desc #x5023)
   (rule-hang-time-name #x5024)
   (rule-hang-time-desc #x5025)
+  (rule-no-harm-name #x5026)
+  (rule-no-harm-desc #x5027)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)
