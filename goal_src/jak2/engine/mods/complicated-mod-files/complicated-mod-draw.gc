@@ -284,6 +284,8 @@ This file is for the mod HUD draw functions
   (let* ((id (-> (-> *MOD-rule-slot-bank* active-slots) slot))
          (punishment (-> (-> *MOD-rule-slot-bank* slot-punishments) slot))
          (goal (-> (-> *MOD-rule-slot-bank* slot-goals) slot))
+         (time-goal (-> (mod-rule-info-get id) time-goal))
+         (distance-goal (-> (mod-rule-info-get id) distance-goal))
          (progress (-> (-> *MOD-rule-slot-bank* slot-progress) slot))
          (time-left (max 0 (- (-> (-> *MOD-rule-slot-bank* slot-end-times) slot) (current-time))))
          (row y)
@@ -382,18 +384,27 @@ This file is for the mod HUD draw functions
         (case id
           (('rule-hang-time) 
             (set! label (text-id mod-hud-progress))
-            (let* ((elapsed (min (seconds (mod-rule-counter-goal 'rule-hang-time)) (- (current-time) (-> *MOD-rule-context-bank* hang-time-air-start))))
-                     (tenths (the int (* (/ (the float elapsed) (the float (seconds 1))) 10)))
-                     )
-              (set! value (string-format "~D.~D/~D" (/ tenths 10) (mod tenths 10) goal))
+            (let ((elapsed (min time-goal (- (current-time) (-> *MOD-rule-context-bank* hang-time-air-start))))
+                    )
+              (set! value 
+                (string-format "~,,1f/~,,1fs" 
+                  (/ (the float elapsed) (seconds 1))
+                  (/ (the float time-goal) (seconds 1))
+                  )
+                )
               )
             )
           (('rule-distancing) 
             (set! label (text-id mod-hud-distance))
             (set! value
-              (if (> *closest-buzzer-dist* (meters 40)) 
-                "-/8m" 
-                (mod-tenths-str (/ *closest-buzzer-dist* (meters 1)))
+              (if (<= *closest-npc-dist* (meters 40)) 
+                (string-format "~,,1f/~,,1fm"
+                  (/ *closest-npc-dist* (meters 1))
+                  (/ distance-goal (meters 1))
+                  )
+                (string-format "-/~,,1fm"
+                  (/ distance-goal (meters 1))
+                  )
                 )
               )
             )

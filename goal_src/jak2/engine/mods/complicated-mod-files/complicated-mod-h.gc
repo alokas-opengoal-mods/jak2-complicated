@@ -93,7 +93,7 @@ Process of adding a new condition:
     ;; 'rule-touch-grass
     'complication-mirror
     'complication-no-double-jump
-    ;; 'rule-hang-time
+    'rule-hang-time
     ;; 'complication-unbreakable
     ;; 'complication-get-a-grip
     ;; 'complication-fast-reel
@@ -126,6 +126,8 @@ Process of adding a new condition:
    (duration            time-frame)
    (grace-period        time-frame)
    (counter-goal        int16)
+   (time-goal           time-frame)
+   (distance-goal           meters)
    (roll-weight         int16)
    (progress?           symbol) ;; Whether to show the progress counter in HUD
    )
@@ -268,6 +270,7 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 30)
       :grace-period (seconds 3)
+      :distance-goal (meters 25)
       :roll-weight 147
       :progress? #t
       )
@@ -321,6 +324,7 @@ Process of adding a new condition:
       :duration (seconds 60)
       :roll-weight 50
       :counter-goal 1
+      :distance-goal (meters 60)
       :progress? #t
       )
     ;; rule-green-pilled
@@ -436,6 +440,17 @@ Process of adding a new condition:
       :duration (seconds 60)
       :roll-weight 52
       :progress? #f
+      )
+    ;; rule-hang-time
+    (new 'static 'mod-rule
+      :name-text (text-id rule-hang-time-name)
+      :desc-text (text-id rule-hang-time-desc)
+      :rule-id 'rule-hang-time
+      :rule-type 'rule
+      :duration (seconds 75)
+      :roll-weight 30
+      :time-goal (seconds 3.0)
+      :progress? #t
       )
     )
   )

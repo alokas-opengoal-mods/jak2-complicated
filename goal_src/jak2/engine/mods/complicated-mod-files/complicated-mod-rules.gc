@@ -830,13 +830,20 @@
   )
 
 (defun hang-time-level? ((level symbol))
-  ;; (or (case level
-  ;;       (('village1 'beach 'jungle 'misty 'swamp 'sunkenb 'snow 'maincave 'robocave) #t)
-  ;;       (else #f))
-  ;;     (string= (current-checkpoint-name) "citadel-start")
-  ;;     (string= (current-checkpoint-name) "citadel-launch-start")
-  ;;     (string= (current-checkpoint-name) "citadel-launch-end"))
-  #t
+  (or (city-level? level)
+      (case level
+        (('drillmid
+          'palcab
+          'mountain
+          'tomba
+          'tombb
+          'dig1
+          'dig3a
+          'dig3b)
+          #t
+          )
+        )
+      )
   )
 
 ;; (defun mod-all-bone-bridges-down? ()
@@ -1246,6 +1253,16 @@
         )
       ;; (('complication-mirror)
       ;;   )
+      (('rule-hang-time)
+        (and
+          (not (in-race?))
+          (not (in-bossfight?))
+          (not is-turret?)
+          (not is-mech?)
+          (not is-indax?)
+          (not is-minigame?)
+          )
+        )
       (else #t)
       )
     )
