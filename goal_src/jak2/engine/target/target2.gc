@@ -757,6 +757,7 @@
     (set! (-> self control draw-offset y) 0.0)
     )
   :trans (behavior ()
+    (mod-rule-trigger-get-a-grip) ;; Mod change
     (when (and (time-elapsed? (-> self state-time) (seconds 0.2))
                ;; og:preserve-this - High FPS Fix - https://github.com/open-goal/jak-project/pull/3178
                (recently-pressed? x)

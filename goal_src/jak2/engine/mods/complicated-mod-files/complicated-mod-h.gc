@@ -95,7 +95,7 @@ Process of adding a new condition:
     'complication-no-double-jump
     'rule-hang-time
     ;; 'complication-unbreakable
-    ;; 'complication-get-a-grip
+    'complication-get-a-grip
     ;; 'complication-fast-reel
     ;; 'complication-palate-change
     ;; 'complication-jak-be-nimble
@@ -450,6 +450,17 @@ Process of adding a new condition:
       :duration (seconds 75)
       :roll-weight 30
       :time-goal (seconds 3.0)
+      :progress? #t
+      )
+    ;; complication-get-a-grip
+    (new 'static 'mod-rule
+      :name-text (text-id complication-get-a-grip-name)
+      :desc-text (text-id complication-get-a-grip-desc)
+      :rule-id 'complication-get-a-grip
+      :rule-type 'complication
+      :duration (seconds 40)
+      :roll-weight 30
+      :time-goal (seconds 10.0)
       :progress? #t
       )
     )

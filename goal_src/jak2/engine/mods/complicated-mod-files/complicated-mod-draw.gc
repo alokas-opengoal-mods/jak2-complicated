@@ -268,6 +268,11 @@ This file is for the mod HUD draw functions
         (- (-> *MOD-rule-context-bank* twist-pending-count) (-> *MOD-stats-bank* rules-rolled))
         )
       )
+    ;; (('complication-get-a-grip)
+    ;;   (string-format (text-id->string (mod-rule-description id))
+    ;;     (/ (mod-apply-time-limit-multiplier (-> (mod-rule-info-get id) time-goal)) (seconds 1))
+    ;;     )
+    ;;   )
     (else
       (text-id->string (mod-rule-description id))
       )
@@ -445,8 +450,18 @@ This file is for the mod HUD draw functions
           (('complication-get-a-grip) 
             (set! label (text-id mod-hud-death))
             (let* ((elapsed (- (current-time) (-> *MOD-rule-context-bank* get-a-grip-last-grab)))
-                   (grip-left (max 0 (- (mod-apply-time-limit-multiplier (seconds 12)) elapsed))))
-              (set! value (string-format "~D/~D" progress goal))
+                   (grip-left (max 0 (- (mod-apply-time-limit-multiplier time-goal) elapsed))))
+              (set! value 
+                (string-format
+                  "~,,1fs"
+                  (/ (the float grip-left) (seconds 1))
+                  )
+                ;; (string-format
+                ;;   "~,,1f/~,,1fs"
+                ;;   (/ (the float grip-left) (seconds 1))
+                ;;   (/ (the float time-goal) (seconds 1))
+                ;;   )
+                )
               )
             )
           (else 

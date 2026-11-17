@@ -413,6 +413,9 @@
   "601c": "One and Done",
   "601d": "You forgot how to double jump.",
 
+  "601e": "Get a Grip",
+  "601f": "Grab ledges or die.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

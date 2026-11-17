@@ -1001,6 +1001,8 @@
   (complication-mirror-desc #x601b)
   (complication-no-double-jump-name #x601c)
   (complication-no-double-jump-desc #x601d)
+  (complication-get-a-grip-name #x601e)
+  (complication-get-a-grip-desc #x601f)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

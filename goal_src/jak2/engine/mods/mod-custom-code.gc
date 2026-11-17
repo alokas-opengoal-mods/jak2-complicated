@@ -177,7 +177,7 @@ an orb |#
 
 (defun runs-on-jak-spawn ()
   ;; Code here runs every time jak spawns (loading a file new game or death)   
-  ;; (mod-rule-trigger-get-a-grip)
+  (mod-rule-trigger-get-a-grip)
   (if (mod-rule-active? 'complication-invisible-man)
     (mod-rule-reapply-slot-visual-effect 'complication-invisible-man)
     (when (-> *MOD-target-mesh-bank* invis-active?)
