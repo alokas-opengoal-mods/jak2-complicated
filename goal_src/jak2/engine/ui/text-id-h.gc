@@ -975,6 +975,8 @@
   (rule-hang-time-desc #x5025)
   (rule-no-harm-name #x5026)
   (rule-no-harm-desc #x5027)
+  (rule-keep-rolling-name #x5028)
+  (rule-keep-rolling-desc #x5029)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)

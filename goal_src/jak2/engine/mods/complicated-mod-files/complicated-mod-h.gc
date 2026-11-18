@@ -107,7 +107,7 @@ Process of adding a new condition:
     ;; 'complication-lights-out
     ;; 'rule-supercharged
     ;; 'complication-half-price
-    ;; 'rule-keep-rolling
+    'rule-keep-rolling
     ;; 'complication-energy-boost
     ;; 'rule-uncharted
     ;; 'rule-bonecracker
@@ -497,11 +497,22 @@ Process of adding a new condition:
     (new 'static 'mod-rule
       :name-text (text-id complication-shifty-name)
       :desc-text (text-id complication-shifty-desc)
-      :rule-id 'complicomplication-shifty
+      :rule-id 'complication-shifty
       :rule-type 'complication
       :duration (seconds 90)
       :roll-weight 40
       :progress? #f
+      )
+    ;; rule-keep-rolling
+    (new 'static 'mod-rule
+      :name-text (text-id rule-keep-rolling-name)
+      :desc-text (text-id rule-keep-rolling-desc)
+      :rule-id 'rule-keep-rolling
+      :rule-type 'rule
+      :duration (seconds 35)
+      :roll-weight 50
+      :counter-goal 30
+      :progress? #t
       )
     )
   )

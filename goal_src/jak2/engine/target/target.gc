@@ -3420,6 +3420,7 @@
       )
     )
   :enter (behavior ()
+    (mod-rule-counter-add-progress 'rule-keep-rolling 1) ;; Mod change
     (target-collide-set! 'duck 1.0)
     (set-time! (-> self state-time))
     (set! (-> self neck flex-blend) 0.0)
