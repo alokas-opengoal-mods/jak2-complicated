@@ -431,6 +431,9 @@
   "6024": "Shifty",
   "6025": "You randomly teleport short distances.",
 
+  "6026": "Lights Out",
+  "6027": "Good night.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

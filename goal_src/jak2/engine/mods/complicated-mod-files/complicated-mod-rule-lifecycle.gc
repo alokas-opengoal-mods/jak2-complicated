@@ -59,35 +59,92 @@
     )
   (none))
 
-;; (defun mod-rule-lights-out-activate! ()
-;;   (set! (-> *MOD-lights-out-bank* active?) #t)
-;;   (dotimes (i (-> *level* length))
-;;     (let ((lev (-> *level* level i)))
-;;       (cond
-;;         ((and (= (-> lev name) 'maincave) (!= (-> lev mood-func) update-mood-lights-out))
-;;          (set! (-> *MOD-lights-out-bank* maincave-mood) (-> lev mood))
-;;          (set! (-> *MOD-lights-out-bank* maincave-mood-func) (-> lev mood-func))
-;;          (set! (-> lev mood) *lights-out-mood*)
-;;          (set! (-> lev mood-func) update-mood-lights-out))
-;;         ((and (= (-> lev name) 'robocave) (!= (-> lev mood-func) update-mood-lights-out))
-;;          (set! (-> *MOD-lights-out-bank* robocave-mood) (-> lev mood))
-;;          (set! (-> *MOD-lights-out-bank* robocave-mood-func) (-> lev mood-func))
-;;          (set! (-> lev mood) *lights-out-mood*)
-;;          (set! (-> lev mood-func) update-mood-lights-out)))))
-;;   (none))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; complication-lights-out
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (defun mod-rule-lights-out-deactivate! ()
-;;   (set! (-> *MOD-lights-out-bank* active?) #f)
-;;   (dotimes (i (-> *level* length))
-;;     (let ((lev (-> *level* level i)))
-;;       (cond
-;;         ((and (= (-> lev name) 'maincave) (= (-> lev mood-func) update-mood-lights-out))
-;;          (set! (-> lev mood) (-> *MOD-lights-out-bank* maincave-mood))
-;;          (set! (-> lev mood-func) (-> *MOD-lights-out-bank* maincave-mood-func)))
-;;         ((and (= (-> lev name) 'robocave) (= (-> lev mood-func) update-mood-lights-out))
-;;          (set! (-> lev mood) (-> *MOD-lights-out-bank* robocave-mood))
-;;          (set! (-> lev mood-func) (-> *MOD-lights-out-bank* robocave-mood-func))))))
-;;   (none))
+;; One backup per regular level slot.
+(deftype mod-mood-backups (structure)
+  ((context       mood-context LEVEL_MAX :inline)
+   (func          (function mood-context float int none) LEVEL_MAX)
+   (level-name    symbol LEVEL_MAX)
+   (saved?        symbol LEVEL_MAX))
+  )
+
+(define *MOD-mood-backups*
+  (new 'static 'mod-mood-backups)
+  )
+
+(define *MOD-lights-out-tie-envmap-mask*
+  (vu1-renderer-mask 
+    tie-envmap 
+    tie-envmap-scissor 
+    tie-envmap-trans
+    tie-envmap-scissor-trans 
+    tie-envmap-water 
+    tie-envmap-scissor-water
+    )
+  )
+
+(define *MOD-lights-out-saved-tie-envmap-mask* (the-as vu1-renderer-mask 0))
+
+(defun mod-lights-out! ((enabled? symbol))
+  (when (and enabled? (not (-> *MOD-lights-out-bank* active?)))
+    (set! *MOD-lights-out-saved-tie-envmap-mask*
+          (logand (-> *display* vu1-enable-user) *MOD-lights-out-tie-envmap-mask*))
+    )
+  (if enabled?
+      (logclear! (-> *display* vu1-enable-user) *MOD-lights-out-tie-envmap-mask*)
+      (when (-> *MOD-lights-out-bank* active?)
+        (logclear! (-> *display* vu1-enable-user) *MOD-lights-out-tie-envmap-mask*)
+        (logior! (-> *display* vu1-enable-user) *MOD-lights-out-saved-tie-envmap-mask*)
+        )
+      )
+  (set! *lights-out-disable-render-effects?* enabled?)
+  (dotimes (i LEVEL_MAX)
+    (let ((lev (-> *level* level i)))
+      (if enabled?
+          (when (and (or (= (-> lev status) 'active)
+                         (= (-> lev status) 'loaded))
+                     (not (-> *MOD-mood-backups* saved? i)))
+            (mem-copy! (the-as pointer (-> *MOD-mood-backups* context i))
+                       (the-as pointer (-> lev mood-context))
+                       1968)
+            (set! (-> *MOD-mood-backups* func i) (-> lev mood-func))
+            (set! (-> *MOD-mood-backups* level-name i) (-> lev name))
+            (set! (-> *MOD-mood-backups* saved? i) #t)
+            (set! (-> lev mood-func)
+                  (the-as (function mood-context float int none) update-mood-lights-out))
+            )
+          (when (-> *MOD-mood-backups* saved? i)
+            (when (and (= (-> lev name) (-> *MOD-mood-backups* level-name i))
+                       (or (= (-> lev status) 'active)
+                           (= (-> lev status) 'loaded)))
+              (mem-copy! (the-as pointer (-> lev mood-context))
+                         (the-as pointer (-> *MOD-mood-backups* context i))
+                         1968)
+              (set! (-> lev mood-func) (-> *MOD-mood-backups* func i))
+              )
+            (set! (-> *MOD-mood-backups* saved? i) #f)
+            )
+          )
+      )
+    )
+  (set! (-> *MOD-lights-out-bank* active?) enabled?)
+  (none)
+  )
+
+(defun mod-rule-update-lights-out ()
+  "Refreshes the effect on the active level pool"
+  (when (mod-rule-active? 'complication-lights-out)
+    (mod-lights-out! #f)
+    (mod-lights-out! #t)
+    )
+  (none)
+  )
+
+
+
 
 (defun mod-level-loaded? ((level-name symbol))
   (let ((result #f))
@@ -170,8 +227,8 @@
     (('complication-bad-ping) 
       ;; (input-delay-enable! #t (-> *MOD-tuning-bank* bad-ping-input-delay))
       )
-    (('complication-lights-out) 
-      ;; (mod-rule-lights-out-activate!)
+    (('complication-lights-out)
+      (mod-lights-out! #t)
       )
     (('complication-jak-rabbit)
       (mod-set-jump-heights 2.0)
@@ -397,8 +454,8 @@
           (('complication-bad-ping) 
             ;; (input-delay-enable! #f 0.0)
             )
-          (('complication-lights-out) 
-            ;; (mod-rule-lights-out-deactivate!)
+          (('complication-lights-out)
+            (mod-lights-out! #f)
             )
           (('complication-rgyb) 
             ;; (mod-rule-rgyb-refresh-eco-clusters)

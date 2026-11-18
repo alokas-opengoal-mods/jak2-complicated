@@ -1531,3 +1531,52 @@
       )
     )
   )
+
+;; Mod change
+(defun mod-apply-lights-out-tables! ((ctx mood-context))
+  ;; mood-fog is 48 bytes; copy one sample into the live context.
+  (mem-copy! (the-as pointer (-> ctx current-fog))
+             (the-as pointer (-> *lights-out-mood-fog-table* data 0))
+             48)
+
+  ;; Use the first lights-out color sample for ambient and direct light.
+  (set! (-> ctx times 0 quad)
+        (-> *lights-out-mood-color-table* data 0 amb-color quad))
+  (dotimes (i 4)
+    (set! (-> ctx times (+ i 1) quad)
+          (-> *lights-out-mood-color-table* data 0 lgt-color quad))
+    )
+
+  ;; Apply the palette to the actual per-level lights as well as mood times.
+  (let ((lights (-> ctx light-group 0))
+        (light-color (-> *lights-out-mood-color-table* data 0 lgt-color))
+        (ambient-color (-> *lights-out-mood-color-table* data 0 amb-color))
+        (direction (-> *lights-out-mood-direction-table* data 0)))
+    (set! (-> lights dir0 direction quad) (-> direction quad))
+    (set! (-> lights dir0 color quad) (-> light-color quad))
+    (set! (-> lights dir0 extra x) 1.0)
+    (set! (-> lights dir1 extra x) 0.0)
+    (set! (-> lights dir2 extra x) 0.0)
+    (set! (-> lights ambi color quad) (-> ambient-color quad))
+    (set! (-> lights ambi extra x) 1.0)
+    )
+
+  ;; Keep the sky dark as well.
+  (set-vector! (-> ctx current-sky-color) 0.0 0.0 0.0 1.0)
+  (none)
+  )
+  
+;; Mod change
+(defbehavior update-mood-lights-out time-of-day-proc
+  ((ctx mood-context) (time float) (level-index int))
+  ;; Start with the normal context update for the level type, then apply
+  ;; lights-out values so they persist after the regular update.
+  (let ((lev (-> *level* level level-index)))
+    (if (and (-> lev bsp) (-> lev bsp ambients))
+        (update-mood-interior ctx)
+        (copy-mood-exterior ctx))
+    )
+  (mod-apply-lights-out-tables! ctx)
+  0
+  (none)
+  )

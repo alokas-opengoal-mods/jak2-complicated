@@ -104,7 +104,7 @@ Process of adding a new condition:
     'complication-shifty
     ;; 'complication-interference
     ;; 'complication-quicksand
-    ;; 'complication-lights-out
+    'complication-lights-out
     ;; 'rule-supercharged
     ;; 'complication-half-price
     'rule-keep-rolling
@@ -501,6 +501,16 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 90)
       :roll-weight 40
+      :progress? #f
+      )
+    ;; complication-lights-out
+    (new 'static 'mod-rule
+      :name-text (text-id complication-lights-out-name)
+      :desc-text (text-id complication-lights-out-desc)
+      :rule-id 'complication-lights-out
+      :rule-type 'complication
+      :duration (seconds 90)
+      :roll-weight 60
       :progress? #f
       )
     ;; rule-keep-rolling

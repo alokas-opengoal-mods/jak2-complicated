@@ -372,15 +372,14 @@
 
 (set! (-> *MOD-rule-display-bank* highlight-line-buf) (new 'global 'string 128 (the-as string #f)))
 
+
+;; Not really needed anymore
 (deftype mod-lights-out-bank (structure)
-  ((active?            symbol)
-   (maincave-mood      mood-context)
-   (maincave-mood-func (function mood-context float int none))
-   (robocave-mood      mood-context)
-   (robocave-mood-func (function mood-context float int none))
+  ((active?                   symbol)
    )
   )
 
+;; Not really needed anymore
 (define *MOD-lights-out-bank* 
   (new 'static 'mod-lights-out-bank 
     :active? #f

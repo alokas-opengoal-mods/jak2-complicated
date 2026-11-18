@@ -1013,6 +1013,8 @@
   (complication-soul-bond-desc #x6023)
   (complication-shifty-name #x6024)
   (complication-shifty-desc #x6025)
+  (complication-lights-out-name #x6026)
+  (complication-lights-out-desc #x6027)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

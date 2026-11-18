@@ -867,4 +867,104 @@
 
 
 
+;; Mod change: lights-out mood tables
+
+(define *lights-out-disable-render-effects?* #f)
+
+(define *lights-out-mood-fog-table*
+  (new 'static 'mood-fog-table 
+    :data (new 'static 'inline-array mood-fog 8
+      (new 'static 'mood-fog
+        :fog-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        :fog-dists (new 'static 'vector :x 30720.0 :y 143360.0 :z 255.0 :w 0.0)
+        :erase-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        )
+      (new 'static 'mood-fog
+        :fog-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        :fog-dists (new 'static 'vector :x 30720.0 :y 143360.0 :z 255.0 :w 0.0)
+        :erase-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        )
+      (new 'static 'mood-fog
+        :fog-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        :fog-dists (new 'static 'vector :x 30720.0 :y 143360.0 :z 255.0 :w 0.0)
+        :erase-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        )
+      (new 'static 'mood-fog
+        :fog-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        :fog-dists (new 'static 'vector :x 30720.0 :y 143360.0 :z 255.0 :w 0.0)
+        :erase-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        )
+      (new 'static 'mood-fog
+        :fog-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        :fog-dists (new 'static 'vector :x 30720.0 :y 143360.0 :z 255.0 :w 0.0)
+        :erase-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        )
+      (new 'static 'mood-fog
+        :fog-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        :fog-dists (new 'static 'vector :x 30720.0 :y 143360.0 :z 255.0 :w 0.0)
+        :erase-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        )
+      (new 'static 'mood-fog
+        :fog-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        :fog-dists (new 'static 'vector :x 30720.0 :y 143360.0 :z 255.0 :w 0.0)
+        :erase-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        )
+      (new 'static 'mood-fog
+        :fog-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        :fog-dists (new 'static 'vector :x 30720.0 :y 143360.0 :z 255.0 :w 0.0)
+        :erase-color (new 'static 'vector :x 28.0 :y 34.0 :z 48.0 :w 128.0)
+        )
+      )
+    )
+  )
+
+(define *lights-out-mood-color-table*
+  (new 'static 'mood-color-table 
+    :data (new 'static 'inline-array mood-color 8
+      (new 'static 'mood-color
+        :lgt-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        :amb-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        )
+      (new 'static 'mood-color
+        :lgt-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        :amb-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        )
+      (new 'static 'mood-color
+        :lgt-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        :amb-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        )
+      (new 'static 'mood-color
+        :lgt-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        :amb-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        )
+      (new 'static 'mood-color
+        :lgt-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        :amb-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        )
+      (new 'static 'mood-color
+        :lgt-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        :amb-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        )
+      (new 'static 'mood-color
+        :lgt-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        :amb-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        )
+      (new 'static 'mood-color
+        :lgt-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        :amb-color (new 'static 'vector :x 0.0 :y 0.0 :z 0.0 :w 1.0)
+        )
+      )
+    )
+  )
+
+(define *lights-out-mood-direction-table*
+  (new 'static 'mood-direction-table
+    :data (new 'static 'inline-array vector 4
+      (new 'static 'vector :y -1.0)
+      (new 'static 'vector :y -1.0)
+      (new 'static 'vector :y -1.0)
+      (new 'static 'vector :y -1.0)
+      )
+    )
+  )
 

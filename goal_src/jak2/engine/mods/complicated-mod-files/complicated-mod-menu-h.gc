@@ -897,6 +897,18 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-lights-out-name)
+      :desc (text-id complication-lights-out-desc)
+      :rule-id 'complication-shifty
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-lights-out?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-lights-out?) val)
+        ;; (complicated-settings-save)
+        )
+      )
     )
   )
 

@@ -1068,7 +1068,8 @@
             (when (logtest? (-> dc status) (draw-control-status disable-fog))
               (logior! (-> flags bit-flags) (pc-merc-bits disable-fog))
               )
-            (when (logtest? (-> dc global-effect) (draw-control-global-effect disable-envmap))
+            (when (or *lights-out-disable-render-effects?* ;; Mod change
+                      (logtest? (-> dc global-effect) (draw-control-global-effect disable-envmap)))
               (logior! (-> flags bit-flags) (pc-merc-bits disable-envmap))
               )
             (set! (-> flags enable-mask) enable-mask)
@@ -1408,7 +1409,8 @@
                              (set! (-> bucket-info effect effect-idx merc-path) (the-as uint 2))
                              (set! (-> (scratchpad-object foreground-work) regs mercneric-used) (the-as uint 1))
                              )
-                            ((and (logtest? (-> geo effect effect-idx effect-usage) 1)
+                            ((and (not *lights-out-disable-render-effects?*)  ;; Mod change
+                                  (logtest? (-> geo effect effect-idx effect-usage) 1)
                                   (zero? (logand (-> dc global-effect) (draw-control-global-effect disable-envmap)))
                                   )
                              0.0
@@ -1512,7 +1514,8 @@
                                      (nonzero? (-> bucket-info must-use-mercneric-for-clip))
                                      )
                                  (set! (-> bucket-info effect effect-idx merc-path) (the-as uint 2))
-                                 (if (logtest? (-> dc global-effect) (draw-control-global-effect disable-envmap))
+                                 (if (or *lights-out-disable-render-effects?* ;; Mod change
+                                         (logtest? (-> dc global-effect) (draw-control-global-effect disable-envmap)))
                                      (set! (-> bucket-info effect effect-idx disable-envmap) (the-as uint 1))
                                      )
                                  (set! (-> (scratchpad-object foreground-work) regs mercneric-used) (the-as uint 1))
@@ -1526,6 +1529,7 @@
                                     (the-as
                                       uint
                                       (if (or (logtest? (-> geo effect effect-idx effect-bits) (effect-bits ignore-alpha))
+                                              *lights-out-disable-render-effects?*  ;; Mod change
                                               (logtest? (-> dc global-effect) (draw-control-global-effect disable-envmap))
                                               )
                                           1
@@ -1595,7 +1599,8 @@
                             (set! dma-ptr (foreground-generic-merc dc dma-ptr 0))
                             )
                         )
-                      (if (-> dc shadow)
+                      (if (and (-> dc shadow) 
+                               (not *lights-out-disable-render-effects?*)) ;; Mod change
                           (set! dma-ptr (foreground-shadow dc (-> (scratchpad-object foreground-work) regs mtxs) dma-ptr))
                           )
                       (when (nonzero? (-> (scratchpad-object foreground-work) regs merc-used))

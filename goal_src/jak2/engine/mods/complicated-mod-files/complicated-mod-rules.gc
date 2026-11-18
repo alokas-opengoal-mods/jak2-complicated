@@ -1302,6 +1302,8 @@
           (not is-minigame?)
           )
         )
+      ;; (('complication-lights-out)
+      ;;   )
       (('rule-keep-rolling)
         (and
           (not (in-race?))
