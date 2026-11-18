@@ -425,6 +425,9 @@
   "6022": "Soul Bond",
   "6023": "Killing an enemy kills you too.",
 
+  "6024": "Shifty",
+  "6025": "You randomly teleport short distances.",
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

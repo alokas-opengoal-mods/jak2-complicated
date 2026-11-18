@@ -101,7 +101,7 @@ Process of adding a new condition:
     'complication-jak-be-nimble
     'rule-no-harm
     'complication-soul-bond
-    ;; 'complication-shifty
+    'complication-shifty
     ;; 'complication-interference
     ;; 'complication-quicksand
     ;; 'complication-lights-out
@@ -268,7 +268,7 @@ Process of adding a new condition:
       :desc-text (text-id complication-bus-driver-desc)
       :rule-id 'complication-bus-driver
       :rule-type 'complication
-      :duration (seconds 30)
+      :duration (seconds 60)
       :grace-period (seconds 3)
       :distance-goal (meters 25)
       :roll-weight 147
@@ -479,7 +479,7 @@ Process of adding a new condition:
       :desc-text (text-id rule-no-harm-desc)
       :rule-id 'rule-no-harm
       :rule-type 'rule
-      :duration (seconds 30)
+      :duration (seconds 40)
       :roll-weight 50
       :progress? #f
       )
@@ -491,6 +491,16 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 40)
       :roll-weight 60
+      :progress? #f
+      )
+    ;; complication-shifty
+    (new 'static 'mod-rule
+      :name-text (text-id complication-shifty-name)
+      :desc-text (text-id complication-shifty-desc)
+      :rule-id 'complicomplication-shifty
+      :rule-type 'complication
+      :duration (seconds 90)
+      :roll-weight 40
       :progress? #f
       )
     )

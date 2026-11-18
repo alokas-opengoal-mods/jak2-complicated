@@ -1009,6 +1009,8 @@
   (complication-jak-be-nimble-desc #x6021)
   (complication-soul-bond-name #x6022)
   (complication-soul-bond-desc #x6023)
+  (complication-shifty-name #x6024)
+  (complication-shifty-desc #x6025)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

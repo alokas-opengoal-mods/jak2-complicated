@@ -189,6 +189,9 @@
    (bus-driver-activate-time  time-frame)
    (bus-driver-grace-period   time-frame)
    (shifty-next-time          time-frame)
+   (shifty-triggered?         symbol)
+   (shifty-dx                 float)
+   (shifty-dz                 float)
    (palate-change-grace-until time-frame)
    (red-shockwave-until       time-frame)
    (fisher-missed             int32)
@@ -212,6 +215,9 @@
     :bus-driver-activate-time 0
     :bus-driver-grace-period (seconds 2)
     :shifty-next-time 0
+    :shifty-triggered? #f
+    :shifty-dx 0.0
+    :shifty-dz 0.0
     :palate-change-grace-until 0
     :red-shockwave-until 0
     :fisher-missed 0

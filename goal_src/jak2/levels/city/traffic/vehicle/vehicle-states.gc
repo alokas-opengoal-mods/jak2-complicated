@@ -189,6 +189,21 @@
       ;;   (target-attack-up *target* 'attack 'explode)
       ;;   )
       )
+
+    ;; Mod change
+    (when (and (mod-rule-active? 'complication-shifty)
+              ;;  (>= (current-time) (-> *MOD-rule-context-bank* shifty-next-time))
+               (-> *MOD-rule-context-bank* shifty-triggered?)
+               )
+      (+! (-> self root trans x) (meters (-> *MOD-rule-context-bank* shifty-dx)))
+      (+! (-> self root trans z) (meters (-> *MOD-rule-context-bank* shifty-dz)))
+      (rigid-body-method-26 
+        (-> self rbody state)
+        (-> self root trans)
+        (-> self root quat)
+        )
+      )
+      
     (when (time-elapsed? (-> self state-time) (seconds 0.1))
       (if (not *target*)
           (go-virtual waiting)

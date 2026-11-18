@@ -1296,6 +1296,12 @@
           (not is-minigame?)
           )
         )
+      (('complication-shifty)
+        (and
+          (not is-turret?)
+          (not is-minigame?)
+          )
+        )
       (else #t)
       )
     )

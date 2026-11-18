@@ -409,3 +409,15 @@ if the result of rand-vu-int-range is 1, then DANCE! if it is not 1, then Don't 
   (none)
   )
 
+(defun spawn-part-group-by-name ((pos vector) (part-group sparticle-launch-group))
+  (let ((matrix (new 'stack-no-clear 'vector)))
+    (set! (-> matrix quad) (-> pos quad))
+    (part-tracker-spawn
+      :to *entity-pool*
+      :group part-group
+      :mat-joint matrix
+      )
+    )
+  (none)
+  )
+
