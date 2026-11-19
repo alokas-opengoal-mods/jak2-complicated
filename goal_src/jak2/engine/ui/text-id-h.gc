@@ -963,6 +963,8 @@
   (rule-keep-it-low-desc #x5017)
   (rule-money-pressure-name #x5018)
   (rule-money-pressure-desc #x5019)
+  (rule-distancing-name #x501a)
+  (rule-distancing-desc #x501b)
   (rule-red-light-name #x501c)
   (rule-red-light-desc #x501d)
   (rule-green-pilled-name #x501e)

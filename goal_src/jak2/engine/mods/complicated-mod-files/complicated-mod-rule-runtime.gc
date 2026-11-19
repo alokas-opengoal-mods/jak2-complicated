@@ -622,16 +622,119 @@
   (none))
 
 
-(define *mod-distancing-checked-frame* -1)
+(define *mod-nearest-enemy-distance* 1000000000.0)
+(define *mod-nearest-enemy-found* #f)
 
-;; (defun mod-rule-update-distancing ()
-;;   (when (mod-rule-active? 'rule-distancing)
-;;     (if (= (the int *closest-buzzer-frame*) *mod-distancing-checked-frame*)
-;;       (set! *closest-buzzer-dist* 1000000000.0)
-;;       (begin
-;;         (set! *mod-distancing-checked-frame* (the int *closest-buzzer-frame*))
-;;         (if (<= *closest-buzzer-dist* (meters 8)) (mod-rule-fail! 'rule-distancing)))))
-;;   (none))
+(declare-type sew-gunturret enemy)
+(define-extern sew-gunturret type)
+
+(declare-type fort-turret enemy)
+(define-extern fort-turret type)
+
+(declare-type gun-buoy nav-enemy)
+(define-extern gun-buoy type)
+
+(declare-type gator nav-enemy)
+(define-extern gator type)
+
+(declare-type tomb-beetle nav-enemy)
+(define-extern tomb-beetle type)
+
+(declare-type vehicle-rider process-focusable)
+(define-extern vehicle-rider type)
+
+(declare-type helldog hellcat)
+(define-extern helldog type)
+
+(declare-type tomb-spider process-drawable)
+(define-extern tomb-spider type)
+
+(declare-type stad-samos process-focusable)
+(define-extern stad-samos type)
+
+(declare-type stad-youngsamos stad-samos)
+(define-extern stad-youngsamos type)
+
+(declare-type stad-keira process-drawable)
+(define-extern stad-keira type)
+
+(declare-type stad-brutter process-drawable)
+(define-extern stad-brutter type)
+
+(declare-type squid process-focusable)
+(define-extern squid type)
+
+(declare-type widow process-drawable)
+(define-extern widow type)
+
+(declare-type metalkor process-focusable)
+(define-extern metalkor type)
+
+
+(defun mod-check-nearest-enemy-distance ()
+  (set! *mod-nearest-enemy-distance* 1000000000.0)
+  (set! *mod-nearest-enemy-found* #f)
+  (when *target*
+    (iterate-process-tree
+      *active-pool*
+      (lambda ((proc process))
+        (when (and (not (logtest? (-> (the-as process-focusable proc) focus-status) (focus-status dead)))
+                    (nonzero? (-> (the-as process-drawable proc) root))
+                    (or (logtest? (-> proc mask) (process-mask enemy guard civilian bot))
+                        (logtest? (-> (the-as process-focusable proc) focus-status) (focus-status pilot-riding))
+                        )
+                    ;; Wanted types
+                    (or (type? proc enemy)
+                        (type? proc nav-enemy)
+                        (type? proc vehicle-rider)
+                        (type? proc helldog)
+                        (type? proc tomb-spider)
+                        (type? proc stad-keira)
+                        (type? proc stad-brutter)
+                        (type? proc stad-samos)
+                        (type? proc stad-youngsamos)
+                        (type? proc squid)
+                        (type? proc widow)
+                        (type? proc metalkor)
+                        )
+                    ;; Unwanted edge cases
+                    (not (type? proc target))
+                    (not (type? proc sew-gunturret))
+                    (not (type? proc fort-turret))
+                    (not (type? proc gun-buoy))
+                    (not (type? proc gator))
+                    (not (type? proc tomb-beetle))
+                    (!= (-> proc state name) 'inactive)
+                    (!= (-> proc state name) 'hidden)
+                    (!= (-> proc state name) 'idle)
+                    (!= (-> proc state name) 'dormant)
+                    )
+          (let ((distance (vector-vector-distance (target-pos 0) (-> (the-as process-drawable proc) root trans))))
+            (when (< distance *mod-nearest-enemy-distance*)
+              (set! *mod-nearest-enemy-distance* distance)
+              (set! *mod-nearest-enemy-found* #t)
+              )
+            )
+          )
+        )
+      *null-kernel-context*
+      )
+    )
+  *mod-nearest-enemy-distance*
+  )
+
+(defun mod-rule-update-distancing ()
+  (when (and (mod-rule-active? 'rule-distancing)
+             (not (movie?))
+             (not (logtest? (-> *target* focus-status) (focus-status grabbed)))
+             )
+    (if (<= (mod-check-nearest-enemy-distance) (-> (mod-rule-info-get 'rule-distancing) distance-goal))
+      (mod-rule-fail! 'rule-distancing)
+      )
+    )
+  (none)
+  )
+
 
 (defun mod-rule-update-qte ()
   (let ((slot (mod-rule-find-active-slot 'rule-qte)))

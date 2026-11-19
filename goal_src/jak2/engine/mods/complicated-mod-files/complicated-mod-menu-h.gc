@@ -580,6 +580,18 @@
         )
       )
     (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-distancing-name)
+      :desc (text-id rule-distancing-desc)
+      :rule-id 'rule-distancing
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-distancing?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-distancing?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
       :name (text-id rule-red-light-name)
       :desc (text-id rule-red-light-desc)
       :rule-id 'rule-red-light

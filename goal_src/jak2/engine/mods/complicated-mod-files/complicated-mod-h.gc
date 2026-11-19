@@ -57,7 +57,7 @@ Process of adding a new condition:
     ;; 'rule-hands-on
     ;; 'complication-eco-reserve
     ;; 'rule-one-frame
-    ;; 'rule-distancing ;; skipping for now
+    'rule-distancing
     ;; 'complication-red-stop
     'rule-red-light
     ;; 'complication-rgyb
@@ -293,6 +293,18 @@ Process of adding a new condition:
       :duration (seconds 45)
       :roll-weight 48
       :progress? #f
+      )
+    ;; rule-distancing
+    (new 'static 'mod-rule
+      :name-text (text-id rule-distancing-name)
+      :desc-text (text-id rule-distancing-desc)
+      :rule-id 'rule-distancing
+      :rule-type 'rule
+      :duration (seconds 60)
+      :roll-weight 42
+      :distance-goal (meters 8.0)
+      :grace-period (seconds 2)
+      :progress? #t
       )
     ;; rule-red-light
     (new 'static 'mod-rule

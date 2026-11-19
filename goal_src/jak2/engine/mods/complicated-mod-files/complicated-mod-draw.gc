@@ -402,9 +402,9 @@ This file is for the mod HUD draw functions
           (('rule-distancing) 
             (set! label (text-id mod-hud-distance))
             (set! value
-              (if (<= *closest-npc-dist* (meters 40)) 
+              (if (<= *mod-nearest-enemy-distance* (meters 40)) 
                 (string-format "~,,1f/~,,1fm"
-                  (/ *closest-npc-dist* (meters 1))
+                  (/ *mod-nearest-enemy-distance* (meters 1))
                   (/ distance-goal (meters 1))
                   )
                 (string-format "-/~,,1fm"

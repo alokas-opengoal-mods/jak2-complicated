@@ -113,7 +113,7 @@ an orb |#
   ;;   )
   (mod-debug-controls)
   (mod-rule-update-ohko)
-  ;; (mod-rule-update-distancing)
+  (mod-rule-update-distancing)
   (mod-rule-update-speed)
   (mod-rule-update-lights-out)
   (none)
