@@ -113,6 +113,15 @@ Process of adding a new condition:
     ;; 'rule-bonecracker
     ;; 'rule-orb-hunt
     ;; 'rule-no-ledge
+
+    ;;;;;;;;;;;;;;;;;
+    ;;  NEW RULES  ;;
+    ;;;;;;;;;;;;;;;;;
+
+    'complication-fast-target
+    'complication-fast-entities
+    'complication-slow-target
+    'complication-slow-entities
     )
   )
 
@@ -535,6 +544,51 @@ Process of adding a new condition:
       :roll-weight 50
       :counter-goal 30
       :progress? #t
+      )
+
+    ;;;;;;;;;;;;;;;;;
+    ;;  NEW RULES  ;;
+    ;;;;;;;;;;;;;;;;;
+
+    ;; complication-fast-target
+    (new 'static 'mod-rule
+      :name-text (text-id complication-fast-target-name)
+      :desc-text (text-id complication-fast-target-desc)
+      :rule-id 'complication-fast-target
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 50
+      :progress? #f
+      )
+    ;; complication-fast-entities
+    (new 'static 'mod-rule
+      :name-text (text-id complication-fast-entities-name)
+      :desc-text (text-id complication-fast-entities-desc)
+      :rule-id 'complication-fast-entities
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 50
+      :progress? #f
+      )
+    ;; complication-slow-target
+    (new 'static 'mod-rule
+      :name-text (text-id complication-slow-target-name)
+      :desc-text (text-id complication-slow-target-desc)
+      :rule-id 'complication-slow-target
+      :rule-type 'complication
+      :duration (seconds 30)
+      :roll-weight 50
+      :progress? #f
+      )
+    ;; complication-slow-entities
+    (new 'static 'mod-rule
+      :name-text (text-id complication-slow-entities-name)
+      :desc-text (text-id complication-slow-entities-desc)
+      :rule-id 'complication-slow-entities
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 50
+      :progress? #f
       )
     )
   )

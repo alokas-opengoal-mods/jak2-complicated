@@ -437,6 +437,19 @@
   "6026": "Lights Out",
   "6027": "Good night.",
 
+  "602a": "I Show Speed",
+  "602b": "You move in double time.",
+  
+  "602c": "They Show Speed",
+  "602d": "Entities move in double time.",
+  
+  "602e": "Sloth-Mo",
+  "602f": "You move in slow motion.",
+  
+  "6030": "Bullet Time",
+  "6031": "Entities move in slow motion.",
+
+
   // Punishments
   "7000": "Lose Time",
   "7001": "Lose ~D__seconds",

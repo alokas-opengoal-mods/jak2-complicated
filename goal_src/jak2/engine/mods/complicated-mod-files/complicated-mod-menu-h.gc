@@ -134,6 +134,10 @@
     (complication-lights-out?       symbol)
     (complication-half-price?       symbol)
     (complication-energy-boost?     symbol)
+    (complication-fast-target?      symbol)
+    (complication-fast-entities?    symbol)
+    (complication-slow-target?      symbol)
+    (complication-slow-entities?    symbol)
     
     ;; Punishments
     (punishment-fall-damage?        symbol)
@@ -392,6 +396,10 @@
       ;; (('rule-bonecracker) (-> *complicated-settings* rule-bonecracker?))
       (('rule-orb-hunt) (-> *complicated-settings* rule-orb-hunt?))
       (('rule-no-ledge) (-> *complicated-settings* rule-no-ledge?))
+      (('complication-fast-target) (-> *complicated-settings* complication-fast-target?))
+      (('complication-fast-entities) (-> *complicated-settings* complication-fast-entities?))
+      (('complication-slow-target) (-> *complicated-settings* complication-slow-target?))
+      (('complication-slow-entities) (-> *complicated-settings* complication-slow-entities?))
       (else #t)
       )
     )
@@ -912,12 +920,60 @@
     (new 'static 'mod-menu-generic-boolean-option
       :name (text-id complication-lights-out-name)
       :desc (text-id complication-lights-out-desc)
-      :rule-id 'complication-shifty
+      :rule-id 'complication-lights-out
       :truthy-text (text-id progress-on)
       :falsey-text (text-id progress-off)
       :get-value-fn (lambda () (-> *complicated-settings* complication-lights-out?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* complication-lights-out?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-fast-target-name)
+      :desc (text-id complication-fast-target-desc)
+      :rule-id 'complication-fast-target
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-fast-target?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-fast-target?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-fast-entities-name)
+      :desc (text-id complication-fast-entities-desc)
+      :rule-id 'complication-fast-entities
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-fast-entities?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-fast-entities?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-slow-target-name)
+      :desc (text-id complication-slow-target-desc)
+      :rule-id 'complication-slow-target
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-slow-target?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-slow-target?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-slow-entities-name)
+      :desc (text-id complication-slow-entities-desc)
+      :rule-id 'complication-slow-entities
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-slow-entities?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-slow-entities?) val)
         ;; (complicated-settings-save)
         )
       )

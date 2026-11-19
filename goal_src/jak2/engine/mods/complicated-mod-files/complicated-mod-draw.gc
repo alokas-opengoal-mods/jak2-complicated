@@ -712,16 +712,17 @@ This file is for the mod HUD draw functions
 (defun mod-run-hud-draw ()
   (cond
     ((-> *MOD-countdown-bank* active?)
-      (with-dma-buffer-add-bucket ((buf (-> *display* frames (-> *display* on-screen) global-buf)) (bucket-id debug-no-zbuf2))
-        (draw-sprite2d-xy 
-          buf
-          *mod-hud-x*
-          *mod-hud-top*
-          *mod-hud-slot-width*
-          *mod-hud-slot-height*
-          (static-rgba 0 0 0 48)
-          )
-        )
+      ;; Background box
+      ;; (with-dma-buffer-add-bucket ((buf (-> *display* frames (-> *display* on-screen) global-buf)) (bucket-id debug-no-zbuf2))
+      ;;   (draw-sprite2d-xy 
+      ;;     buf
+      ;;     *mod-hud-x*
+      ;;     *mod-hud-top*
+      ;;     *mod-hud-slot-width*
+      ;;     *mod-hud-slot-height*
+      ;;     (static-rgba 0 0 0 48)
+      ;;     )
+      ;;   )
       ;; Draw seed
       (mod-draw-text
         (string-format (text-id->string (text-id mod-hud-seed)) (-> *MOD-rng-bank* seed-display))

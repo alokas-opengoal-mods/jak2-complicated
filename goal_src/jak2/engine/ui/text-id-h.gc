@@ -1017,6 +1017,14 @@
   (complication-shifty-desc #x6025)
   (complication-lights-out-name #x6026)
   (complication-lights-out-desc #x6027)
+  (complication-fast-target-name #x602a)
+  (complication-fast-target-desc #x602b)
+  (complication-fast-entities-name #x602c)
+  (complication-fast-entities-desc #x602d)
+  (complication-slow-target-name #x602e)
+  (complication-slow-target-desc #x602f)
+  (complication-slow-entities-name #x6030)
+  (complication-slow-entities-desc #x6031)
 
   ;; Punishments
   (punishment-countdown-name #x7000)
