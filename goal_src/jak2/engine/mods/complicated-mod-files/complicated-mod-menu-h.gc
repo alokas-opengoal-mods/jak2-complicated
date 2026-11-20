@@ -156,7 +156,8 @@
     (punishment-reset?              symbol)
     (punishment-countdown?          symbol)
     (punishment-kick?               symbol)
-    (punishment-pause?              symbol)   
+    (punishment-pause?              symbol)
+    (punishment-restart-mission?    symbol)
 
     ;; Complicated settings
     (countdown-start-seconds        float)
@@ -425,6 +426,7 @@
       (('punishment-countdown) (-> *complicated-settings* punishment-countdown?))
       (('punishment-kick) (-> *complicated-settings* punishment-kick?))
       (('punishment-pause) (-> *complicated-settings* punishment-pause?))
+      (('punishment-restart-mission) (-> *complicated-settings* punishment-restart-mission?))
       (else #t)
       )
     )
@@ -1261,6 +1263,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* condition-delay-seconds))
       :on-confirm (lambda ((val float))
         (set! (-> *complicated-settings* condition-delay-seconds) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id punishment-restart-mission-name)
+      :desc (text-id punishment-restart-mission-desc)
+      :rule-id 'punishment-restart-mission
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* punishment-restart-mission?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* punishment-restart-mission?) val)
         ;; (complicated-settings-save)
         )
       )

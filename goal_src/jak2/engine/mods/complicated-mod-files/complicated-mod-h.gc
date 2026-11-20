@@ -623,6 +623,12 @@ Process of adding a new condition:
     'punishment-reset
     'punishment-kick
     'punishment-pause
+
+    ;;;;;;;;;;;;;;;;;;;;;;;
+    ;;  NEW PUNISHMENTS  ;;
+    ;;;;;;;;;;;;;;;;;;;;;;;
+
+    'punishment-restart-mission
     )
   )
 
@@ -743,6 +749,18 @@ Process of adding a new condition:
       :rule-id 'punishment-pause
       :duration (seconds 180)
       :timed? #t
+      )
+
+    ;;;;;;;;;;;;;;;;;;;;;;;
+    ;;  NEW PUNISHMENTS  ;;
+    ;;;;;;;;;;;;;;;;;;;;;;;
+
+    ;; punishment-restart-mission
+    (new 'static 'mod-punishment
+      :name-text (text-id punishment-restart-mission-name)
+      :desc-text (text-id punishment-restart-mission-desc)
+      :rule-id 'punishment-restart-mission
+      :timed? #f
       )
     )
   )

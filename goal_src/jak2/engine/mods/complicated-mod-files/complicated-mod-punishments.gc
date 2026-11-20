@@ -458,6 +458,7 @@
     (consider-punishment punishment-ohko 10)
     (consider-punishment punishment-pause 10)
     (consider-punishment punishment-reset 3 (not (eq? rule-id 'rule-qte)))
+    (consider-punishment punishment-restart-mission 10)
     selected))
 
 (defun mod-clear-all-timed-punishments ()

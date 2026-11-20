@@ -1055,6 +1055,8 @@
   (punishment-kick-desc #x701b)
   (punishment-pause-name #x701c)
   (punishment-pause-desc #x701d)
+  (punishment-restart-mission-name #x701e)
+  (punishment-restart-mission-desc #x701f)
 )
 ;; ---text-id
 
