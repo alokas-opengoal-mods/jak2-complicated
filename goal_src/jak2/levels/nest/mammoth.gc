@@ -1396,6 +1396,7 @@
                  )
                 )
               )
+            (mod-rule-counter-add-progress 'rule-shocked 1) ;; Mod change
             (let ((s2-1 (vector-x-quaternion! (new 'stack-no-clear 'vector) (-> this root quat)))
                   (s1-0 *mammoth-lightning-joint-tbl*)
                   (s4-2 (new 'stack-no-clear 'array 'uint32 4))

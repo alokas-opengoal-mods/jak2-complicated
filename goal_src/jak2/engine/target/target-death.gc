@@ -597,6 +597,7 @@
 (defbehavior target-hit-push target ((arg0 vector) (arg1 matrix) (arg2 float) (arg3 float) (arg4 attack-info))
   (case (-> arg4 mode)
     (('shock 'shockup 'shock-red 'shock-green)
+     (mod-rule-counter-add-progress 'rule-shocked 1) ;; Mod change
      (when (>= (- (-> *display* game-clock frame-counter) (-> self shock-effect-time)) (seconds 0.03))
        (set! (-> self shock-effect-time) (-> *display* game-clock frame-counter))
        (send-event self 'color-effect 'shock (seconds 0.2))
@@ -1041,6 +1042,7 @@
               (go target-hit-ground-hard (-> *TARGET-bank* fall-far))
               )
              (('shock 'shock-red 'shock-green)
+              (mod-rule-counter-add-progress 'rule-shocked 1) ;; Mod change
               (pickup-collectable! (-> self fact) (pickup-type health) (- (-> sv-32 damage)) (the-as handle #f))
               (let* ((v1-123 (-> sv-32 mode))
                      (gp-3 (cond

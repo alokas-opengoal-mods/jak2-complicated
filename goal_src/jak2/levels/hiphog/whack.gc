@@ -1521,6 +1521,7 @@
        (case (-> self mode)
          ((10)
           (sound-play "whack-wrong")
+          (mod-rule-counter-add-progress 'rule-shocked 1) ;; Mod change
           'die
           )
          ((11)

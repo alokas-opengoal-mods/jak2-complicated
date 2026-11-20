@@ -247,7 +247,7 @@
                                                                            )
                                      )
             (vector-normalize! s4-1 1.0)
-            (if (send-event
+            (when (send-event
                   (-> (the-as collide-shape-prim-sphere s5-1) cshape process)
                   'attack
                   #f
@@ -256,6 +256,7 @@
                     )
                   )
                 (sound-play "und-laser-hit")
+                (mod-rule-counter-add-progress 'rule-shocked 1) ;; Mod change
                 )
             )
           )

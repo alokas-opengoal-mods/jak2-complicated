@@ -122,6 +122,7 @@ Process of adding a new condition:
     'complication-fast-entities
     'complication-slow-target
     'complication-slow-entities
+    'rule-shocked
     )
   )
 
@@ -588,6 +589,17 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 60)
       :roll-weight 50
+      :progress? #f
+      )
+    ;; rule-shocked
+    (new 'static 'mod-rule
+      :name-text (text-id rule-shocked-name)
+      :desc-text (text-id rule-shocked-desc)
+      :rule-id 'rule-shocked
+      :rule-type 'rule
+      :duration (seconds 35)
+      :roll-weight 50
+      :counter-goal 1
       :progress? #f
       )
     )

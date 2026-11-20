@@ -302,6 +302,7 @@
                     (static-attack-info ((id (-> self attack-id)) (invinc-time (seconds 3)) (vector v1-68) (shove-up (meters 3))))
                     )
                   )
+                (mod-rule-counter-add-progress 'rule-shocked 1) ;; Mod change
                 )
               )
             )

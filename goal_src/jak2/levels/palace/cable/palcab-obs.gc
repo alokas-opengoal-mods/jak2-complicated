@@ -79,6 +79,7 @@
                                           )
                                          )
                      )
+               (mod-rule-counter-add-progress 'rule-shocked 1) ;; Mod change
                (set-time! (-> self no-collision-timer))
                (let ((v1-19 (-> self root root-prim)))
                  (set! (-> v1-19 prim-core collide-as) (collide-spec))

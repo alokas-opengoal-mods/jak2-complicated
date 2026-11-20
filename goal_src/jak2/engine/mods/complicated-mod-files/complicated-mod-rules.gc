@@ -1035,6 +1035,40 @@
     )
   )
 
+(defun level-can-shock? ((level symbol))
+  (or (city-level? level)
+      (case level
+        (('castle ;; elec-gate
+          'casboss ;; krew-clone
+          'forexita ;; guards
+          'forexitb ;; guards
+          'fordumpa ;; elec-gate
+          'fordumpb ;; elec-gate + guards
+          'forresca ;; elec-gate
+          'forrescb ;; elec-gate + fort-elec-belt
+          'atoll ;; juicer
+          'palcab ;; pal-electric-fan + electric tiles
+          'palroof ;; elec-gate
+          'tombb ;; electric water
+          'tombboss ;; spydroid
+          'sewesc ;; hose-head
+          'under ;; under-laser
+          'nest-gun ;; mammoth
+          )
+          #t
+          )
+        (('drillmid) ;; elec-gate
+          (or 
+            (task-node-open? (game-task-node drill-ship-resolution))
+            (task-node-open? (game-task-node drill-mech-started-smashing))
+            (task-node-open? (game-task-node drill-mech-resolution))
+            )
+          )
+        )
+      (task-node-open? (game-task-node city-whack-resolution))
+      )
+  )
+
 (defun in-bossfight? ()
   (or
     (task-node-open? (game-task-node palace-boss-battle))
@@ -1047,6 +1081,8 @@
 
 (defun in-race? ()
   (or
+    (task-node-open? (game-task-node city-errol-challenge-race))
+    (task-node-open? (game-task-node city-errol-challenge-resolution))
     (task-node-open? (game-task-node stadium-race-class3-race))
     (task-node-open? (game-task-node stadium-race-class3-resolution))
     (task-node-open? (game-task-node stadium-race-class2-race))
@@ -1341,6 +1377,12 @@
       ;;   )
       ;; (('complication-slow-entities)
       ;;   )
+      (('rule-shocked)
+        (and
+          (level-can-shock? level-name)
+          (not (in-race?))
+          )
+        )
       (else #t)
       )
     )

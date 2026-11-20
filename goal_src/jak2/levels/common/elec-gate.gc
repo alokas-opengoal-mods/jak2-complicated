@@ -361,6 +361,7 @@
                    )
                   )
                 )
+              (mod-rule-counter-add-progress 'rule-shocked 1) ;; Mod change
               (let* ((s4-1 (-> self l-bolt))
                      (s3-2 (get-point-at-percent-along-path! (-> self path) (new 'stack-no-clear 'vector) (-> s4-1 0 pos) 'interp))
                      (s4-2

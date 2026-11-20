@@ -88,6 +88,7 @@
     (rule-survivor?                 symbol)
     (rule-vendetta?                 symbol)
     (rule-hands-on?                 symbol)
+    (rule-shocked?                    symbol)
 
     ;; Complications
     (complication-brittle-bones?    symbol)
@@ -248,6 +249,7 @@
   (set! (-> obj rule-survivor?)                 #t)
   ;; (set! (-> obj rule-vendetta?)                 #t)
   ;; (set! (-> obj rule-hands-on?)                 #t)
+  (set! (-> obj rule-shocked?)                    #t)
 
   ;; Complications
   (set! (-> obj complication-brittle-bones?)    #t)
@@ -514,6 +516,7 @@
       (('complication-fast-entities) (-> *complicated-settings* complication-fast-entities?))
       (('complication-slow-target) (-> *complicated-settings* complication-slow-target?))
       (('complication-slow-entities) (-> *complicated-settings* complication-slow-entities?))
+      (('rule-shocked) (-> *complicated-settings* rule-shocked?))
       (else #t)
       )
     )
@@ -819,6 +822,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* rule-keep-rolling?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* rule-keep-rolling?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-shocked-name)
+      :desc (text-id rule-shocked-desc)
+      :rule-id 'rule-shocked
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-shocked?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-shocked?) val)
         ;; (complicated-settings-save)
         )
       )
