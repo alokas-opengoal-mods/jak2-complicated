@@ -124,6 +124,7 @@ Process of adding a new condition:
     'complication-slow-target
     'complication-slow-entities
     'rule-shocked
+    'complication-iron-man
     )
   )
 
@@ -472,7 +473,7 @@ Process of adding a new condition:
       :rule-type 'rule
       :duration (seconds 75)
       :roll-weight 30
-      :time-goal (seconds 3.0)
+      :time-goal (seconds 2.5)
       :progress? #t
       )
     ;; complication-get-a-grip
@@ -532,7 +533,7 @@ Process of adding a new condition:
       :desc-text (text-id complication-lights-out-desc)
       :rule-id 'complication-lights-out
       :rule-type 'complication
-      :duration (seconds 90)
+      :duration (seconds 60)
       :roll-weight 60
       :progress? #f
       )
@@ -611,6 +612,16 @@ Process of adding a new condition:
       :duration (seconds 35)
       :roll-weight 50
       :counter-goal 1
+      :progress? #f
+      )
+    ;; complication-iron-man
+    (new 'static 'mod-rule
+      :name-text (text-id complication-iron-man-name)
+      :desc-text (text-id complication-iron-man-desc)
+      :rule-id 'complication-iron-man
+      :rule-type 'complication
+      :duration (seconds 30)
+      :roll-weight 25
       :progress? #f
       )
     )

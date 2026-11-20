@@ -140,6 +140,7 @@
     (complication-fast-entities?    symbol)
     (complication-slow-target?      symbol)
     (complication-slow-entities?    symbol)
+    (complication-iron-man?         symbol)
     
     ;; Punishments
     (punishment-fall-damage?        symbol)
@@ -302,6 +303,7 @@
   (set! (-> obj complication-fast-entities?)    #t)
   (set! (-> obj complication-slow-target?)      #t)
   (set! (-> obj complication-slow-entities?)    #t)
+  (set! (-> obj complication-iron-man?)         #t)
   
   ;; Punishments
   (set! (-> obj punishment-fall-damage?)        #t)
@@ -520,6 +522,7 @@
       (('complication-slow-target) (-> *complicated-settings* complication-slow-target?))
       (('complication-slow-entities) (-> *complicated-settings* complication-slow-entities?))
       (('rule-shocked) (-> *complicated-settings* rule-shocked?))
+      (('complication-iron-man) (-> *complicated-settings* complication-iron-man?))
       (else #t)
       )
     )
@@ -1119,6 +1122,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* complication-slow-entities?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* complication-slow-entities?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-iron-man-name)
+      :desc (text-id complication-iron-man-desc)
+      :rule-id 'complication-iron-man
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-iron-man?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-iron-man?) val)
         ;; (complicated-settings-save)
         )
       )

@@ -84,6 +84,7 @@
         (go target-mech-carry-pickup)
         )
     (if (and (or (cpad-pressed? (-> self control cpad number) triangle) (not (-> *setting-control* user-current pilot)))
+             (not (mod-rule-active? 'complication-iron-man)) ;; Mod change
              (target-mech-get-off?)
              )
         (go target-mech-get-off)
@@ -221,6 +222,7 @@
           (go target-mech-stance)
           )
         (if (and (or (cpad-pressed? (-> self control cpad number) triangle) (not (-> *setting-control* user-current pilot)))
+                 (not (mod-rule-active? 'complication-iron-man)) ;; Mod change
                  (target-mech-get-off?)
                  )
             (go target-mech-get-off)

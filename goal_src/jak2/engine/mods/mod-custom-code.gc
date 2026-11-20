@@ -111,6 +111,8 @@ an orb |#
   ;; (when (mod-rule-active? 'complication-drought)
   ;;   (set! *ocean-off* #t)
   ;;   )
+
+  ;; Update mod functions
   (mod-debug-controls)
   (mod-rule-update-ohko)
   (mod-rule-update-distancing)
@@ -183,6 +185,9 @@ an orb |#
     (set! (-> *MOD-tuning-bank* soul-bond-triggered?) #f)
     )
   (mod-rule-trigger-get-a-grip)
+  (if (mod-rule-active? 'complication-iron-man)
+    (mod-rule-reapply-slot-visual-effect 'complication-iron-man)
+    )
   (if (mod-rule-active? 'complication-invisible-man)
     (mod-rule-reapply-slot-visual-effect 'complication-invisible-man)
     (when (-> *MOD-target-mesh-bank* invis-active?)

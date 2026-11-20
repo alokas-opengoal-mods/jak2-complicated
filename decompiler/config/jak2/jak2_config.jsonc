@@ -144,6 +144,7 @@
     "jak-indax+0-ag",
     "jak-mech+0-ag",
     "grunt-mech-anims+0-ag",
+    "mech-ag"
     ],
 
   // tpages that should always be possible to access, e.g. "common_tpages": [1119],

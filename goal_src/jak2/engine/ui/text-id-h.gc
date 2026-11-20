@@ -1029,6 +1029,8 @@
   (complication-slow-target-desc #x602f)
   (complication-slow-entities-name #x6030)
   (complication-slow-entities-desc #x6031)
+  (complication-iron-man-name #x6032)
+  (complication-iron-man-desc #x6033)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

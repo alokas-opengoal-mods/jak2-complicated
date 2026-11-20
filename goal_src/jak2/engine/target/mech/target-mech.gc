@@ -1052,7 +1052,11 @@
    (collide-spec)
    )
   (set! (-> self mech shield-max) 100.0)
-  (set! (-> self mech shield-value) arg1)
+  ;; Mod change
+  (if (mod-rule-active? 'complication-iron-man)
+    (set! (-> self mech shield-value) 100.0)
+    (set! (-> self mech shield-value) arg1)
+    )
   (set! (-> self mech entity) #f)
   (let ((v1-27 (handle->process arg0)))
     (if v1-27

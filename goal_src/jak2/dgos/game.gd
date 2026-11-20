@@ -490,6 +490,9 @@
   "target-mech.o"
   "mech-states.o"
   "grunt-mech.o"
+  "mech-ag.go"
+  "jak-mech+0-ag.go"
+  "grunt-mech-anims+0-ag.go"
 
   "complicated-mod-h.o" ;; Mod change: added
   "complicated-mod-common.o" ;; Mod change: added
