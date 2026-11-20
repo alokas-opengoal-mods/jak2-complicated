@@ -484,6 +484,7 @@
   "mod-common-functions.o" ;; added
 
   "target-indax.o"
+  "jak-indax+0-ag.go"
   "mech-part.o"
   "mech.o"
   "target-mech.o"

@@ -593,6 +593,10 @@
                         ((= v1-7 'pilot)
                          (target-standard-event-handler arg0 arg1 arg2 arg3)
                          )
+                        ;; Mod change
+                        (else
+                         (target-standard-event-handler arg0 arg1 arg2 arg3)
+                         )
                         )
                  )
            )

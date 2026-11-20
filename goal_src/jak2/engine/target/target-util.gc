@@ -1855,7 +1855,7 @@
   (local-vars (v0-0 vector))
   (let ((v1-0 (-> this control)))
     (cond
-      ((zero? arg0)
+      ((or (zero? arg0) (focus-test? this indax)) ;; Mod change: (focus-test? this indax)
        (-> v1-0 trans)
        )
       ((= arg0 1)

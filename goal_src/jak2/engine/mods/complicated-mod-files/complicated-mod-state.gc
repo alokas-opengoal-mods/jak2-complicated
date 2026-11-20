@@ -444,6 +444,9 @@
             (set! (-> *MOD-countdown-bank* last-update-time) (current-time))
             ;; Beep on second during the final 10 seconds
             (let ((whole-second (the int (/ (-> *MOD-countdown-bank* remaining-time) (seconds 1)))))
+              (when (= (-> *MOD-countdown-bank* remaining-time) (seconds 10))
+                (play-vag-sound "ds471")
+                )
               (if (> whole-second 9)
                 (set! (-> *MOD-countdown-bank* last-warn-second) -1)
                 (when (and (>= whole-second 0) (!= whole-second (-> *MOD-countdown-bank* last-warn-second)))

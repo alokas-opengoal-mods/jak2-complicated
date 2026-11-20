@@ -1019,6 +1019,8 @@
   (complication-shifty-desc #x6025)
   (complication-lights-out-name #x6026)
   (complication-lights-out-desc #x6027)
+  (complication-sidekicked-name #x6028)
+  (complication-sidekicked-desc #x6029)
   (complication-fast-target-name #x602a)
   (complication-fast-target-desc #x602b)
   (complication-fast-entities-name #x602c)

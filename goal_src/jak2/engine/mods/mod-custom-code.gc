@@ -116,6 +116,7 @@ an orb |#
   (mod-rule-update-distancing)
   (mod-rule-update-speed)
   (mod-rule-update-lights-out)
+  (mod-rule-update-sidekicked)
   (none)
   )
 

@@ -1705,7 +1705,7 @@
                  )
              (and (< f0-17 0.0)
                   (and (or (not (and (= *cheat-mode* 'debug) (cpad-hold? (-> self control cpad number) r2))) *pause-lock*)
-                       (not (focus-test? self flut pilot mech indax))
+                       (not (focus-test? self flut pilot mech)) ;; Mod change: removed indax
                        (not (logtest? (-> self state-flags) (state-flags prevent-jump)))
                        #t
                        )
@@ -2341,7 +2341,7 @@
     (set! (-> v1-29 blend) 0.0)
     )
   (cond
-    ((focus-test? self tube pilot indax)
+    ((focus-test? self tube pilot) ;; Mod change: removed indax
      )
     ((logtest? (water-flags wading) (-> self water flags))
      (let ((f30-0 (- (- (-> self control trans y) (- (-> self water height) (-> self water wade-height))))))

@@ -118,6 +118,7 @@ Process of adding a new condition:
     ;;  NEW RULES  ;;
     ;;;;;;;;;;;;;;;;;
 
+    'complication-sidekicked
     'complication-fast-target
     'complication-fast-entities
     'complication-slow-target
@@ -551,6 +552,16 @@ Process of adding a new condition:
     ;;  NEW RULES  ;;
     ;;;;;;;;;;;;;;;;;
 
+    ;; complication-sidekicked
+    (new 'static 'mod-rule
+      :name-text (text-id complication-sidekicked-name)
+      :desc-text (text-id complication-sidekicked-desc)
+      :rule-id 'complication-sidekicked
+      :rule-type 'complication
+      :duration (seconds 45)
+      :roll-weight 40
+      :progress? #f
+      )
     ;; complication-fast-target
     (new 'static 'mod-rule
       :name-text (text-id complication-fast-target-name)
@@ -778,3 +789,25 @@ Process of adding a new condition:
   )
 
 (define *mod-punishment-id-count* (length *mod-punishment-ids*))
+
+
+
+(define *mod-rule-sidekicked-lines*
+  (new 'static 'boxed-array :type string
+    "ds023"
+    "ds024"
+    "ds025"
+    "ds026"
+    "ds028"
+    "ds179"
+    "ds187"
+    "ds188"
+    "ds189"
+    "ds195"
+    "ds207"
+    "ds208"
+    "ds215"
+    "ds217"
+    )
+  )
+

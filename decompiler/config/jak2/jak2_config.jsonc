@@ -141,9 +141,9 @@
 
   // art groups that should always be possible to access, e.g. "common_art_groups": ["eichar-racer+0-ag", "racer-ag", "ef-plane-ag"]
   "common_art_groups": [
+    "jak-indax+0-ag",
     "jak-mech+0-ag",
     "grunt-mech-anims+0-ag",
-    "jak-indax+0-ag"
     ],
 
   // tpages that should always be possible to access, e.g. "common_tpages": [1119],
