@@ -903,7 +903,7 @@
             )
           (mod-reset-cam-settings)
           (when (= (-> *target* state name) 'target-turret-stance)
-            (set! (-> *camera* slave 0 fov) (* 182.04445 target-fov))
+            (set! (-> *camera* slave 0 fov) (* 182.04445 64))
             )
           )
         (else

@@ -1184,7 +1184,6 @@
                            (= animation-group jakb-duck-roll-end-ja)
                            (= animation-group jakb-gun-duck-roll-ja)
                            (= animation-group jakb-gun-duck-roll-end-ja)
-                           (= animation-group jakb-attack-punch-ja)
                            )
                        )
                   )
@@ -1211,6 +1210,7 @@
            (focus-test? self board)
            (focus-test? self mech)
            (focus-test? self pilot)
+           (= state-name 'target-turret-stance)
            movement-facing?
            )
         (rotate-toward-orientation!
