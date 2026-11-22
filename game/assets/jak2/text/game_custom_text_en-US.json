@@ -316,6 +316,10 @@
   "403b": "Complications",
   "403c": "Ban Hover Glitch",
   "403d": "Prevents usage of the JET-Board hover glitch.",
+  "403e": "POV Camera Sensitivity",
+  "403f": "Camera sensitivity for the POV rule.",
+  "4040": "POV Camera FOV",
+  "4041": "Camera field of view for the POV rule.",
   
   // Rules
   "5000": "Unknown rule",
