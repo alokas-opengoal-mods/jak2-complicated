@@ -2566,6 +2566,7 @@
                     (-> gp-2 ppointer)
                     )
                   )
+                (mod-rule-counter-add-progress 'rule-propaganda 1) ;; Mod change
                 (go-virtual broken)
                 )
                ((< (-> self hit-points) 6)

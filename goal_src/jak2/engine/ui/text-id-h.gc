@@ -985,6 +985,8 @@
   (rule-keep-rolling-desc #x5029)
   (rule-shocked-name #x502a)
   (rule-shocked-desc #x502b)
+  (rule-propaganda-name #x502e)
+  (rule-propaganda-desc #x502f)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)

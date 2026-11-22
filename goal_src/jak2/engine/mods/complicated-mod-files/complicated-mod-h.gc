@@ -126,6 +126,7 @@ Process of adding a new condition:
     'rule-shocked
     'complication-iron-man
     'complication-pov
+    'rule-propaganda
     )
   )
 
@@ -633,6 +634,17 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 60)
       :roll-weight 40
+      :progress? #f
+      )
+    ;; rule-propaganda
+    (new 'static 'mod-rule
+      :name-text (text-id rule-propaganda-name)
+      :desc-text (text-id rule-propaganda-desc)
+      :rule-id 'rule-propaganda
+      :rule-type 'rule
+      :duration (seconds 45)
+      :roll-weight 40
+      :counter-goal 1
       :progress? #f
       )
     )

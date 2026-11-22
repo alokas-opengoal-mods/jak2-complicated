@@ -88,7 +88,8 @@
     (rule-survivor?                 symbol)
     (rule-vendetta?                 symbol)
     (rule-hands-on?                 symbol)
-    (rule-shocked?                    symbol)
+    (rule-shocked?                  symbol)
+    (rule-propaganda?               symbol)
 
     ;; Complications
     (complication-brittle-bones?    symbol)
@@ -256,7 +257,8 @@
   (set! (-> obj rule-survivor?)                 #t)
   ;; (set! (-> obj rule-vendetta?)                 #t)
   ;; (set! (-> obj rule-hands-on?)                 #t)
-  (set! (-> obj rule-shocked?)                    #t)
+  (set! (-> obj rule-shocked?)                  #t)
+  (set! (-> obj rule-propaganda?)               #t)
 
   ;; Complications
   (set! (-> obj complication-brittle-bones?)    #t)
@@ -530,6 +532,7 @@
       (('rule-shocked) (-> *complicated-settings* rule-shocked?))
       (('complication-iron-man) (-> *complicated-settings* complication-iron-man?))
       (('complication-pov) (-> *complicated-settings* complication-pov?))
+      (('rule-propaganda) (-> *complicated-settings* rule-propaganda?))
       (else #t)
       )
     )
@@ -847,6 +850,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* rule-shocked?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* rule-shocked?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-propaganda-name)
+      :desc (text-id rule-propaganda-desc)
+      :rule-id 'rule-propaganda
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-propaganda?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-propaganda?) val)
         ;; (complicated-settings-save)
         )
       )

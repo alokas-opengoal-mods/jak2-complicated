@@ -1418,6 +1418,21 @@
           (not is-minigame?)
           )
         )
+      (('rule-propaganda)
+        (and
+          (case level-name
+            (('ctysluma
+              'ctyslumb
+              'ctyport
+              'ctyinda
+              'ctyindb
+              'hideout)
+              #t
+              )
+            )
+          (not is-minigame?)
+          )
+        )
       (else #t)
       )
     )
