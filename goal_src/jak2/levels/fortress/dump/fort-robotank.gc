@@ -207,7 +207,10 @@
         (new 'static 'fort-robotank-segment-event
           :event-type 'code
           :pos-norm 0.01
-          :param-obj (lambda () (set-setting! 'target-height 'abs (meters -1) 0) (none))
+          :param-obj (lambda () 
+            (when (not (mod-rule-active? 'complication-pov)) ;; Mod change
+              (set-setting! 'target-height 'abs (meters -1) 0) (none))
+              )
           )
         (new 'static 'fort-robotank-segment-event
           :event-type 'send-event
@@ -555,19 +558,21 @@
                  )
                )
               (('pov-cam-on)
-               (set-setting! 'mode-name 'cam-pov-track 0.0 0)
-               (set-setting! 'allow-look-around #f 0.0 0)
-               (set-setting! 'target-height 'abs (meters -3) 0)
-               (let ((v1-27 (process->ppointer this)))
-                 (set-setting! 'pov-handle v1-27 3.0 (-> v1-27 0 pid))
-                 )
-               (set-setting! 'pov-offset 'asdf (-> this pov-cam-offset) 0)
-               (send-event (handle->process (-> this turret)) 'pov-cam-on)
-               (logior! (-> this flags) (robotank-flags roflags-7))
-               (let ((v1-41 (-> (the-as collide-shape-prim-group (-> this root root-prim)) child 2)))
-                 (set! (-> v1-41 prim-core collide-as) (collide-spec enemy pusher))
-                 (set! (-> v1-41 prim-core collide-with) (collide-spec jak bot player-list))
-                 )
+                (when (not (mod-rule-active? 'complication-pov))  ;; Mod change
+                  (set-setting! 'mode-name 'cam-pov-track 0.0 0)
+                  (set-setting! 'allow-look-around #f 0.0 0)
+                  (set-setting! 'target-height 'abs (meters -3) 0)
+                  (let ((v1-27 (process->ppointer this)))
+                    (set-setting! 'pov-handle v1-27 3.0 (-> v1-27 0 pid))
+                    )
+                  (set-setting! 'pov-offset 'asdf (-> this pov-cam-offset) 0)
+                  (send-event (handle->process (-> this turret)) 'pov-cam-on)
+                  (logior! (-> this flags) (robotank-flags roflags-7))
+                  (let ((v1-41 (-> (the-as collide-shape-prim-group (-> this root root-prim)) child 2)))
+                    (set! (-> v1-41 prim-core collide-as) (collide-spec enemy pusher))
+                    (set! (-> v1-41 prim-core collide-with) (collide-spec jak bot player-list))
+                    )
+                  )
                )
               (('pov-cam-off)
                (remove-setting! 'pov-handle)

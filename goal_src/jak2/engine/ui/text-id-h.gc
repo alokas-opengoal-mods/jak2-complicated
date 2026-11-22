@@ -935,6 +935,10 @@
   (mod-progress-complication-options #x403b)
   (mod-progress-ban-hover-name #x403c)
   (mod-progress-ban-hover-desc #x403d)
+  (mod-progress-pov-cam-sensitivity-name #x403e)
+  (mod-progress-pov-cam-sensitivity-desc #x403f)
+  (mod-progress-pov-fov-name #x4040)
+  (mod-progress-pov-fov-desc #x4041)
 
   ;; Rules
   (unknown-rule-name #x5000)
@@ -1031,6 +1035,8 @@
   (complication-slow-entities-desc #x6031)
   (complication-iron-man-name #x6032)
   (complication-iron-man-desc #x6033)
+  (complication-pov-name #x6034)
+  (complication-pov-desc #x6035)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

@@ -1165,15 +1165,87 @@
     (meters 2)
     (new 'static 'rgba :r #xff :b #xff :a #x80)
     )
-  (rotate-toward-orientation!
-    (-> self control)
-    (-> self control dir-targ)
-    (-> self control current-surface turnv)
-    0.0
-    (the int (-> self control current-surface turnvf))
-    150
-    (-> self control turn-go-the-long-way)
+  ;; (rotate-toward-orientation!
+  ;;   (-> self control)
+  ;;   (-> self control dir-targ)
+  ;;   (-> self control current-surface turnv)
+  ;;   0.0
+  ;;   (the int (-> self control current-surface turnvf))
+  ;;   150
+  ;;   (-> self control turn-go-the-long-way)
+  ;;   )
+  ;; Mod change: logic for first person camera mode
+  (let* ((state-name (-> self state name))
+         (rolling-animation?
+           (and (= state-name 'target-duck-stance)
+                (let ((animation-group (ja-group)))
+                  (and animation-group
+                       (or (= animation-group jakb-duck-roll-ja)
+                           (= animation-group jakb-duck-roll-end-ja)
+                           (= animation-group jakb-gun-duck-roll-ja)
+                           (= animation-group jakb-gun-duck-roll-end-ja)
+                           (= animation-group jakb-attack-punch-ja)
+                           )
+                       )
+                  )
+                )
+           )
+         (movement-facing?
+           (or (= state-name 'target-running-attack)
+               (= state-name 'target-roll)
+               (= state-name 'target-roll-flip)
+               rolling-animation?
+               )
+           )
+         (retain-facing?
+           (or (= state-name 'target-attack)
+               (= state-name 'target-attack-air)
+               (= state-name 'target-attack-uppercut)
+               (= state-name 'target-attack-uppercut-jump)
+               )
+           )
+         )
+    (cond
+      ;; Original rotation behavior
+      ((or (not (mod-rule-active? 'complication-pov))
+           (focus-test? self board)
+           (focus-test? self mech)
+           (focus-test? self pilot)
+           movement-facing?
+           )
+        (rotate-toward-orientation!
+          (-> self control)
+          (-> self control dir-targ)
+          (-> self control current-surface turnv)
+          0.0
+          (the int (-> self control current-surface turnvf))
+          150
+          (-> self control turn-go-the-long-way)
+          )
+        )
+      (retain-facing?
+        (none)
+        )
+      (else
+        ;; First person rotation behavior
+        (let* ((camera-matrix (matrix-local->world #t #f))
+               (camera-forward (vector-float*! (new-stack-vector0) (-> camera-matrix vector 2) 1.0))
+               )
+          (vector-flatten! camera-forward camera-forward (-> self control bent-gravity-normal))
+          (when (< 0.00004096 (vector-length camera-forward))
+            (vector-normalize! camera-forward 1.0)
+            (forward-up-nopitch->quaternion
+              (-> self control dir-targ)
+              camera-forward
+              (-> self control bent-gravity-normal)
+              )
+            (quaternion-copy! (-> self control quat-for-control) (-> self control dir-targ))
+            )
+          )
+        )
+      )
     )
+    
   (if (and (!= (-> self control turn-go-the-long-way) 0.0)
            (< (fabs
                 (deg-diff

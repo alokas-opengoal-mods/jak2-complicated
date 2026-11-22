@@ -141,6 +141,7 @@
     (complication-slow-target?      symbol)
     (complication-slow-entities?    symbol)
     (complication-iron-man?         symbol)
+    (complication-pov?              symbol)
     
     ;; Punishments
     (punishment-fall-damage?        symbol)
@@ -177,6 +178,8 @@
     (text-scale                     float)
     (target-slot-count              int8)
     (ban-hover?                     symbol)
+    (pov-cam-sensitivity            float)
+    (pov-fov                        float)
   )
   (:methods
     (reset (_type_) int)
@@ -208,6 +211,8 @@
   (set! (-> obj text-scale) 0.9)
   (set! (-> obj target-slot-count) 1)
   (set! (-> obj ban-hover?) #t)
+  (set! (-> obj pov-cam-sensitivity) 2.0)
+  (set! (-> obj pov-fov) 100.0)
   
   ;; Rules
   (set! (-> obj rule-grounded?)                 #t)
@@ -304,6 +309,7 @@
   (set! (-> obj complication-slow-target?)      #t)
   (set! (-> obj complication-slow-entities?)    #t)
   (set! (-> obj complication-iron-man?)         #t)
+  (set! (-> obj complication-pov?)              #t)
   
   ;; Punishments
   (set! (-> obj punishment-fall-damage?)        #t)
@@ -523,6 +529,7 @@
       (('complication-slow-entities) (-> *complicated-settings* complication-slow-entities?))
       (('rule-shocked) (-> *complicated-settings* rule-shocked?))
       (('complication-iron-man) (-> *complicated-settings* complication-iron-man?))
+      (('complication-pov) (-> *complicated-settings* complication-pov?))
       (else #t)
       )
     )
@@ -1137,6 +1144,18 @@
         ;; (complicated-settings-save)
         )
       )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-pov-name)
+      :desc (text-id complication-pov-desc)
+      :rule-id 'complication-pov
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-pov?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-pov?) val)
+        ;; (complicated-settings-save)
+        )
+      )
     )
   )
 
@@ -1575,6 +1594,40 @@
     )
   )
 
+(defmacro mod-option-pov-cam-sensitivity ()
+  '(new 'static 'mod-menu-generic-slider-option
+    :name (text-id mod-progress-pov-cam-sensitivity-name)
+    :desc (text-id mod-progress-pov-cam-sensitivity-desc)
+    :min-value 0.5
+    :max-value 3.0
+    :step 0.1
+    :show-decimal? #f
+    :units 'percent
+    :get-value-fn (lambda () (-> *complicated-settings* pov-cam-sensitivity))
+    :on-confirm (lambda ((val float))
+      (set! (-> *complicated-settings* pov-cam-sensitivity) val)
+      ;; (complicated-settings-save)
+      )
+    )
+  )
+
+(defmacro mod-option-pov-fov ()
+  '(new 'static 'mod-menu-generic-slider-option
+    :name (text-id mod-progress-pov-fov-name)
+    :desc (text-id mod-progress-pov-fov-desc)
+    :min-value 60.0
+    :max-value 120.0
+    :step 1.0
+    :show-decimal? #f
+    :units #f
+    :get-value-fn (lambda () (-> *complicated-settings* pov-fov))
+    :on-confirm (lambda ((val float))
+      (set! (-> *complicated-settings* pov-fov) val)
+      ;; (complicated-settings-save)
+      )
+    )
+  )
+
 (defmacro mod-complicated-options ()
   `(progress-new-generic-link-to-scrolling-page (text-id mod-progress-complicated-options)
     (mod-page-timer)
@@ -1585,6 +1638,8 @@
     (mod-option-pass-credits)
     (mod-option-active-conditions)
     (mod-option-ban-hover)
+    (mod-option-pov-cam-sensitivity)
+    (mod-option-pov-fov)
     (mod-option-restore-defaults)
     )
   )

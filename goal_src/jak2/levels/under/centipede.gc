@@ -564,7 +564,9 @@
 
 (defmethod centipede-method-183 ((this centipede))
   (when (not (and (-> this next-state) (= (-> this next-state name) 'thru-grating)))
-    (centipede-method-187 this)
+    (when (not (mod-rule-active? 'complication-pov)) ;; Mod change
+      (centipede-method-187 this)
+      )
     (when (= (-> this id) 2)
       (let ((overlap-parms (new 'stack-no-clear 'overlaps-others-params)))
         (set! (-> overlap-parms options) (overlaps-others-options))
@@ -766,13 +768,15 @@
   :code (behavior ()
     (logior! (-> self enemy-flags) (enemy-flag alert))
     (set! (-> self desired-talking-volume) 0.0)
-    (centipede-method-187 self)
-    (set-setting! 'interp-time 'abs 0.0 0)
-    (when (not (-> self set-camera-mode?))
-      (set! (-> self set-camera-mode?) #t)
-      (set-setting-by-param *setting-control* 'mode-name 'cam-fixed 0 0)
+    (when (not (mod-rule-active? 'complication-pov)) ;; Mod change
+      (centipede-method-187 self)
+      (set-setting! 'interp-time 'abs 0.0 0)
+      (when (not (-> self set-camera-mode?))
+        (set! (-> self set-camera-mode?) #t)
+        (set-setting-by-param *setting-control* 'mode-name 'cam-fixed 0 0)
+        )
+      (set-setting! 'allow-look-around #f 0.0 0)
       )
-    (set-setting! 'allow-look-around #f 0.0 0)
     (suspend)
     (until #f
       (let ((v1-13 *camera*))
@@ -1145,7 +1149,9 @@
       (set! (-> self set-camera-mode?) #f)
       (remove-setting-by-arg0 *setting-control* 'mode-name)
       )
-    (remove-setting! 'allow-look-around)
+    (when (not (mod-rule-active? 'complication-pov)) ;; Mod change
+      (remove-setting! 'allow-look-around)
+      )
     (set-setting! 'entity-name "camera-252" 0.0 0)
     (centipede-method-188 self)
     (suspend)

@@ -125,6 +125,7 @@ Process of adding a new condition:
     'complication-slow-entities
     'rule-shocked
     'complication-iron-man
+    'complication-pov
     )
   )
 
@@ -622,6 +623,16 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 30)
       :roll-weight 25
+      :progress? #f
+      )
+    ;; complication-pov
+    (new 'static 'mod-rule
+      :name-text (text-id complication-pov-name)
+      :desc-text (text-id complication-pov-desc)
+      :rule-id 'complication-pov
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 40
       :progress? #f
       )
     )

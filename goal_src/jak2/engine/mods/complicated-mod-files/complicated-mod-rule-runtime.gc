@@ -862,6 +862,61 @@
     (none)
   )
 
+(defun mod-rule-update-pov ()
+  "Ugliest code of my life but it works i guess"
+  (when (and (mod-rule-active? 'complication-pov)
+            *target*
+            *camera*
+            *setting-control*
+            )
+    (let ((target-fov (* 182.04445 (-> *complicated-settings* pov-fov))))
+      (if (logtest? (-> *target* focus-status) (focus-status grabbed pilot))
+          (begin
+            (when (logtest? (-> *target* draw status) (draw-control-status no-draw-bounds2))
+              (logclear! (-> *target* draw status) (draw-control-status no-draw-bounds2))
+              )
+            (when (not (logtest? (-> *game-info* features) (game-feature sidekick)))
+              (logior! (-> *game-info* features) (game-feature sidekick))
+              )
+            )
+          (begin
+            (when (not (logtest? (-> *target* draw status) (draw-control-status no-draw-bounds2)))
+              (logior! (-> *target* draw status) (draw-control-status no-draw-bounds2))
+              )
+            (when (logtest? (-> *game-info* features) (game-feature sidekick))
+              (logclear! (-> *game-info* features) (game-feature sidekick))
+              )
+            
+              (when (!= (-> *setting-control* cam-current fov) target-fov)
+                (set-setting-by-param *setting-control* 'fov #f target-fov 0)
+                )
+              (when (and (-> *camera* slave)
+                        (!= (-> *camera* slave 0 fov) target-fov))
+                (set! (-> *camera* slave 0 fov) target-fov)
+                )
+              )
+            )
+
+      (cond 
+        ((or (= (-> *target* state name) 'target-turret-stance)
+            (logtest? (-> *target* focus-status) (focus-status pilot mech grabbed))
+            )
+          (mod-reset-cam-settings)
+          (when (= (-> *target* state name) 'target-turret-stance)
+            (set! (-> *camera* slave 0 fov) (* 182.04445 target-fov))
+            )
+          )
+        (else
+          (when (not (send-event *camera* 'query-state cam-eye))
+            (set-setting-by-param *setting-control* 'mode-name (-> cam-eye name) 0 0)
+            )
+          )
+        )
+      )
+    )
+  (none)
+  )
+
 
 (defun mod-rule-update-qte ()
   (let ((slot (mod-rule-find-active-slot 'rule-qte)))
@@ -1121,7 +1176,10 @@
   (when (mod-rule-active? 'rule-hang-time)
     (let ((slot (mod-rule-find-active-slot 'rule-hang-time)))
       (when (>= slot 0)
-        (set! (-> (-> *MOD-rule-slot-bank* slot-progress) slot) 0))))
+        (set! (-> (-> *MOD-rule-slot-bank* slot-progress) slot) 0)
+        )
+      )
+    )
   (set! (-> *MOD-rule-context-bank* hang-time-air-start) (current-time))
   (none))
 

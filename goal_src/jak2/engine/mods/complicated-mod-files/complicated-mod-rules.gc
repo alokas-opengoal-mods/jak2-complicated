@@ -1098,6 +1098,17 @@
     )
   )
 
+(defun gun-owned? ((gun symbol))
+  (logtest? (-> *game-info* features)
+    (case gun
+      (('gun-yellow) (game-feature gun-yellow))
+      (('gun-red) (game-feature gun-red))
+      (('gun-blue) (game-feature gun-blue))
+      (('gun-dark) (game-feature gun-dark))
+      (('any) (game-feature gun))
+      )
+    )
+  )
 
 ;; True if the twist state forbids rolling this id (rules while a twist is pending/marked, twist while one is already in progress).
 (defun mod-rule-twist-blocks? ((id symbol))
@@ -1266,6 +1277,7 @@
           (not is-minigame?)
           (not (in-bossfight?))
           (not (in-race?))
+          (gun-owned? 'gun-yellow)
           )
         )
       (('rule-green-pilled)
@@ -1397,6 +1409,15 @@
           (not is-minigame?)
           )
         )
+      (('complication-pov)
+        (and
+          (not is-indax?)
+          (not is-pilot?)
+          (not is-turret?)
+          (not is-mech?)
+          (not is-minigame?)
+          )
+        )
       (else #t)
       )
     )
@@ -1406,12 +1427,14 @@
 ;; Roll weight for a condition.
 (defun mod-rule-roll-priority ((id symbol))
   (cond
+    ;; if these, don't roll
     ((or (not (mod-condition-enabled? id))
         (mod-rule-twist-blocks? id)
         (mod-rule-conflicts-with-active? id)
         )
       0
       )
+    ;; else check rule specific conditions
     ((mod-rule-can-roll? id)
       (-> (mod-rule-info-get id) roll-weight)
       )

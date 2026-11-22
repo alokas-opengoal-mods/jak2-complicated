@@ -44,16 +44,18 @@
   (when *target*
     (if enabled?
       (begin
-        (logior! (-> *target* draw status) (draw-control-status force-fade))
+        (logior! (-> *target* draw status) (draw-control-status no-draw-bounds2))
         (logior! (-> *target* draw shadow-ctrl settings flags) (shadow-flags disable-draw))
         (logior! (-> *gun-shadow-control* settings flags) (shadow-flags disable-draw))
         (logior! (-> *board-shadow-control* settings flags) (shadow-flags disable-draw))
+        (logclear! (-> *game-info* features) (game-feature sidekick))
         )
       (begin
-        (logclear! (-> *target* draw status) (draw-control-status force-fade))
+        (logclear! (-> *target* draw status) (draw-control-status no-draw-bounds2))
         (logclear! (-> *target* draw shadow-ctrl settings flags) (shadow-flags disable-draw))
         (logclear! (-> *gun-shadow-control* settings flags) (shadow-flags disable-draw))
         (logclear! (-> *board-shadow-control* settings flags) (shadow-flags disable-draw))
+        (logior! (-> *game-info* features) (game-feature sidekick))
         )
       )
     )
@@ -203,6 +205,16 @@
   )
 
 
+(defun mod-reset-cam-settings ()
+  (logclear! (-> *target* draw status) (draw-control-status no-draw-bounds2))
+  (logior! (-> *game-info* features) (game-feature sidekick))
+  (remove-setting-by-arg0 *setting-control* 'mode-name)
+  (remove-setting-by-arg0 *setting-control* 'fov)
+  (remove-setting-by-arg0 *setting-control* 'slave-options)
+  (none)
+  )
+
+
 ;; Apply or re-apply the one-time effect of a condition.
 (defun mod-rule-reapply-slot-visual-effect ((id symbol))
   (case id
@@ -255,15 +267,32 @@
       )
     (('complication-fast-entities)
       (update-rates! (-> *display* entity-clock) 2.0)
+      (update-rates! (-> *display* part-clock) 2.0)
       )
     (('complication-slow-target)
       (update-rates! (-> *display* target-clock) 0.5)
       )
     (('complication-slow-entities)
       (update-rates! (-> *display* entity-clock) 0.3)
+      (update-rates! (-> *display* part-clock) 0.3)
       )
     (('complication-iron-man)
       (send-event *target* 'change-mode 'mech #f)
+      )
+    (('complication-pov)
+      ;; (set-setting-by-param *setting-control* 'mode-name (-> cam-eye name) 0 0)
+      ;; (logior! (-> *target* draw status) (draw-control-status no-draw-bounds2))
+      ;; (logclear! (-> *game-info* features) (game-feature sidekick))
+      ;; (set-setting-by-param *setting-control* 'fov #f (* 182.04445 100) 0)
+      ;; ;; Fuckass hack to make sure it sets the fov
+      ;; (process-spawn-function process
+      ;;   (lambda ()
+      ;;     (until (= (-> *camera* slave 0 fov) (* 182.04445 100))
+      ;;       (set! (-> *camera* slave 0 fov) (* 182.04445 100))
+      ;;       (suspend)
+      ;;       )
+      ;;     )
+      ;;   )
       )
     (else (none))
     )
@@ -527,11 +556,15 @@
           (('complication-fast-entities
             'complication-slow-entities)
             (update-rates! (-> *display* entity-clock) 1.0)
+            (update-rates! (-> *display* part-clock) 1.0)
             )
           (('complication-iron-man) 
             (when (and *target* (mod-target-on-mode? 'mech))
               (send-event *target* 'end-mode)
               )
+            )
+          (('complication-pov)
+            (mod-reset-cam-settings)
             )
           )
         )

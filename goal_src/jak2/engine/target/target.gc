@@ -3428,6 +3428,33 @@
     (set! (-> self control mod-surface) *roll-mods*)
     (+! (-> self control unknown-word02) 1)
     (rot->dir-targ! (-> self control))
+    ;; Mod change: allow rolling in any direction in first person
+    (when (mod-rule-active? 'complication-pov)
+      (let* ((move-direction
+               (vector-flatten!
+                 (new-stack-vector0)
+                 (-> self control transv)
+                 (-> self control bent-gravity-normal)
+                 )
+               )
+             (has-move-velocity? (< 0.00004096 (vector-length move-direction)))
+             )
+        (when (and (not has-move-velocity?) (< 0.0 (-> self control turn-to-magnitude)))
+          (vector-flatten! move-direction (-> self control to-target-pt-xz) (-> self control bent-gravity-normal))
+          )
+        (when (< 0.00004096 (vector-length move-direction))
+          (vector-normalize! move-direction 1.0)
+          (forward-up-nopitch->quaternion
+            (-> self control dir-targ)
+            move-direction
+            (-> self control bent-gravity-normal)
+            )
+          (quaternion-copy! (-> self control quat-for-control) (-> self control dir-targ))
+          (set-quaternion! (-> self control) (-> self control dir-targ))
+          )
+        )
+      )
+      
     (set-forward-vel (+ (-> *TARGET-bank* roll-speed-min)
                         (* (-> *TARGET-bank* roll-speed-inc) (the float (+ (-> self control unknown-word02) -1)))
                         )

@@ -451,7 +451,12 @@
 
 
 (define *CAM_EYE-bank*
-  (new 'static 'cam-eye-bank :rot-speed 364.0889 :max-degrees 12743.111 :max-fov 11650.845 :min-fov 6189.511)
+  (new 'static 'cam-eye-bank
+    :rot-speed 364.0889
+    :max-degrees 12743.111
+    :max-fov 11650.845
+    :min-fov 6189.511
+    )
   )
 
 (defstate cam-eye (camera-slave)
@@ -519,39 +524,119 @@
                             )
                           )
                     )
-                ;; og:preserve-this changed for high fps
-                (set! (-> s4-0 y) (- (-> s4-0 y) (* (- f30-0) (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)))))
-                (set! (-> s4-0 x) (- (-> s4-0 x) (* (- f0-0) (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)))))
-                )
-              )
-            ;; og:preserve-this changed for high fps
-            (cond
-              ((< (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)) (-> s4-0 x))
-               (set! (-> s4-0 x) (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)))
-               )
-              ((< (-> s4-0 x) (- (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed))))
-               (set! (-> s4-0 x) (- (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed))))
-               )
-              )
-            ;; og:preserve-this changed for high fps
-            (cond
-              ((< (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)) (-> s4-0 y))
-               (set! (-> s4-0 y) (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)))
-               )
-              ((< (-> s4-0 y) (- (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed))))
-               (set! (-> s4-0 y) (- (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed))))
-               )
-              )
-            (cond
-              ((and (= (-> s4-0 x) 0.0) (= (-> s4-0 y) 0.0))
-               (set! gp-0 (current-time))
-               )
-              (else
-                (let ((v1-39 (min 10 (max 1 (- (current-time) gp-0)))))
-                  (vector-float*! s4-0 s4-0 (* 0.1 (the float v1-39)))
+
+                ;; Mod change: only allow 1st person camera move on right stick when in POV mode
+                (when (mod-rule-active? 'complication-pov)
+                  (set! f30-0
+                    (analog-input-horizontal-first
+                      (the-as int (+ (-> *cpad-list* cpads 0 rightx) -128)) 
+                      0.0
+                      48.0
+                      110.0
+                      -1.0
+                      )
+                    )
+                  (set! f0-0
+                    (analog-input-vertical-first
+                      (the-as int (+ (-> *cpad-list* cpads 0 righty) -128))
+                      0.0
+                      48.0
+                      110.0
+                      -1.0
+                      )
+                    )
+                  )
+                ;; Mod change
+                (cond 
+                  ((mod-rule-active? 'complication-pov)
+                    (set! (-> s4-0 y) (* (- (-> s4-0 y) (* (- f30-0) (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)))) (-> *complicated-settings* pov-cam-sensitivity)))
+                    (set! (-> s4-0 x) (* (- (-> s4-0 x) (* (- f0-0) (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)))) (-> *complicated-settings* pov-cam-sensitivity)))
+                    )
+                  (else
+                    ;; og:preserve-this changed for high fps
+                    (set! (-> s4-0 y) (* (- (-> s4-0 y) (* (- f30-0) (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed))))))
+                    (set! (-> s4-0 x) (* (- (-> s4-0 x) (* (- f0-0) (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed))))))
+                    )
                   )
                 )
               )
+            ;; Mod change: First person camera behavior
+            (cond ((mod-rule-active? 'complication-pov)
+              ;; og:preserve-this changed for high fps
+              (cond
+                ((< (* (-> *display* base-clock time-adjust-ratio) 
+                        (-> *CAM_EYE-bank* rot-speed)
+                        (-> *complicated-settings* pov-cam-sensitivity)) 
+                    (-> s4-0 x))
+                  (set! (-> s4-0 x) 
+                        (* (-> *display* base-clock time-adjust-ratio) 
+                          (-> *CAM_EYE-bank* rot-speed) 
+                          (-> *complicated-settings* pov-cam-sensitivity)))
+                  )
+                ((< (-> s4-0 x) 
+                    (- (* (-> *display* base-clock time-adjust-ratio) 
+                          (-> *CAM_EYE-bank* rot-speed)
+                          (-> *complicated-settings* pov-cam-sensitivity))))
+                  (set! (-> s4-0 x) 
+                        (- (* (-> *display* base-clock time-adjust-ratio) 
+                              (-> *CAM_EYE-bank* rot-speed)
+                              (-> *complicated-settings* pov-cam-sensitivity))))
+                  )
+                )
+              ;; og:preserve-this changed for high fps
+              (cond
+                ((< (* (-> *display* base-clock time-adjust-ratio) 
+                        (-> *CAM_EYE-bank* rot-speed)
+                        (-> *complicated-settings* pov-cam-sensitivity)) 
+                    (-> s4-0 y))
+                  (set! (-> s4-0 y) 
+                        (* (-> *display* base-clock time-adjust-ratio) 
+                          (-> *CAM_EYE-bank* rot-speed) 
+                          (-> *complicated-settings* pov-cam-sensitivity)))
+                  )
+                ((< (-> s4-0 y) 
+                    (- (* (-> *display* base-clock time-adjust-ratio) 
+                          (-> *CAM_EYE-bank* rot-speed)
+                          (-> *complicated-settings* pov-cam-sensitivity))))
+                  (set! (-> s4-0 y) 
+                        (- (* (-> *display* base-clock time-adjust-ratio) 
+                              (-> *CAM_EYE-bank* rot-speed)
+                              (-> *complicated-settings* pov-cam-sensitivity))))
+                  )
+                )
+              )
+            ;; Normal camera behavior
+            (else
+              ;; og:preserve-this changed for high fps
+              (cond
+                ((< (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)) (-> s4-0 x))
+                  (set! (-> s4-0 x) (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)))
+                  )
+                ((< (-> s4-0 x) (- (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed))))
+                  (set! (-> s4-0 x) (- (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed))))
+                  )
+                )
+              ;; og:preserve-this changed for high fps
+              (cond
+                ((< (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)) (-> s4-0 y))
+                  (set! (-> s4-0 y) (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed)))
+                  )
+                ((< (-> s4-0 y) (- (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed))))
+                  (set! (-> s4-0 y) (- (* (-> *display* base-clock time-adjust-ratio) (-> *CAM_EYE-bank* rot-speed))))
+                  )
+                )
+              (cond
+                ((and (= (-> s4-0 x) 0.0) (= (-> s4-0 y) 0.0))
+                  (set! gp-0 (current-time))
+                  )
+                (else
+                  (let ((v1-39 (min 10 (max 1 (- (current-time) gp-0)))))
+                    (vector-float*! s4-0 s4-0 (* 0.1 (the float v1-39)))
+                    )
+                  )
+                )
+              )
+            )
             (matrix-axis-angle! s5-0 (-> *camera* local-down) (-> s4-0 y))
             (matrix*! (-> self tracking inv-mat) (-> self tracking inv-mat) s5-0)
             (when (not (logtest? (-> self options) (cam-slave-options-u32 ALLOW_Z_ROT)))
