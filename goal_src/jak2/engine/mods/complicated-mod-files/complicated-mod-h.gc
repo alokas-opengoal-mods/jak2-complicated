@@ -127,6 +127,7 @@ Process of adding a new condition:
     'complication-iron-man
     'complication-pov
     'rule-propaganda
+    'complication-car-trouble
     )
   )
 
@@ -645,6 +646,16 @@ Process of adding a new condition:
       :duration (seconds 45)
       :roll-weight 40
       :counter-goal 1
+      :progress? #f
+      )
+    ;; complication-car-trouble
+    (new 'static 'mod-rule
+      :name-text (text-id complication-car-trouble-name)
+      :desc-text (text-id complication-car-trouble-desc)
+      :rule-id 'complication-car-trouble
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 40
       :progress? #f
       )
     )

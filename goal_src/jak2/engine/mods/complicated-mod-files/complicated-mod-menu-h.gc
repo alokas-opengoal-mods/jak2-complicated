@@ -143,6 +143,7 @@
     (complication-slow-entities?    symbol)
     (complication-iron-man?         symbol)
     (complication-pov?              symbol)
+    (complication-car-trouble?      symbol)
     
     ;; Punishments
     (punishment-fall-damage?        symbol)
@@ -312,6 +313,7 @@
   (set! (-> obj complication-slow-entities?)    #t)
   (set! (-> obj complication-iron-man?)         #t)
   (set! (-> obj complication-pov?)              #t)
+  (set! (-> obj complication-car-trouble?)      #t)
   
   ;; Punishments
   (set! (-> obj punishment-fall-damage?)        #t)
@@ -533,6 +535,7 @@
       (('complication-iron-man) (-> *complicated-settings* complication-iron-man?))
       (('complication-pov) (-> *complicated-settings* complication-pov?))
       (('rule-propaganda) (-> *complicated-settings* rule-propaganda?))
+      (('complication-car-trouble) (-> *complicated-settings* complication-car-trouble?))
       (else #t)
       )
     )
@@ -1168,6 +1171,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* complication-pov?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* complication-pov?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-car-trouble-name)
+      :desc (text-id complication-car-trouble-desc)
+      :rule-id 'complication-car-trouble
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-car-trouble?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-car-trouble?) val)
         ;; (complicated-settings-save)
         )
       )

@@ -196,6 +196,8 @@
    (red-shockwave-until       time-frame)
    (fisher-missed             int32)
    (fisher-caught             int32)
+   (vehicle-hover-zone-time   time-frame)
+   (car-trouble-triggered?    symbol)
    )
   )
 
@@ -222,6 +224,8 @@
     :red-shockwave-until 0
     :fisher-missed 0
     :fisher-caught 0
+    :vehicle-hover-zone-time 0
+    :car-trouble-triggered? #f
     )
   )
 

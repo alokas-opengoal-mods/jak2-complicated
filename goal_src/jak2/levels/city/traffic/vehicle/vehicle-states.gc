@@ -191,6 +191,16 @@
       )
 
     ;; Mod change
+    (when (and (mod-rule-active? 'complication-car-trouble)
+               (-> *MOD-rule-context-bank* car-trouble-triggered?)
+               )
+      (if (zero? (-> self flight-level-index))
+        (switch-zone-high! self)
+        (switch-zone-low! self)
+        )
+      )
+
+    ;; Mod change
     (when (and (mod-rule-active? 'complication-shifty)
               ;;  (>= (current-time) (-> *MOD-rule-context-bank* shifty-next-time))
                (-> *MOD-rule-context-bank* shifty-triggered?)

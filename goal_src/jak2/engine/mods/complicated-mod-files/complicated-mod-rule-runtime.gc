@@ -953,6 +953,19 @@
   (none)
   )
 
+(defun mod-rule-update-car-trouble ()
+  (if (-> *MOD-rule-context-bank* car-trouble-triggered?)
+    (set! (-> *MOD-rule-context-bank* car-trouble-triggered?) #f)
+    )
+  (when (and (mod-rule-active? 'complication-car-trouble) 
+             (>= (current-time) (-> *MOD-rule-context-bank* vehicle-hover-zone-time))
+             )
+    (set! (-> *MOD-rule-context-bank* car-trouble-triggered?) #t)
+    (set! (-> *MOD-rule-context-bank* vehicle-hover-zone-time) (+ (current-time) (mod-rand-int-range (seconds 0.2) (seconds 1.0))))
+    )
+  (none)
+  )
+
 (defun mod-rule-update-hang-time ()
   (when (mod-rule-active? 'rule-hang-time)
     (let ((slot (mod-rule-find-active-slot 'rule-hang-time))
@@ -1383,6 +1396,7 @@
   (set! (-> *MOD-rule-context-bank* bus-driver-activate-time)
         (+ (-> *MOD-rule-context-bank* bus-driver-activate-time) elapsed))
   (set! (-> *MOD-rule-context-bank* shifty-next-time) (+ (-> *MOD-rule-context-bank* shifty-next-time) elapsed))
+  (set! (-> *MOD-rule-context-bank* vehicle-hover-zone-time) (+ (-> *MOD-rule-context-bank* vehicle-hover-zone-time) elapsed))
   (none))
 
 ;; Main rule loop.
@@ -1425,6 +1439,7 @@
             (mod-rule-update-red-light)
             (mod-rule-handle-pass-input)
             (mod-rule-update-shifty)
+            (mod-rule-update-car-trouble)
             ;; (mod-orb-hunt-update)
             (let ((target (mod-rule-target-slot-count)))
               (when (< target *mod-last-target-slot-count*)

@@ -1433,6 +1433,11 @@
           (not is-minigame?)
           )
         )
+      (('complication-car-trouble)
+        (and
+          (city-level? level-name)
+          )
+        )
       (else #t)
       )
     )
