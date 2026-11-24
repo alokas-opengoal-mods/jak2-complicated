@@ -868,7 +868,12 @@
         )
     (when (logtest? (-> this draw status) (draw-control-status on-screen))
       (if #t
-          (draw-thrusters this)
+          ;; Mod change
+          (when (not (and (mod-rule-active? 'complication-invisible-man)
+                          (= (-> this state name) 'player-control))
+                          )
+            (draw-thrusters this)
+            )
           )
       (if (< (-> this camera-dist2) (square 245760.0))
           (update-joint-mods this)
@@ -1204,8 +1209,13 @@
         )
       (when (logtest? (-> this draw status) (draw-control-status on-screen))
         (when #t
-          (set! (-> this node-list data 0 bone transform trans quad) (-> this root trans quad))
-          (draw-thrusters this)
+          ;; Mod change
+          (when (not (and (mod-rule-active? 'complication-invisible-man)
+                          (= (-> this state name) 'player-control))
+                          )
+            (set! (-> this node-list data 0 bone transform trans quad) (-> this root trans quad))
+            (draw-thrusters this)
+            )
           )
         )
       (let ((v1-70 (-> *perf-stats* data 19)))

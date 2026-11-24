@@ -213,6 +213,18 @@
         (-> self root quat)
         )
       )
+
+    ;; Mod change
+    (if (mod-rule-active? 'complication-invisible-man)
+      (when (not (logtest? (-> self draw status) (draw-control-status no-draw-bounds2)))
+        (logior! (-> self draw status) (draw-control-status no-draw-bounds2))
+        (mod-rule-invis-effect)
+        )
+      (when (logtest? (-> self draw status) (draw-control-status no-draw-bounds2))
+        (logclear! (-> self draw status) (draw-control-status no-draw-bounds2))
+        (mod-rule-invis-effect)
+        )
+      )
       
     (when (time-elapsed? (-> self state-time) (seconds 0.1))
       (if (not *target*)
@@ -224,6 +236,12 @@
                  (not (focus-test? *target* dead hit grabbed))
                  (!= (-> self crash-level) 3)
                  )
+        ;; Mod change
+        (when (logtest? (-> self draw status) (draw-control-status no-draw-bounds2))
+          (logclear! (-> self draw status) (draw-control-status no-draw-bounds2))
+          (mod-rule-invis-effect)
+          )
+
         (if (send-event *target* 'end-mode)
             (go-virtual waiting)
             )

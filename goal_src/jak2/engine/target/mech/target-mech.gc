@@ -369,12 +369,14 @@
              (s4-1 (vector<-cspace! (new 'stack-no-clear 'vector) s3-1))
              (a2-2 (vector-negate! (new 'stack-no-clear 'vector) (-> s3-1 bone transform vector 1)))
              )
-        (mech-spawn-thruster
-          (-> arg0 mech)
-          s4-1
-          a2-2
-          (-> arg0 mech thruster-flame-width)
-          (-> arg0 mech thruster-flame-length)
+        (when (not (mod-rule-active? 'complication-invisible-man)) ;; Mod change
+          (mech-spawn-thruster
+            (-> arg0 mech)
+            s4-1
+            a2-2
+            (-> arg0 mech thruster-flame-width)
+            (-> arg0 mech thruster-flame-length)
+            )
           )
         )
       )
@@ -1617,6 +1619,18 @@
               (set-vector! (-> self control target-transv) 0.0 0.0 f0-20 1.0)
               )
             (target-mech-add-thrust)
+            )
+          )
+
+        ;; Mod change
+        (if (mod-rule-active? 'complication-invisible-man)
+          (when (not (logtest? (-> self manipy 0 draw status) (draw-control-status no-draw-bounds2)))
+            (logior! (-> self manipy 0 draw status) (draw-control-status no-draw-bounds2))
+            (mod-rule-invis-effect)
+            )
+          (when (logtest? (-> self manipy 0 draw status) (draw-control-status no-draw-bounds2))
+            (logclear! (-> self manipy 0 draw status) (draw-control-status no-draw-bounds2))
+            (mod-rule-invis-effect)
             )
           )
         (add-gravity)

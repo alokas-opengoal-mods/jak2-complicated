@@ -36,5 +36,5 @@
 ;; (define-extern *last-launch-time* (int))
 (define *last-launch-time* 0)
 (define-extern *lights-out-disable-render-effects?* symbol)
-
+(define-extern mod-rule-invis-effect (function none))
 (define-extern target-slot-count-value (function int))
