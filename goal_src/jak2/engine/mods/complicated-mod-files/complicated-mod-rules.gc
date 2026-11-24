@@ -1027,6 +1027,13 @@
           (not is-minigame?)
           )
         )
+      (('rule-green-light)
+        (and
+          (not is-pilot?)
+          (not is-turret?)
+          (not is-minigame?)
+          )
+        )
       (('rule-propaganda)
         (and
           (case level-name
@@ -1047,11 +1054,9 @@
           (city-level? level-name)
           )
         )
-      (('rule-green-light)
+      (('rule-trigger-discipline)
         (and
-          (not is-pilot?)
-          (not is-turret?)
-          (not is-minigame?)
+          (gun-owned? 'any)
           )
         )
       (else #t)

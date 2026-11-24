@@ -989,6 +989,8 @@
   (rule-green-light-desc #x502d)
   (rule-propaganda-name #x502e)
   (rule-propaganda-desc #x502f)
+  (rule-trigger-discipline-name #x5030)
+  (rule-trigger-discipline-desc #x5031)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)
@@ -1075,6 +1077,8 @@
   (punishment-pause-desc #x701d)
   (punishment-restart-mission-name #x701e)
   (punishment-restart-mission-desc #x701f)
+  (punishment-trigger-discipline-name #x7020)
+  (punishment-trigger-discipline-desc #x7021)
 )
 ;; ---text-id
 

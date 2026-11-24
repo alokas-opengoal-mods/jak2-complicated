@@ -2689,7 +2689,9 @@
       (cpad-set-buzz! (-> *cpad-list* cpads 0) 1 153 (seconds 0.1))
       (talker-spawn-func (-> *talker-speech* 328) *entity-pool* (target-pos 0) (the-as region #f))
       )
-    (when (and (cpad-pressed? (-> self control cpad number) r1) (zero? (-> self gun fire-pending)))
+    (when (and (cpad-pressed? (-> self control cpad number) r1) (zero? (-> self gun fire-pending))
+               (not (mod-timed-punishment-active? 'punishment-trigger-discipline))) ;; Mod change
+      (mod-rule-fail! 'rule-trigger-discipline) ;; Mod change
       (case (-> self gun gun-type)
         (((pickup-type eco-yellow))
          (+! (-> self gun fire-pending) 5)

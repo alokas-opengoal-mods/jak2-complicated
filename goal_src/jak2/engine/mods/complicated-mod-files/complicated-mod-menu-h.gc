@@ -91,6 +91,7 @@
     (rule-shocked?                  symbol)
     (rule-green-light?              symbol)
     (rule-propaganda?               symbol)
+    (rule-trigger-discipline?       symbol)
 
     ;; Complications
     (complication-brittle-bones?    symbol)
@@ -165,6 +166,7 @@
     (punishment-kick?               symbol)
     (punishment-pause?              symbol)
     (punishment-restart-mission?    symbol)
+    (punishment-trigger-discipline? symbol)
 
     ;; Complicated settings
     (countdown-start-seconds        float)
@@ -262,6 +264,7 @@
   (set! (-> obj rule-shocked?)                  #t)
   (set! (-> obj rule-green-light?)              #t)
   (set! (-> obj rule-propaganda?)               #t)
+  (set! (-> obj rule-trigger-discipline?)       #t)
 
   ;; Complications
   (set! (-> obj complication-brittle-bones?)    #t)
@@ -336,6 +339,7 @@
   (set! (-> obj punishment-kick?)               #t)
   (set! (-> obj punishment-pause?)              #t)
   (set! (-> obj punishment-restart-mission?)    #t)
+  (set! (-> obj punishment-trigger-discipline?) #t)
   0
   )
 
@@ -539,6 +543,7 @@
       (('rule-green-light) (-> *complicated-settings* rule-green-light?))
       (('rule-propaganda) (-> *complicated-settings* rule-propaganda?))
       (('complication-car-trouble) (-> *complicated-settings* complication-car-trouble?))
+      (('rule-trigger-discipline) (-> *complicated-settings* rule-trigger-discipline?))
       (else #t)
       )
     )
@@ -565,6 +570,7 @@
       (('punishment-kick) (-> *complicated-settings* punishment-kick?))
       (('punishment-pause) (-> *complicated-settings* punishment-pause?))
       (('punishment-restart-mission) (-> *complicated-settings* punishment-restart-mission?))
+      (('punishment-trigger-discipline) (-> *complicated-settings* punishment-trigger-discipline?))
       (else #t)
       )
     )
@@ -880,6 +886,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* rule-propaganda?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* rule-propaganda?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-trigger-discipline-name)
+      :desc (text-id rule-trigger-discipline-desc)
+      :rule-id 'rule-trigger-discipline
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-trigger-discipline?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-trigger-discipline?) val)
         ;; (complicated-settings-save)
         )
       )
@@ -1384,6 +1402,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* punishment-restart-mission?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* punishment-restart-mission?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id punishment-trigger-discipline-name)
+      :desc (text-id punishment-trigger-discipline-desc)
+      :rule-id 'punishment-trigger-discipline
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* punishment-trigger-discipline?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* punishment-trigger-discipline?) val)
         ;; (complicated-settings-save)
         )
       )

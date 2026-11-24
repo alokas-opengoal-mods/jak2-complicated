@@ -129,6 +129,7 @@ Process of adding a new condition:
     'rule-green-light
     'rule-propaganda
     'complication-car-trouble
+    'rule-trigger-discipline
     )
   )
 
@@ -670,6 +671,16 @@ Process of adding a new condition:
       :roll-weight 40
       :progress? #f
       )
+    ;; rule-trigger-discipline
+    (new 'static 'mod-rule
+      :name-text (text-id rule-trigger-discipline-name)
+      :desc-text (text-id rule-trigger-discipline-desc)
+      :rule-id 'rule-trigger-discipline
+      :rule-type 'rule
+      :duration (seconds 60)
+      :roll-weight 50
+      :progress? #f
+      )
     )
   )
 
@@ -709,6 +720,7 @@ Process of adding a new condition:
     ;;;;;;;;;;;;;;;;;;;;;;;
 
     'punishment-restart-mission
+    'punishment-trigger-discipline
     )
   )
 
@@ -841,6 +853,14 @@ Process of adding a new condition:
       :desc-text (text-id punishment-restart-mission-desc)
       :rule-id 'punishment-restart-mission
       :timed? #f
+      )
+    ;; punishment-trigger-discipline
+    (new 'static 'mod-punishment
+      :name-text (text-id punishment-trigger-discipline-name)
+      :desc-text (text-id punishment-trigger-discipline-desc)
+      :rule-id 'punishment-trigger-discipline
+      :duration (seconds 180)
+      :timed? #t
       )
     )
   )
