@@ -126,6 +126,7 @@ Process of adding a new condition:
     'rule-shocked
     'complication-iron-man
     'complication-pov
+    'rule-green-light
     'rule-propaganda
     'complication-car-trouble
     )
@@ -403,7 +404,7 @@ Process of adding a new condition:
       :desc-text (text-id complication-invert-desc)
       :rule-id 'complication-invert
       :rule-type 'complication
-      :duration (seconds 20)
+      :duration (seconds 40)
       :roll-weight 36
       :progress? #f
       )
@@ -635,6 +636,17 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 60)
       :roll-weight 40
+      :progress? #f
+      )
+    ;; rule-green-light
+    (new 'static 'mod-rule
+      :name-text (text-id rule-green-light-name)
+      :desc-text (text-id rule-green-light-desc)
+      :rule-id 'rule-green-light
+      :rule-type 'rule
+      :duration (seconds 30)
+      :grace-period (seconds 1.5)
+      :roll-weight 30
       :progress? #f
       )
     ;; rule-propaganda

@@ -89,6 +89,7 @@
     (rule-vendetta?                 symbol)
     (rule-hands-on?                 symbol)
     (rule-shocked?                  symbol)
+    (rule-green-light?              symbol)
     (rule-propaganda?               symbol)
 
     ;; Complications
@@ -259,6 +260,7 @@
   ;; (set! (-> obj rule-vendetta?)                 #t)
   ;; (set! (-> obj rule-hands-on?)                 #t)
   (set! (-> obj rule-shocked?)                  #t)
+  (set! (-> obj rule-green-light?)              #t)
   (set! (-> obj rule-propaganda?)               #t)
 
   ;; Complications
@@ -534,6 +536,7 @@
       (('rule-shocked) (-> *complicated-settings* rule-shocked?))
       (('complication-iron-man) (-> *complicated-settings* complication-iron-man?))
       (('complication-pov) (-> *complicated-settings* complication-pov?))
+      (('rule-green-light) (-> *complicated-settings* rule-green-light?))
       (('rule-propaganda) (-> *complicated-settings* rule-propaganda?))
       (('complication-car-trouble) (-> *complicated-settings* complication-car-trouble?))
       (else #t)
@@ -853,6 +856,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* rule-shocked?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* rule-shocked?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-green-light-name)
+      :desc (text-id rule-green-light-desc)
+      :rule-id 'rule-green-light
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-green-light?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-green-light?) val)
         ;; (complicated-settings-save)
         )
       )

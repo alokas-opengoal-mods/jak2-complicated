@@ -953,6 +953,19 @@
   (none)
   )
 
+(defun mod-rule-update-green-light ()
+  (when (mod-rule-active? 'rule-green-light)
+    (when
+      (and
+        (= (-> *cpad-list* cpads 0 stick0-speed) 0.0)
+        (<= (-> *target* control ctrl-xz-vel) (meters 3))
+        )
+      (mod-rule-fail! 'rule-green-light)
+      )
+    )
+  (none)
+  )
+
 (defun mod-rule-update-car-trouble ()
   (if (-> *MOD-rule-context-bank* car-trouble-triggered?)
     (set! (-> *MOD-rule-context-bank* car-trouble-triggered?) #f)
@@ -1437,6 +1450,7 @@
             (mod-update-trivia)
             (mod-rule-update-hang-time)
             (mod-rule-update-red-light)
+            (mod-rule-update-green-light)
             (mod-rule-handle-pass-input)
             (mod-rule-update-shifty)
             (mod-rule-update-car-trouble)

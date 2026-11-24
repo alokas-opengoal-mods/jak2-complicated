@@ -588,6 +588,7 @@
         'rule-trivia
         'complication-twisted
         'rule-red-light
+        'rule-green-light
         'complication-palate-change
         )
         (play-custom-sfx sound-red-light 100.0)

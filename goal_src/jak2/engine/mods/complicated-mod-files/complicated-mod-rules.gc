@@ -1047,6 +1047,13 @@
           (city-level? level-name)
           )
         )
+      (('rule-green-light)
+        (and
+          (not is-pilot?)
+          (not is-turret?)
+          (not is-minigame?)
+          )
+        )
       (else #t)
       )
     )
