@@ -8,357 +8,30 @@
 
 (defun mod-rule-name ((id symbol))
   (-> (mod-rule-info-get id) name-text)
-  ;; (case id
-  ;;   (('rule-grounded) "GROUNDED")
-  ;;   (('rule-management) "ANGER MANAGEMENT")
-  ;;   (('rule-die) "DIE")
-  ;;   (('rule-kill-pressure) "BLOODLUST")
-  ;;   (('rule-hitlist) "HITLIST")
-  ;;   (('rule-double-kill) "DOUBLE KILL")
-  ;;   (('rule-sniper) "SNIPER")
-  ;;   (('rule-crate-break) "BULL AND CHINA")
-  ;;   (('rule-money-pressure) "CASH GRAB")
-  ;;   (('rule-fuel-pressure) "CELL PRESSURE")
-  ;;   (('rule-buzzer-pressure) "BUZZER BEATER")
-  ;;   (('rule-flop-this) "FLOP THIS")
-  ;;   (('complication-brittle-bones) "BRITTLE BONES")
-  ;;   (('complication-rotten-eggs) "ROTTEN EGGS")
-  ;;   (('complication-eco-allergy) "ECO ALLERGY")
-  ;;   (('rule-keep-it-low) "KEEP IT LOW")
-  ;;   (('complication-sizeable) "SIZEABLE CONTRIBUTIONS")
-  ;;   (('complication-cumbersome) "CUMBERSOME")
-  ;;   (('complication-ohko) "OHKO")
-  ;;   (('complication-critical) "CRITICAL CONDITION")
-  ;;   (('complication-glare) "GLARE")
-  ;;   (('complication-heating-balloons) "HEATING BALLOONS")
-  ;;   (('complication-disassociate) "DISASSOCIATE")
-  ;;   (('complication-bus-driver) "BUS DRIVER")
-  ;;   (('complication-wings-tied) "WINGS TIED")
-  ;;   (('complication-fuel-shortage) "FUEL SHORTAGE")
-  ;;   (('complication-hidden-treasure) "HIDDEN TREASURE")
-  ;;   (('complication-drought) "DROUGHT")
-  ;;   (('complication-jak-rabbit) "JAK RABBIT")
-  ;;   (('rule-survivor) "STEP ONE")
-  ;;   (('rule-vendetta) "VENDETTA")
-  ;;   (('rule-hands-on) "HANDS ON")
-  ;;   (('complication-eco-reserve) "ECO RESERVE")
-  ;;   (('complication-red-stop) "SEEING RED")
-  ;;   (('rule-one-frame) "SPIN TO WIN")
-  ;;   (('rule-distancing) "SOCIAL DISTANCING")
-  ;;   (('rule-red-light) "RED LIGHT")
-  ;;   (('complication-rgyb) "RGYB")
-  ;;   (('complication-butter-fingers) "BUTTER FINGERS")
-  ;;   (('rule-for-billy) "FOR BILLY")
-  ;;   (('rule-cold-feet) "COLD FEET")
-  ;;   (('complication-overclock) "OVERCLOCK")
-  ;;   (('rule-speed) "SPEED RACER")
-  ;;   (('rule-math-quiz) "QUICK MATHS")
-  ;;   (('rule-trivia) "DON\c12T KNOW JAK")
-  ;;   (('complication-bad-ping) "BAD PING")
-  ;;   (('rule-green-pilled) "GREEN-PILLED")
-  ;;   (('rule-button-pusher) "BUTTON PUSHER")
-  ;;   (('rule-loyal-customer) "LOYAL CUSTOMER")
-  ;;   (('complication-invisible-man) "INVISIBLE MAN")
-  ;;   (('rule-cooked) "COOKED")
-  ;;   (('complication-joyride) "JOYRIDE")
-  ;;   (('rule-sagging-sails) "SAGGING SAILS")
-  ;;   (('rule-side-to-side) "SIDE TO SIDE")
-  ;;   (('rule-landlubber) "LANDLUBBER")
-  ;;   (('complication-double-aphids) "INFESTATION")
-  ;;   (('complication-invert) "THIS ONE SUCKS")
-  ;;   (('complication-loose-pockets) "LOOSE POCKETS")
-  ;;   (('complication-twisted) "TWISTED")
-  ;;   (('complication-vibe-check) "VIBE CHECK")
-  ;;   (('complication-income-tax) "INCOME TAX")
-  ;;   (('rule-express-delivery) "EXPRESS DELIVERY")
-  ;;   (('rule-qte) "QUICK TIME EVENT")
-  ;;   (('rule-touch-grass) "TOUCH GRASS")
-  ;;   (('complication-mirror) "MIRRORED")
-  ;;   (('complication-no-double-jump) "ONE AND DONE")
-  ;;   (('rule-hang-time) "HANG TIME")
-  ;;   (('complication-unbreakable) "UNBREAKABLE")
-  ;;   (('complication-get-a-grip) "GET A GRIP")
-  ;;   (('complication-fast-reel) "FAST REEL")
-  ;;   (('complication-palate-change) "PALATE CHANGE")
-  ;;   (('complication-jak-be-nimble) "JAK BE NIMBLE")
-  ;;   (('rule-no-harm) "DO NO HARM")
-  ;;   (('complication-soul-bond) "SOUL BOND")
-  ;;   (('complication-shifty) "SHIFTY")
-  ;;   (('complication-interference) "INTERFERENCE")
-  ;;   (('complication-quicksand) "QUICKSAND")
-  ;;   (('complication-lights-out) "LIGHTS OUT")
-  ;;   (('rule-supercharged) "SUPERCHARGED")
-  ;;   (('complication-half-price) "LIMITED TIME OFFER")
-  ;;   (('rule-keep-rolling) "KEEP ROLLING")
-  ;;   (('complication-energy-boost) "ENERGY BOOST")
-  ;;   (('rule-uncharted) "UNCHARTED")
-  ;;   (('rule-bonecracker) "BONECRACKER")
-  ;;   (('rule-orb-hunt) "ORB HUNT")
-  ;;   (('rule-no-ledge) "LEDGE LESS")
-  ;;   (else "UNKNOWN")
-  ;;   )
   )
-
-(defun mod-apply-time-limit-multiplier ((base-time time-frame))
-  (let* ((raw-mult (time-limit-multiplier))
-         (tenths (the int (+ (* raw-mult 10.0) 0.5))))
-    (the time-frame (/ (* base-time (the time-frame tenths)) 10))))
-
-;; (defun mod-level-display-name ((level symbol))
-;;   (case level
-;;     (('training) "GEYSER ROCK")
-;;     (('village1) "SANDOVER VILLAGE")
-;;     (('beach) "SENTINEL BEACH")
-;;     (('jungle) "FORBIDDEN JUNGLE")
-;;     (('jungleb) "JUNGLE TEMPLE")
-;;     (('misty) "MISTY ISLAND")
-;;     (('firecanyon) "FIRE CANYON")
-;;     (('village2) "ROCK VILLAGE")
-;;     (('sunken 'sunkenb) "LOST PRECURSOR CITY")
-;;     (('swamp) "BOGGY SWAMP")
-;;     (('rolling) "PRECUROR BASIN")
-;;     (('ogre) "MOUNTAIN PASS")
-;;     (('village3) "VOLCANIC CRATER")
-;;     (('snow) "SNOWY MOUNTAIN")
-;;     (('maincave) "MAIN CAVE")
-;;     (('robocave) "ROBOT ROOM")
-;;     (('darkcave) "DARK CAVE")
-;;     (('lavatube) "LAVA TUBE")
-;;     (('citadel) "CITADEL")
-;;     (('finalboss) "FINAL BOSS")
-;;     (else "UNKNOWN")
-;;     )
-;;   )
 
 (defun mod-rule-description ((id symbol))
   (-> (mod-rule-info-get id) desc-text)
-  ;; (case id
-  ;;   (('rule-grounded) "DO NOT JUMP.")
-  ;;   (('rule-management) "DO NOT PUNCH.")
-  ;;   (('rule-die) "KILL HIM. KILL HIM NOW.")
-  ;;   (('rule-kill-pressure) "KILL 6 LURKERS.")
-  ;;   (('rule-hitlist) "KILL 3 UNIQUE LURKER TYPES.")
-  ;;   (('rule-double-kill) "KILL 2 LURKERS AT THE SAME TIME.")
-  ;;   (('rule-sniper) "KILL A LURKER FROM AT LEAST 70 METERS AWAY.")
-  ;;   (('rule-crate-break) "BREAK 5 CRATES.")
-  ;;   (('rule-money-pressure) "COLLECT 20 ORBS.")
-  ;;   (('rule-fuel-pressure) "COLLECT A POWER CELL.")
-  ;;   (('rule-buzzer-pressure) "COLLECT A SCOUT FLY.")
-  ;;   (('rule-flop-this) "LURKERS MAY ONLY BE KILLED WITH GROUND POUNDS.")
-  ;;   (('complication-brittle-bones) "EVERY JUMP HAS A 10% CHANCE TO DAMAGE YOU.")
-  ;;   (('complication-rotten-eggs) "ORBS KILL YOU.")
-  ;;   (('complication-eco-allergy) "ECO DAMAGES YOU.")
-  ;;   (('rule-keep-it-low) "DO NOT JUMP KICK.")
-  ;;   (('complication-sizeable) "ROLLJUMPS COST 2 ORBS.")
-  ;;   (('complication-cumbersome) "ORBS WEIGH JAK DOWN.")
-  ;;   (('complication-heating-balloons) "COOLING BALLOONS MELT YOU.")
-  ;;   (('complication-drought) "ALL WATER, LAVA, AND DARK ECO ARE GONE.")
-  ;;   (('complication-ohko) "JAK IS LIMITED TO ONE HEALTH.")
-  ;;   (('complication-critical) "CELLS CAN ONLY BE COLLECTED AT ONE HEALTH.")
-  ;;   (('complication-glare) "JAK FREEZES WHEN LURKERS SEE HIM.")
-  ;;   (('complication-disassociate) "KILLING A LURKER DISMOUNTS FLUT FLUT.")
-  ;;   (('complication-bus-driver) "ZOOMER EXPLODES IF TOO SLOW.")
-  ;;   (('complication-fuel-shortage) "ALL POWER CELLS ARE GONE.")
-  ;;   (('complication-hidden-treasure) "ORBS ARE INVISIBLE.")
-  ;;   (('complication-wings-tied) "YOU CANNOT COLLECT CELLS WHILE ON FLUT FLUT.")
-  ;;   (('complication-jak-rabbit) "JUMP HEIGHTS ARE DOUBLED.")
-  ;;   (('rule-vendetta) "KILL A LURKER WITH RED ECO.")
-  ;;   (('rule-hands-on) "CRATES MAY ONLY BE BROKEN BY DIRECT CONTACT FROM JAK.")
-  ;;   (('rule-survivor) "STAY ALIVE.")
-  ;;   (('complication-eco-reserve) "YELLOW ECO PAUSES TIMER.")
-  ;;   (('complication-red-stop) "RED ECO PAUSES TIMER.")
-  ;;   (('rule-one-frame) "DO A ONE-FRAME.")
-  ;;   (('rule-distancing) "DO NOT GET WITHIN 8 METERS OF A SCOUT FLY.")
-  ;;   (('rule-red-light) "DO NOT MOVE.")
-  ;;   (('complication-rgyb) "BLUE AND YELLOW ECO ARE SWAPPED.")
-  ;;   (('complication-butter-fingers) "JAK CANNOT GRAB LEDGES.")
-  ;;   (('rule-for-billy) "PROTECT FARTHY\c12S SNACKS. DO NOT LEAVE BOGGY SWAMP.")
-  ;;   (('rule-cold-feet) "KEEP OFF THE ICE.")
-  ;;   (('complication-overclock) "CITADEL DISCS ARE FASTER.")
-  ;;   (('rule-speed) "REACH A SPEED OF 40 METERS PER SECOND.")
-  ;;   (('rule-math-quiz) "ANSWER CORRECTLY.       (USE D-PAD)")
-  ;;   (('rule-trivia) "ANSWER CORRECTLY.")
-  ;;   (('complication-bad-ping) (string-format "YOU HAVE ~D-MS INPUT DELAY." (mod-seconds->ms (-> *MOD-tuning-bank* bad-ping-input-delay))))
-  ;;   (('rule-green-pilled) "INCREASE YOUR HEALTH WITH GREEN ECO.")
-  ;;   (('rule-button-pusher) "PUSH A BUTTON.")
-  ;;   (('rule-loyal-customer) "BUY AN ORACLE CELL.")
-  ;;   (('complication-invisible-man) "JAK IS INVISIBLE.")
-  ;;   (('rule-cooked) "BURN JAK.")
-  ;;   (('complication-joyride) "HEY! THERE\c12S THE FLUT-FLUT!")
-  ;;   (('rule-sagging-sails) "MISS 3 FIVE-POUND FISH.")
-  ;;   (('rule-side-to-side) "DO NOT TOUCH THE MIDDLE PLATFORM.")
-  ;;   (('rule-landlubber) "STAY OUT OF THE WATER, MUD, AND TAR.")
-  ;;   (('complication-double-aphids) "DOUBLE THE APHIDS.")
-  ;;   (('complication-invert) "CONTROLS ARE INVERTED.")
-  ;;   (('complication-loose-pockets) "BONKING OR TAKING DAMAGE LOSES 20 ORBS.")
-  ;;   (('complication-twisted)
-  ;;    (let ((rolls-away (- (-> *MOD-rule-context-bank* twist-pending-count) (-> *MOD-stats-bank* rules-rolled))))
-  ;;      (if (> rolls-away 0)
-  ;;        (string-format "THE RULE ROLLED ~D RULES FROM NOW MUST BE BROKEN." rolls-away)
-  ;;        "A LATER RULE MUST BE BROKEN.")))
-  ;;   (('complication-vibe-check) "I LIKE YA CUT, G.")
-  ;;   (('complication-income-tax) "TIMER INCREMENTS ARE HALVED.")
-  ;;   (('rule-touch-grass) "DO THAT.")
-  ;;   (('rule-express-delivery) "RETURN THE MUSE.          OR SUFFER MY CURSE.")
-  ;;   (('rule-qte) "PRESS ")
-  ;;   (('complication-mirror) "THE WORLD IS MIRRORED.")
-  ;;   (('complication-no-double-jump) "JAK AND FLUT FLUT FORGOT HOW TO DOUBLE JUMP.")
-  ;;   (('rule-hang-time) "STAY AIRBORNE FOR 3 CONSECUTIVE SECONDS.")
-  ;;   (('complication-unbreakable) "SCOUT FLY CRATES CAN ONLY BE BROKEN BY ECO.")
-  ;;   (('complication-get-a-grip)
-  ;;    (let ((seconds (/ (the int (mod-apply-time-limit-multiplier (seconds 12))) (seconds 1))))
-  ;;      (string-format "FOR EVERY ~D SECONDS A LEDGE IS NOT GRABBED, YOU DIE." seconds)))
-  ;;   (('complication-fast-reel) "YOUR REEL SPEED HAS INCREASED!")
-  ;;   (('complication-palate-change) "EELS ARE GOOD, YELLOWS ARE BAD.")
-  ;;   (('complication-jak-be-nimble) "JAK BE QUICK.")
-  ;;   (('rule-no-harm) "DO NOT KILL ANY LURKERS.")
-  ;;   (('complication-soul-bond) "IF A LURKER DIES, YOU DIE TOO.")
-  ;;   (('complication-shifty) "JAK RANDOMLY TELEPORTS SHORT DISTANCES.")
-  ;;   (('complication-interference) "ECO PIXELATES THE SCREEN.")
-  ;;   (('complication-quicksand) "THE TIMER DRAINS TWICE AS FAST WHILE YOU\c12RE ON SAND.")
-  ;;   (('complication-lights-out) "SORRY, WERE YOU USING THAT?")
-  ;;   (('rule-supercharged) "COLLECT BLUE ECO.")
-  ;;   (('complication-half-price) "POWER CELLS ARE 50% OFF!")
-  ;;   (('rule-keep-rolling) "ROLL 30 TIMES.")
-  ;;   (('complication-energy-boost) "HAVE SOME ECO.")
-  ;;   (('rule-uncharted) "VISIT A LEVEL YOU HAVE NOT BEEN TO YET.")
-  ;;   (('rule-bonecracker) "KNOCK DOWN A BONE BRIDGE.")
-  ;;   (('rule-orb-hunt)
-  ;;    (if (-> *MOD-orb-hunt-bank* level)
-  ;;      (string-format "COLLECT THE HIDDEN ORB IN ~S." (mod-level-display-name (-> *MOD-orb-hunt-bank* level)))
-  ;;      "COLLECT THE HIDDEN ORB IN THIS LEVEL."))
-  ;;   (('rule-no-ledge) "DO NOT GRAB A LEDGE.")
-  ;;   (else "NO DESCRIPTION AVAILABLE.")
-  ;;   )
   )
 
 (defun mod-rule-duration ((id symbol))
   (-> (mod-rule-info-get id) duration)
-  ;; (case id
-  ;;   (('rule-grounded) (seconds 10)) ;; 10
-  ;;   (('rule-management) (seconds 90)) ;; 90
-  ;;   (('rule-die) (seconds 20)) ;; 20
-  ;;   (('rule-kill-pressure) (seconds 45)) ;; 45
-  ;;   (('rule-hitlist) (seconds 50)) ;; 50
-  ;;   (('rule-double-kill) (seconds 45)) ;; 45
-  ;;   (('rule-sniper) (seconds 75)) ;; 75
-  ;;   (('rule-money-pressure) (seconds 45)) ;; 45
-  ;;   (('rule-fuel-pressure) (seconds 45)) ;; 45
-  ;;   (('rule-buzzer-pressure) (seconds 30)) ;; 30
-  ;;   (('rule-flop-this) (seconds 60)) ;; 60
-  ;;   (('complication-brittle-bones) (seconds 45)) ;; 45
-  ;;   (('complication-rotten-eggs) (seconds 20)) ;; 20
-  ;;   (('complication-eco-allergy) (seconds 45)) ;; 45
-  ;;   (('rule-keep-it-low) (seconds 90)) ;; 90
-  ;;   (('complication-sizeable) (seconds 60)) ;; 60
-  ;;   (('complication-cumbersome) (seconds 40)) ;; 40
-  ;;   (('complication-ohko) (seconds 60)) ;; 60
-  ;;   (('complication-critical) (seconds 60)) ;; 60
-  ;;   (('complication-heating-balloons) (seconds 20)) ;; 20
-  ;;   (('complication-glare) (seconds 45)) ;; 45
-  ;;   (('complication-disassociate) (seconds 45)) ;; 45
-  ;;   (('complication-bus-driver) (seconds 20)) ;; 20
-  ;;   (('complication-wings-tied) (seconds 60)) ;; 60
-  ;;   (('rule-survivor) (seconds 60)) ;; 60
-  ;;   (('complication-fuel-shortage) (seconds 30)) ;; 30
-  ;;   (('complication-hidden-treasure) (seconds 60)) ;; 60
-  ;;   (('complication-drought) (seconds 45)) ;; 45
-  ;;   (('complication-jak-rabbit) (seconds 45)) ;; 45
-  ;;   (('rule-vendetta) (seconds 35)) ;; 35
-  ;;   (('rule-hands-on) (seconds 60)) ;; 60
-  ;;   (('complication-eco-reserve) (seconds 45)) ;; 45
-  ;;   (('complication-red-stop) (seconds 60)) ;; 60
-  ;;   (('rule-one-frame) (seconds 45)) ;; 45
-  ;;   (('rule-distancing) (seconds 45)) ;; 45
-  ;;   (('rule-red-light) (seconds 5)) ;; 5
-  ;;   (('complication-rgyb) (seconds 30)) ;; 30
-  ;;   (('complication-butter-fingers) (seconds 60)) ;; 60
-  ;;   (('rule-for-billy) (seconds 130)) ;; 130
-  ;;   (('rule-cold-feet) (seconds 60)) ;; 60
-  ;;   (('complication-overclock) (seconds 45)) ;; 45
-  ;;   (('rule-speed) (seconds 60)) ;; 60
-  ;;   (('rule-math-quiz) (seconds 20)) ;; 20
-  ;;   (('rule-trivia) (seconds 15)) ;; 15
-  ;;   (('complication-bad-ping) (seconds 45)) ;; 45
-  ;;   (('rule-green-pilled) (seconds 60)) ;; 60
-  ;;   (('rule-button-pusher) (seconds 45)) ;; 45
-  ;;   (('rule-loyal-customer) (seconds 60)) ;; 60
-  ;;   (('complication-invisible-man) (seconds 45)) ;; 45
-  ;;   (('rule-cooked) (seconds 35)) ;; 35
-  ;;   (('complication-joyride) (seconds 30)) ;; 30
-  ;;   (('rule-sagging-sails) (seconds 30)) ;; 30
-  ;;   (('rule-side-to-side) (seconds 60)) ;; 60
-  ;;   (('rule-landlubber) (seconds 40)) ;; 40
-  ;;   (('complication-double-aphids) (seconds 40)) ;; 40
-  ;;   (('complication-invert) (seconds 20)) ;; 20
-  ;;   (('complication-loose-pockets) (seconds 60)) ;; 60
-  ;;   (('complication-twisted) (seconds 8)) ;; 8
-  ;;   (('complication-vibe-check) (seconds 4)) ;; 4
-  ;;   (('complication-income-tax) (seconds 30)) ;; 30
-  ;;   (('rule-express-delivery) (seconds 90)) ;; 90
-  ;;   (('rule-crate-break) (seconds 30)) ;; 30
-  ;;   (('rule-qte) (seconds 1.5)) ;; 1.5
-  ;;   (('rule-touch-grass) (seconds 15)) ;; 15
-  ;;   (('complication-mirror) (seconds 60)) ;; 60
-  ;;   (('complication-no-double-jump) (seconds 60)) ;; 60
-  ;;   (('rule-hang-time) (seconds 75)) ;; 75
-  ;;   (('complication-unbreakable) (seconds 45)) ;; 45
-  ;;   (('complication-get-a-grip) (seconds 40)) ;; 40
-  ;;   (('complication-fast-reel) (seconds 15)) ;; 15
-  ;;   (('complication-palate-change) (seconds 30)) ;; 30
-  ;;   (('complication-jak-be-nimble) (seconds 45)) ;; 45
-  ;;   (('rule-no-harm) (seconds 30)) ;; 30
-  ;;   (('complication-soul-bond) (seconds 40)) ;; 40
-  ;;   (('complication-shifty) (seconds 45)) ;; 45
-  ;;   (('complication-interference) (seconds 45)) ;; 45
-  ;;   (('complication-quicksand) (seconds 30)) ;; 30
-  ;;   (('complication-lights-out) (seconds 30)) ;; 30
-  ;;   (('rule-supercharged) (seconds 25)) ;; 25
-  ;;   (('complication-half-price) (seconds 20)) ;; 20
-  ;;   (('rule-keep-rolling) (seconds 35)) ;; 35
-  ;;   (('complication-energy-boost) (seconds 4)) ;; 4
-  ;;   (('rule-uncharted) (seconds 45)) ;; 45
-  ;;   (('rule-bonecracker) (seconds 45)) ;; 45
-  ;;   (('rule-orb-hunt) (seconds 105)) ;; 105
-  ;;   (('rule-no-ledge) (seconds 60)) ;; 60
-  ;;   (else (seconds 30))
-  ;;   )
   )
 
 (defun mod-rule-counter-goal ((id symbol))
   (-> (mod-rule-info-get id) counter-goal)
-  ;; (case id
-  ;;   (('rule-kill-pressure) 6)
-  ;;   (('rule-hitlist 'rule-sagging-sails 'rule-hang-time) 3)
-  ;;   (('rule-crate-break) 5)
-  ;;   (('rule-money-pressure) 20)
-  ;;   (('rule-keep-rolling) 30)
-  ;;   (('rule-double-kill 'rule-fuel-pressure
-  ;;                      'rule-sniper
-  ;;                      'rule-buzzer-pressure
-  ;;                      'rule-die
-  ;;                      'rule-one-frame
-  ;;                      'rule-vendetta
-  ;;                      'rule-for-billy
-  ;;                      'rule-speed
-  ;;                      'rule-green-pilled
-  ;;                      'rule-button-pusher
-  ;;                      'rule-loyal-customer
-  ;;                      'rule-cooked
-  ;;                      'rule-express-delivery
-  ;;                      'rule-qte
-  ;;                      'rule-touch-grass
-  ;;                      'rule-supercharged
-  ;;                      'rule-uncharted
-  ;;                      'rule-bonecracker
-  ;;                      'rule-orb-hunt)
-  ;;    1)
-  ;;   (else 0)
-  ;;   )
   )
 
 (defun mod-rule-type ((id symbol))
   (-> *mod-rules* (mod-rule-index-from-id id) rule-type)
+  )
+
+(defun mod-apply-time-limit-multiplier ((base-time time-frame))
+  (let* ((raw-mult (time-limit-multiplier))
+         (tenths (the int (+ (* raw-mult 10.0) 0.5)))
+         )
+    (the time-frame (/ (* base-time (the time-frame tenths)) 10))
+    )
   )
 
 ;; Grace period after activation during which a failure is ignored.
@@ -425,6 +98,16 @@
     'rule-no-ledge                  'complication-get-a-grip
     'rule-no-ledge                  'complication-butter-fingers
     'rule-grounded                  'complication-get-a-grip
+    'rule-hang-time                 'rule-keep-it-low
+    'complication-sidekicked        'rule-flop-this
+    'complication-sidekicked        'complication-bus-driver
+    'complication-sidekicked        'complication-butter-fingers
+    'complication-sidekicked        'rule-sniper
+    'complication-sidekicked        'rule-button-pusher
+    'complication-sidekicked        'rule-hang-time
+    'complication-sidekicked        'complication-get-a-grip
+    'complication-sidekicked        'rule-keep-rolling
+    'rule-green-light               'rule-red-light
     )
   )
 
@@ -466,19 +149,31 @@
   (let ((slot 0)
         (result -1))
     (while (and (< slot *mod-rule-slot-count*) (< result 0))
-      (when (and (not (-> (-> *MOD-rule-slot-bank* active-slots) slot)) (not (-> (-> *MOD-rule-slot-bank* pending-slots) slot)))
-        (set! result slot))
-      (+! slot 1))
-    result))
+      (when (and (not (-> (-> *MOD-rule-slot-bank* active-slots) slot)) 
+                 (not (-> (-> *MOD-rule-slot-bank* pending-slots) slot))
+                 )
+        (set! result slot)
+        )
+      (+! slot 1)
+      )
+    result
+    )
+  )
 
 (defun mod-rule-first-occupied-slot ()
   (let ((slot 0)
         (result -1))
     (while (and (< slot *mod-rule-slot-count*) (< result 0))
-      (when (or (-> (-> *MOD-rule-slot-bank* active-slots) slot) (-> (-> *MOD-rule-slot-bank* pending-slots) slot))
-        (set! result slot))
-      (+! slot 1))
-    result))
+      (when (or (-> (-> *MOD-rule-slot-bank* active-slots) slot) 
+                (-> (-> *MOD-rule-slot-bank* pending-slots) slot)
+                )
+        (set! result slot)
+        )
+      (+! slot 1)
+      )
+    result
+    )
+  )
 
 (defun mod-rule-clear-slot ((slot int))
   (when (and (>= slot 0) (< slot *mod-rule-slot-count*))
@@ -489,28 +184,26 @@
     (set! (-> (-> *MOD-rule-slot-bank* slot-progress) slot) 0)
     (set! (-> (-> *MOD-rule-slot-bank* slot-end-times) slot) 0)
     (set! (-> (-> *MOD-rule-slot-bank* roll-ready-times) slot) 0)
-    (set! (-> (-> *MOD-rule-slot-bank* slot-grace-periods) slot) 0))
-  (none))
+    (set! (-> (-> *MOD-rule-slot-bank* slot-grace-periods) slot) 0)
+    )
+  (none)
+  )
 
 ;; Remember the last outcome shown in a slot's band.
 (defun mod-rule-set-slot-outcome! ((slot int) (outcome symbol))
-  (when (and (>= slot 0) (< slot *mod-rule-slot-count*))
-    (set! (-> (-> *MOD-rule-slot-bank* slot-outcomes) slot) outcome))
-  (none))
+  (when (and (>= slot 0) 
+             (< slot *mod-rule-slot-count*))
+    (set! (-> (-> *MOD-rule-slot-bank* slot-outcomes) slot) outcome)
+    )
+  (none)
+  )
 
 (defun mod-rule-clear-slot-outcomes! ()
   (dotimes (slot *mod-rule-slot-count*)
-    (set! (-> (-> *MOD-rule-slot-bank* slot-outcomes) slot) 'none))
-  (none))
-
-
-;; True in places where Jak is always on the zoomer.
-;; (defun sole-zoomer-level? ((level symbol))
-;;   ;; (or (string= (current-checkpoint-name) "firecanyon-start")
-;;   ;;     (eq? level 'rolling)
-;;   ;;     (string= (current-checkpoint-name) "ogre-race"))
-;;   #f
-;;   )
+    (set! (-> (-> *MOD-rule-slot-bank* slot-outcomes) slot) 'none)
+    )
+  (none)
+  )
 
 (defun city-level? ((level symbol))
   (case level
@@ -616,16 +309,16 @@
           (when (nonzero? actors)
             (dotimes (ii (-> actors length))
               (let ((entity (-> actors data ii actor)))
-                (format #t "Level entity ~D: ~S~%" 
-                  ii 
-                  (the string (-> entity etype symbol))
-                  )
+                ;; (format #t "Level entity ~D: ~S~%" 
+                ;;   ii 
+                ;;   (the string (-> entity etype symbol))
+                ;;   )
                 (when (and (= (-> entity etype symbol) e)
                             (or (not (-> entity extra)) 
                                 (zero? (-> entity extra)) 
                                 (not (logtest? (-> entity extra perm status) (entity-perm-status dead)))
                                 ))
-                    (format #t "  Status: ~S" (the string (-> entity extra perm status)))
+                    ;; (format #t "  Status: ~S" (the string (-> entity extra perm status)))
                     (return #t)
                   )
                 )
@@ -683,10 +376,10 @@
                                   )
                               )
                       (+! enemy-count 1)
-                      (format #t "Level enemy ~D: ~S~%"
-                        enemy-count 
-                        (the string (-> entity etype symbol))
-                        )
+                      ;; (format #t "Level enemy ~D: ~S~%"
+                      ;;   enemy-count 
+                      ;;   (the string (-> entity etype symbol))
+                      ;;   )
                     )
                   )
                 )
@@ -695,7 +388,7 @@
           )
         )
       )
-    (format #t "Level enemy count: ~D~%" enemy-count)
+    ;; (format #t "Level enemy count: ~D~%" enemy-count)
     enemy-count
     )
   )
@@ -783,52 +476,6 @@
     )
   )
 
-(defun sparse-green-eco-level? ((level symbol))
-  ;; (or (case level
-  ;;       ;; (('village3
-  ;;       ;;   'village1
-  ;;       ;;   'jungleb
-  ;;       ;;   'lavatube
-  ;;       ;;   'ogre
-  ;;       ;;   'citadel
-  ;;       ;;   'finalboss
-  ;;       ;;   'sunkenb
-  ;;       ;;   'firecanyon
-  ;;       ;;   ) #t)
-  ;;       (else #f))
-  ;;     (string= (current-checkpoint-name) "ogre-start"))
-  #f
-  )
-
-(defun red-eco-level? ((level symbol))
-  ;; (or (case level
-  ;;       (('misty 
-  ;;         'snow) 
-  ;;         #t)
-  ;;       (else #f))
-  ;;     (string= (current-checkpoint-name) "citadel-generator-start"))
-  #f
-  )
-
-(defun yellow-eco-level? ((level symbol))
-  ;; (or (case level
-  ;;       (('swamp 'snow 'citadel 'finalboss 'lavatube 'maincave 'robocave 'darkcave) #t)
-  ;;       (else #f))
-  ;;     (and (eq? level 'ogre) (task-closed? (game-task snow-eggtop) (task-status need-resolution)))
-  ;;     )
-  #f
-  )
-
-(defun sparse-blue-eco-level? ((level symbol))
-  ;; (or (and (eq? level 'firecanyon) (not (task-closed? (game-task jungle-eggtop) (task-status need-resolution))))
-  ;;     (string= (current-checkpoint-name) "citadel-generator-start")
-  ;;     (string= (current-checkpoint-name) "misty-bike")
-  ;;     (case level
-  ;;       (('maincave 'snow 'darkcave 'finalboss 'village3 'rolling 'lavatube) #t)
-  ;;       (else #f)))
-  #f
-  )
-
 (defun hang-time-level? ((level symbol))
   (or (city-level? level)
       (case level
@@ -845,46 +492,6 @@
         )
       )
   )
-
-;; (defun mod-all-bone-bridges-down? ()
-;;   (let ((misty-level (level-get *level* 'misty))
-;;         (bridge-count 0)
-;;         (fallen-count 0))
-;;     (when (and misty-level (= (-> misty-level status) 'active))
-;;       (let ((actors (-> misty-level bsp actors)))
-;;         (when (nonzero? actors)
-;;           (dotimes (idx (-> actors length))
-;;             (let ((actor (-> actors data idx actor)))
-;;               (when (and (type-type? (-> actor type) entity-actor) (= (-> (the-as entity-actor actor) etype) mis-bone-bridge))
-;;                 (+! bridge-count 1)
-;;                 (when (logtest? (-> (the-as entity-actor actor) extra perm status) (entity-perm-status complete))
-;;                   (+! fallen-count 1))))))))
-;;     (and (> bridge-count 0) (= bridge-count fallen-count))))
-
-;; (defun mod-rule-uncharted-level-visited? ((level-index level-task-data-index))
-;;   (and *game-info* (not (zero? (-> *game-info* enter-level-time level-index)))))
-
-;; (defun mod-rule-uncharted-can-roll? ((village symbol))
-;;   (cond
-;;     ((eq? village 'village1)
-;;      (or (not (mod-rule-uncharted-level-visited? (level-task-data-index beach)))
-;;          (not (mod-rule-uncharted-level-visited? (level-task-data-index jungle)))
-;;          (and (task-closed? (game-task jungle-fishgame) (task-status need-resolution))
-;;               (not (mod-rule-uncharted-level-visited? (level-task-data-index misty))))
-;;          (not (mod-rule-uncharted-level-visited? (level-task-data-index firecanyon)))))
-;;     ((eq? village 'village2)
-;;      (or (not (mod-rule-uncharted-level-visited? (level-task-data-index firecanyon)))
-;;          (not (mod-rule-uncharted-level-visited? (level-task-data-index sunken)))
-;;          (not (mod-rule-uncharted-level-visited? (level-task-data-index swamp)))
-;;          (and (>= (-> *game-info* fuel) 45.0) (not (mod-rule-uncharted-level-visited? (level-task-data-index ogre))))
-;;          (not (mod-rule-uncharted-level-visited? (level-task-data-index rolling)))))
-;;     ((eq? village 'village3)
-;;      (or (not (mod-rule-uncharted-level-visited? (level-task-data-index ogre)))
-;;          (and (task-closed? (game-task village3-button) (task-status need-hint))
-;;               (not (mod-rule-uncharted-level-visited? (level-task-data-index snow))))
-;;          (not (mod-rule-uncharted-level-visited? (level-task-data-index cave)))
-;;          (not (mod-rule-uncharted-level-visited? (level-task-data-index lavatube)))))
-;;     (else #f)))
 
 (defun level-has-grass? ((level symbol))
   (case level
@@ -1003,18 +610,6 @@
     )
   )
 
-;; True if all villager and oracle cells in the area are bought.
-;; (defun mod-cells-purchased? ((level symbol))
-;;   (and (mod-villagers-closed? level) (mod-oracles-closed? level)))
-
-;; (defun mod-cell-purchase-level? ((level symbol))
-;;   (case level
-;;     (('village1 'village2 'village3 'rolling) #t)
-;;     (else #f)))
-
-;; (defun half-price-level? ((level symbol))
-;;   (and (mod-cell-purchase-level? level) (not (mod-cells-purchased? level))))
-
 (defun level-can-burn? ((level symbol))
   (case level
     (('dig1
@@ -1114,23 +709,37 @@
 (defun mod-rule-twist-blocks? ((id symbol))
   (cond
     ((eq? (mod-rule-type id) 'rule)
-     (or (>= (-> *MOD-rule-context-bank* twist-marked-slot) 0) (mod-rule-active? 'complication-twisted)))
+      (or (>= (-> *MOD-rule-context-bank* twist-marked-slot) 0) 
+          (mod-rule-active? 'complication-twisted)
+          )
+      )
     ((eq? id 'complication-twisted)
-     (or (>= (-> *MOD-rule-context-bank* twist-pending-count) 0)
-         (mod-rule-any-rule-active?)
-         (>= (-> *MOD-rule-context-bank* twist-marked-slot) 0)))
-    (else #f)))
+      (or (>= (-> *MOD-rule-context-bank* twist-pending-count) 0)
+          (mod-rule-any-rule-active?)
+          (>= (-> *MOD-rule-context-bank* twist-marked-slot) 0)
+          )
+      )
+    (else #f)
+    )
+  )
 
 (defun mod-rule-conflicts-with-active? ((id symbol))
   (let ((i 0)
         (hit #f))
-    (while (and (< i (-> *mod-rule-conflict-pairs* length)) (not hit))
+    (while (and (< i (-> *mod-rule-conflict-pairs* length)) 
+                (not hit))
       (let ((a (-> *mod-rule-conflict-pairs* i))
             (b (-> *mod-rule-conflict-pairs* (+ i 1))))
-        (when (or (and (= id a) (mod-rule-active? b)) (and (= id b) (mod-rule-active? a)))
-          (set! hit #t)))
-      (+! i 2))
-    hit))
+        (when (or (and (= id a) (mod-rule-active? b)) 
+                  (and (= id b) (mod-rule-active? a)))
+          (set! hit #t)
+          )
+        )
+      (+! i 2)
+      )
+    hit
+    )
+  )
 
 
 ;; Roll conditions for each rule
@@ -1462,700 +1071,3 @@
     )
   )
 
-;; Roll weight for a condition.
-;; (defun mod-rule-roll-priority ((id symbol))
-;;   (if (not (mod-condition-enabled? id))
-;;     0
-;;     (let* ((checkpoint-name (current-checkpoint-name))
-;;            (level-name (the symbol (current-level-name)))
-;;            (on-racer (mod-target-on-mode? 'racer))
-;;            (on-flut (mod-target-on-mode? 'flut))
-;;           ;;  (fuel-left (- (mod-max-fuel-current-level) (mod-collected-fuel-current-level)))
-;;           ;;  (money-left (- (mod-max-money-current-level) (mod-collected-money-current-level)))
-;;           ;;  (buzzer-left (- 7 (mod-collected-buzzer-current-level)))
-;;            (fuel-left 100)
-;;            (money-left 100)
-;;            (buzzer-left 100)
-;;            (is-minigame (or (mod-target-on-mode? 'target-fishing) (mod-target-on-mode? 'target-billy-game)))
-;;           ;;  (is-klaww (and (not (task-closed? (game-task ogre-boss) (task-status need-resolution))) (string= checkpoint-name "ogre-start")))
-;;            (is-klaww #f)
-;;            (deep-lavatube (or (string= checkpoint-name "lavatube-middle") (string= checkpoint-name "lavatube-after-ribbon")))
-;;           ;;  (racer-lavatube (or (and on-racer (string= checkpoint-name "lavatube-start")) deep-lavatube)))
-;;            (racer-lavatube #f))
-;;       (if (mod-rule-twist-blocks? id)
-;;         0
-;;         (begin
-;;         (cond
-;;           ((mod-rule-conflicts-with-active? id) 0)
-;;           ;; Resources
-;;           )
-;;         ;; Check if rule meets its conditions,
-;;         ;; if #t then use the weight value defined in *mod-rules*,
-;;         ;; else don't roll that rule
-;;         (if (mod-rule-can-roll? id)
-;;           (-> (mod-rule-info-get id) roll-weight)
-;;           0
-;;           )
-;;         (case id
-;;           (('rule-supercharged)
-;;             (if (string= checkpoint-name "snow-fort")
-;;               107
-;;               (if (or is-minigame
-;;                       (and (mod-rule-active? 'complication-rgyb) (not (yellow-eco-level? level-name)))
-;;                       (sparse-blue-eco-level? level-name))
-;;                 0
-;;                 64
-;;                 )
-;;               )
-;;             )
-          
-;;           (('complication-critical) 
-;;             (if (or is-minigame 
-;;                     (< fuel-left 1) 
-;;                     (eq? level-name 'finalboss)) 
-;;               0 
-;;               47
-;;               )
-;;             )
-          
-;;           (('rule-buzzer-pressure)
-;;             (if (or (< buzzer-left 3)
-;;                     is-minigame
-;;                     is-klaww
-;;                     (eq? level-name 'jungleb)
-;;                     (eq? level-name 'robocave)
-;;                     (eq? level-name 'finalboss)
-;;                     (eq? level-name 'sunkenb))
-;;               0
-;;               47
-;;               )
-;;             )
-          
-;;           (('rule-fuel-pressure)
-;;             (cond
-;;               ((or (< fuel-left 1)
-;;                     (and (eq? level-name 'rolling) (< fuel-left 3))
-;;                     (and (eq? level-name 'swamp) (< fuel-left 3))
-;;                     (and (eq? level-name 'village1) (< fuel-left 3))
-;;                     (and (eq? level-name 'village2) (< fuel-left 3))
-;;                     (and (eq? level-name 'village3) (< fuel-left 4))
-;;                     (and (eq? level-name 'jungle) (< fuel-left 4))
-;;                     is-minigame
-;;                     (eq? level-name 'ogre)
-;;                     (eq? level-name 'firecanyon)
-;;                     (eq? level-name 'jungleb)
-;;                     (string= checkpoint-name "lavatube-start")
-;;                     racer-lavatube
-;;                     (eq? level-name 'finalboss))
-;;                 0)
-;;               (else 53)
-;;               )
-;;             )
-          
-;;           (('rule-money-pressure)
-;;             (if (or (<= money-left 50)
-;;                     is-minigame
-;;                     is-klaww (eq? level-name 'finalboss)
-;;                     (eq? level-name 'jungleb) deep-lavatube)
-;;               0 
-;;               45
-;;               )
-;;             )
-          
-;;           (('complication-hidden-treasure)
-;;             (if (or is-klaww
-;;                     (eq? level-name 'finalboss)
-;;                     (string= checkpoint-name "firecanyon-start")
-;;                     deep-lavatube)
-;;               0 
-;;               50
-;;               )
-;;             )
-
-;;           (('rule-loyal-customer)
-;;             (if (and (mod-cell-purchase-level? level-name)
-;;                       (not (mod-oracles-closed? level-name))
-;;                       (>= (+ (current-orb-count) money-left) (mod-cell-price-oracle))
-;;                       (<= (- (mod-cell-price-oracle) (current-orb-count)) 20))
-;;               119
-;;               0
-;;               )
-;;             )
-
-;;           ;; Enemies
-;;           (('complication-glare 
-;;             'rule-kill-pressure)
-;;             (cond
-;;               ((sparse-enemy-level? level-name)
-;;                 0
-;;                 )
-;;               ((eq? id 'complication-glare) 
-;;                 72
-;;                 )
-;;               (is-minigame 
-;;                 0
-;;                 )
-;;               (else 
-;;                 69
-;;                 )
-;;               )
-;;             )
-          
-;;           (('rule-hitlist) 
-;;             (if (or (sparse-hitlist-level? level-name)
-;;                     is-minigame)
-;;               0
-;;               94
-;;               )
-;;             )
-          
-;;           (('rule-double-kill)
-;;             (if (or (sparse-enemy-level? level-name) 
-;;                     is-minigame
-;;                     is-klaww (eq? level-name 'finalboss) (eq? level-name 'sunkenb)) 
-;;               0 
-;;               72
-;;               )
-;;             )
-          
-;;           (('rule-no-harm) ;; disabled
-;;             (if (or (sparse-enemy-level? level-name)
-;;                     is-minigame
-;;                     is-klaww
-;;                     (eq? level-name 'jungleb))
-;;               0
-;;               74
-;;               )
-;;             )
-          
-;;           (('complication-soul-bond)
-;;             (if (or (sparse-enemy-level? level-name)
-;;                     is-minigame
-;;                     is-klaww
-;;                     (eq? level-name 'jungleb)
-;;                     (string= checkpoint-name "sunkenb-helix"))
-;;               0
-;;               60
-;;               )
-;;             )
-          
-;;           (('rule-sniper)
-;;             (if (or (case level-name
-;;                       (('swamp 'beach 'snow 'robocave 'darkcave) #t)
-;;                       (else #f))
-;;                     ;; (and (eq? level-name 'maincave) (not (task-closed? (game-task cave-gnawers) (task-status need-resolution))))
-;;                     )
-;;               100
-;;               0
-;;               )
-;;             )
-          
-;;           (('rule-flop-this)
-;;             (if (or (case level-name
-;;                       (('training 'lavatube 'village3 'village2 'village1 'rolling 'ogre 'finalboss) #t)
-;;                       (else #f))
-;;                     (mod-target-on-mode? 'target-billy-game))
-;;               0
-;;               80
-;;               )
-;;             )
-          
-;;           (('rule-uncharted) 
-;;             (if (mod-rule-uncharted-can-roll? level-name)
-;;               250
-;;               0
-;;               )
-;;             )
-          
-;;           (('rule-vendetta) 
-;;             (if (or (sparse-enemy-level? level-name)
-;;                     (not (red-eco-level? level-name))
-;;                     on-racer
-;;                     is-minigame)
-;;               0
-;;               190
-;;               )
-;;             )
-          
-;;           (('rule-bonecracker) 
-;;             (if (and (eq? level-name 'misty)
-;;                      (not (mod-all-bone-bridges-down?)))
-;;               422
-;;               0
-;;               )
-;;             )
-          
-;;           (('rule-orb-hunt) 
-;;             (if (or is-minigame 
-;;                     (<= (mod-orb-hunt-spot-count level-name) 0))
-;;               0 
-;;               35
-;;               )
-;;             )
-          
-;;           (('complication-eco-reserve)
-;;             (cond
-;;               ((or (eq? level-name 'finalboss) is-klaww)
-;;                 104
-;;                 )
-;;               ((yellow-eco-level? level-name) 
-;;                 43
-;;                 )
-;;               (else 
-;;                 0
-;;                 )
-;;               )
-;;             )
-          
-;;           (('complication-red-stop) ;; disabled
-;;             (if (red-eco-level? level-name) 
-;;               180
-;;               0
-;;               )
-;;             )
-          
-;;           (('complication-ohko) ;; disabled
-;;             (if (mod-timed-punishment-active? 'punishment-ohko)
-;;               0 
-;;               36
-;;               )
-;;             ) 
-          
-;;           (('complication-invisible-man) 
-;;             (if on-racer 
-;;               0 
-;;               50
-;;               )
-;;             )
-          
-;;           (('complication-double-aphids) ;; disabled
-;;             (if (and (not (task-closed? (game-task jungle-plant) (task-status need-resolution))) 
-;;                      (eq? level-name 'jungleb))
-;;               307 
-;;               0
-;;               )
-;;             )
-
-;;           ;; Crates
-;;           (('rule-crate-break)
-;;             (if (or (eq? level-name 'ogre)
-;;                     is-minigame
-;;                     (string= checkpoint-name "sunkenb-helix")
-;;                     (sparse-crate-level? level-name))
-;;               0
-;;               65
-;;               )
-;;             )
-          
-;;           (('rule-hands-on)
-;;             (case level-name
-;;               (('darkcave 'jungleb 'firecanyon 'finalboss 'village3 'ogre 'rolling 'lavatube) 
-;;                 0
-;;                 )
-;;               (else 
-;;                 61
-;;                 )
-;;               )
-;;             )
-;;           (('complication-unbreakable
-;;             'rule-distancing
-;;             )
-;;             (if (or (< buzzer-left 1)
-;;                     is-klaww
-;;                     (eq? level-name 'training)
-;;                     (eq? level-name 'jungleb)
-;;                     (eq? level-name 'finalboss))
-;;               0
-;;               42
-;;               )
-;;             )
-          
-;;           ;; Movement
-;;           (('complication-no-double-jump) 
-;;             (if on-racer
-;;               0
-;;               (if on-flut
-;;                 105
-;;                 52
-;;                 )
-;;               )
-;;             )
-          
-;;           (('complication-jak-rabbit)
-;;             (if on-racer
-;;               0
-;;               48
-;;               )
-;;             )
-          
-;;           (('complication-jak-be-nimble) 
-;;             (if (or on-racer on-flut) 
-;;               0
-;;               6
-;;               )
-;;             )
-          
-;;           (('rule-keep-rolling)
-;;             (if (or is-minigame
-;;                     is-klaww
-;;                     racer-lavatube
-;;                     (sole-zoomer-level? level-name)
-;;                     on-racer
-;;                     on-flut)
-;;               0
-;;               68
-;;               )
-;;             )
-          
-;;           (('complication-quicksand) 
-;;             (if (sand-level? level-name)
-;;               146
-;;               0
-;;               )
-;;             )
-          
-;;           (('complication-invert)
-;;             36
-;;             )
-          
-;;           (('complication-cumbersome) 
-;;             (if (or is-minigame
-;;                     on-racer
-;;                     on-flut
-;;                     (< (current-orb-count) 20))
-;;               0
-;;               64
-;;               )
-;;             )
-          
-;;           (('complication-shifty)
-;;             (if (or is-klaww 
-;;                     is-minigame)
-;;               0
-;;               40
-;;               )
-;;             )
-          
-;;           (('rule-grounded)
-;;             (cond
-;;               ((or (eq? level-name 'training) 
-;;                    (string= checkpoint-name "finalboss-fight")
-;;                    is-minigame)
-;;                 0
-;;                 )
-;;               (is-klaww
-;;                 15
-;;                 )
-;;               (else 
-;;                 27
-;;                 )
-;;               )
-;;             )
-
-;;           (('rule-die)
-;;             (if (or (eq? level-name 'training) 
-;;                     (string= checkpoint-name "finalboss-fight"))
-;;               0
-;;               12
-;;               )
-;;             )
-          
-;;           (('rule-red-light)
-;;             24
-;;             )
-          
-;;           (('complication-butter-fingers) ;; disabled
-;;             (if (or 
-;;                     (sole-zoomer-level? level-name)
-;;                     on-racer
-;;                     on-flut
-;;                     racer-lavatube)
-;;               0
-;;               52
-;;               )
-;;             )
-
-;;           (('rule-keep-it-low)
-;;             (if (or racer-lavatube 
-;;                     on-racer 
-;;                     on-flut 
-;;                     (sole-zoomer-level? level-name)
-;;                     )
-;;               0
-;;               (if (mod-timed-punishment-active? 'punishment-kick)
-;;                 0 
-;;                 55
-;;                 )
-;;               )
-;;             )
-
-;;           (('complication-sizeable)
-;;             (if (or racer-lavatube
-;;                     on-racer
-;;                     on-flut
-;;                     (sole-zoomer-level? level-name)
-;;                     )
-;;               0
-;;               60
-;;               )
-;;             )
-          
-;;           (('rule-management)
-;;             (if (or racer-lavatube
-;;                     on-racer
-;;                     on-flut
-;;                     (sole-zoomer-level? level-name)
-;;                     )
-;;               0 
-;;               55
-;;               )
-;;             )
-          
-;;           (('complication-bad-ping) 
-;;             (if (mod-timed-punishment-active? 'punishment-delay) 
-;;               0 
-;;               36
-;;               )
-;;             )
-          
-;;           (('complication-loose-pockets)
-;;             (if (or (< (current-orb-count) 20) 
-;;                     (eq? level-name 'finalboss) 
-;;                     (eq? level-name 'citadel) 
-;;                     (eq? level-name 'lavatube)) 
-;;               0 
-;;               52
-;;               )
-;;             )
-          
-;;           (('rule-no-ledge)
-;;             (if (or on-racer
-;;                     on-flut
-;;                     (eq? level-name 'finalboss)
-;;                     (sole-zoomer-level? level-name)
-;;                     (mod-timed-punishment-active? 'punishment-edge))
-;;               0
-;;               50
-;;               )
-;;             )
-
-;;           Water
-;;           (('complication-drought)
-;;            (cond
-;;              ((no-drought-level? level-name) 0)
-;;              ((or (eq? level-name 'rolling) (eq? level-name 'training)) 41)
-;;              (else 87)))
-          
-;;           (('rule-landlubber)
-;;            (if (and *target* (logtest? (-> *target* control status) (cshape-moving-flags on-water)))
-;;              0
-;;              (cond
-;;                ((water-level? level-name) 95)
-;;                ((or (eq? level-name 'misty)
-;;                     (and (not (task-closed? (game-task cave-dark-crystals) (task-status need-resolution))) (eq? level-name 'darkcave)))
-;;                 86)
-;;                (else 0))))
-
-;;           Special
-;;           (('rule-hang-time) (if (or is-minigame (not (hang-time-level? level-name))) 0 71))
-          
-;;           (('complication-vibe-check)
-;;            (cond
-;;              ((or is-minigame (string= checkpoint-name "finalboss-fight")) 0)
-             
-;;              ((eq? level-name 'citadel) 10)
-;;              ((and *target* (< (-> (the-as fact-info-target (-> *target* fact)) health) 2.0)) 55)
-;;              (else 24)))
-          
-;;           (('rule-express-delivery)
-;;            (cond
-;;              ((task-closed? (game-task misty-muse) (task-status need-resolution)) 0)
-             
-;;              ((eq? level-name 'misty) 135)
-;;              ((task-closed? (game-task misty-muse) (task-status need-introduction))
-;;               200)
-;;              (else 0)))
-          
-;;           (('rule-side-to-side) (if is-klaww 640 0))
-          
-;;           (('complication-mirror) (if is-klaww 0 37))
-          
-;;           (('complication-income-tax) (if (eq? level-name 'finalboss) 0 29))
-          
-;;           (('complication-half-price) (if (half-price-level? level-name) 40 0))
-          
-;;           (('rule-button-pusher)
-;;            (if (or (not (button-level? level-name)) is-minigame) 0 (if (or (eq? level-name 'jungle) (eq? level-name 'village2)) 49 181)))
-          
-;;           (('rule-cooked)
-;;            (if (or on-racer racer-lavatube (not (burn-level? level-name))) 0 (if (eq? level-name 'village1) 81 182)))
-          
-;;           (('complication-get-a-grip)
-;;            (if (or (sole-zoomer-level? level-name)
-;;                    (string= checkpoint-name "swamp-cave1")
-;;                    (string= checkpoint-name "citadel-elevator")
-;;                    is-minigame
-;;                    (eq? level-name 'ogre)
-;;                    (eq? level-name 'finalboss)
-;;                    (eq? level-name 'lavatube)
-;;                    (mod-timed-punishment-active? 'punishment-edge)
-;;                    on-racer
-;;                    on-flut)
-;;              0
-;;              32))
-          
-;;           ((rule-green-pilled) (if (or (sparse-green-eco-level? level-name) is-minigame) 0 65))
-          
-;;           (('complication-joyride)
-;;            (if (or on-racer
-;;                    on-flut
-;;                    is-minigame
-;;                    (eq? level-name 'finalboss)
-;;                    (and (mod-rule-active? 'rule-button-pusher) (or (eq? level-name 'sunken) (eq? level-name 'sunkenb)))
-;;                    (string= checkpoint-name "firecanyon-start")
-;;                    (eq? level-name 'lavatube))
-;;              0
-;;              54))
-
-;;           (('complication-fast-reel 'complication-palate-change)
-;;            (if (and (mod-target-on-mode? 'target-fishing) (< (-> *MOD-rule-context-bank* fisher-missed) 15)) 1290 0))
-          
-;;           (('rule-sagging-sails)
-;;            (if (and (mod-target-on-mode? 'target-fishing)
-;;                     (< (-> *MOD-rule-context-bank* fisher-missed) 5)
-;;                     (<= (-> *MOD-rule-context-bank* fisher-caught) 160)
-;;                     (>= (-> *MOD-rule-context-bank* fisher-caught) 20))
-;;              1613
-;;              0))
-          
-;;           (('rule-cold-feet)
-;;            (if (and *target* (= (-> *target* control ground-pat material) (pat-material ice))) 0 (if (eq? level-name 'snow) 387 0)))
-          
-;;           (('rule-touch-grass)
-;;            (if (or (and (eq? level-name 'jungleb) (task-closed? (game-task jungle-plant) (task-status need-resolution)))
-;;                    (and (not (or (mod-target-on-mode? 'target-fishing) (and *target* (= (-> *target* control ground-pat material) (pat-material grass)))))
-;;                         (grass-level? level-name)))
-;;              87
-;;              0))
-          
-;;           (('rule-math-quiz) (if (eq? level-name 'training) 0 22))
-          
-;;           (('rule-trivia) (if (eq? level-name 'training) 0 22))
-          
-;;           (('complication-overclock)
-;;            (if (and (eq? level-name 'citadel) (not (string= checkpoint-name "citadel-elevator"))) 430 0))
-          
-;;           (('rule-one-frame)
-;;            (cond
-;;              ((or (mod-timed-punishment-active? 'punishment-kick) is-minigame) 0)
-;;              ((or (eq? level-name 'robocave) (string= checkpoint-name "sunkenb-helix")) 83)
-             
-;;              ((eq? level-name 'finalboss) 56)
-;;              ((launcher-level? level-name) 109)
-;;              (else 0)))
-          
-;;           (('rule-for-billy)
-;;            (if (and (not (task-closed? (game-task swamp-billy) (task-status need-resolution)))
-;;                     (> (-> *MOD-countdown-bank* remaining-time) (seconds 240))
-;;                     (or (string= checkpoint-name "swamp-game")
-;;                         (string= checkpoint-name "swamp-cave2")
-;;                         (string= checkpoint-name "swamp-dock2")))
-;;              242
-;;              0))
-          
-;;           (('complication-rgyb)
-;;            (if (or (mod-target-on-mode? 'target-billy-game)
-;;                    (eq? level-name 'jungleb)
-;;                    (eq? level-name 'training)
-;;                    (eq? level-name 'finalboss)
-;;                    (eq? level-name 'village3)
-;;                    is-klaww
-;;                    (string= checkpoint-name "lavatube-middle")
-;;                    (string= checkpoint-name "lavatube-start"))
-;;              0
-;;              48))
-          
-;;           (('rule-survivor)
-;;            (cond
-;;              ((or (eq? level-name 'training) (eq? level-name 'village1)) 0)
-             
-;;              ((eq? level-name 'village2) 22)
-;;              (else 45)))
-          
-;;           (('complication-eco-allergy)
-;;            (cond
-;;              ((or (eq? level-name 'finalboss) (eq? level-name 'village3)) 0)
-;;              (is-klaww 16)
-;;              (else 41)))
-          
-;;           (('complication-interference) (if (or (mod-target-on-mode? 'target-fishing) (eq? level-name 'village3)) 0 38)) ;; disabled
-          
-;;           (('complication-heating-balloons)
-;;            (if (or (string= checkpoint-name "firecanyon-start") (and (eq? level-name 'lavatube) on-racer)) 439 0))
-          
-;;           (('complication-bus-driver) (if (or (string= checkpoint-name "firecanyon-start") on-racer) 147 0))
-          
-;;           (('rule-speed) ;; disabled
-;;            (if (or (and (or (eq? level-name 'ogre) (eq? level-name 'firecanyon) (string= checkpoint-name "lavatube-start")) on-racer)
-;;                    (string= checkpoint-name "rolling-start"))
-;;              159
-;;              0))
-          
-;;           (('complication-rotten-eggs) (if (or is-klaww (eq? level-name 'finalboss) deep-lavatube) 0 36))
-          
-;;           (('complication-disassociate) (if (and on-flut (not (sparse-enemy-level? level-name))) 774 0))
-          
-;;           (('complication-wings-tied)
-;;            (if (and on-flut (not (or (eq? level-name 'training) (eq? level-name 'finalboss)))) 366 0))
-          
-;;           (('complication-fuel-shortage)
-;;            (if (or (eq? level-name 'training)
-;;                    (eq? level-name 'finalboss)
-;;                    (eq? level-name 'lavatube)
-;;                    (eq? level-name 'citadel)
-;;                    is-minigame
-;;                    ;;  (and (string= checkpoint-name "citadel-elevator")
-;;                    ;;       (task-closed? (game-task citadel-sage-green) (task-status need-resolution)))
-;;                    )
-;;              0
-;;              39))
-          
-;;           (('complication-brittle-bones)
-;;            (cond
-;;              ((or (eq? level-name 'finalboss) is-klaww) 31)
-;;              (is-minigame 0)
-;;              (else 38)))
-          
-;;           (('complication-twisted) 
-;;             36
-;;             )
-          
-;;           (('rule-qte) 
-;;             32
-;;             )
-          
-;;           (('complication-energy-boost) 
-;;             (if is-minigame
-;;               0
-;;               44
-;;               )
-;;             )
-          
-;;           (('complication-lights-out)
-;;             (case level-name
-;;               (('maincave 'robocave) 
-;;                 520
-;;                 )
-;;               (else 
-;;                 0
-;;                 )
-;;               )
-;;             )
-
-;;           (else 35)
-;;           )
-;;           )
-;;         )
-;;       )
-;;     )
-;;   )
