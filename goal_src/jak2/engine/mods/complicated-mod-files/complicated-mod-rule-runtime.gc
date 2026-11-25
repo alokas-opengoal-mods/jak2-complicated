@@ -917,6 +917,14 @@
   (none)
   )
 
+(defun mod-rule-update-stay-on-board ()
+  (when (mod-rule-active? 'rule-stay-on-board)
+    (when (not (or (mod-target-on-mode? 'board)
+                   (= (-> *target* state name) 'target-board-get-on)))
+      (mod-rule-fail! 'rule-stay-on-board)
+      )
+    )
+  )
 
 (defun mod-rule-update-qte ()
   (let ((slot (mod-rule-find-active-slot 'rule-qte)))
@@ -1454,6 +1462,7 @@
             (mod-rule-handle-pass-input)
             (mod-rule-update-shifty)
             (mod-rule-update-car-trouble)
+            (mod-rule-update-stay-on-board)
             ;; (mod-orb-hunt-update)
             (let ((target (mod-rule-target-slot-count)))
               (when (< target *mod-last-target-slot-count*)

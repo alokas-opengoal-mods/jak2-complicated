@@ -93,6 +93,7 @@
     (rule-propaganda?               symbol)
     (rule-trigger-discipline?       symbol)
     (rule-trickster?                symbol)
+    (rule-stay-on-board?            symbol)
 
     ;; Complications
     (complication-brittle-bones?    symbol)
@@ -267,6 +268,7 @@
   (set! (-> obj rule-propaganda?)               #t)
   (set! (-> obj rule-trigger-discipline?)       #t)
   (set! (-> obj rule-trickster?)                #t)
+  (set! (-> obj rule-stay-on-board?)            #t)
 
   ;; Complications
   (set! (-> obj complication-brittle-bones?)    #t)
@@ -547,6 +549,7 @@
       (('complication-car-trouble) (-> *complicated-settings* complication-car-trouble?))
       (('rule-trigger-discipline) (-> *complicated-settings* rule-trigger-discipline?))
       (('rule-trickster) (-> *complicated-settings* rule-trickster?))
+      (('rule-stay-on-board) (-> *complicated-settings* rule-stay-on-board?))
       (else #t)
       )
     )
@@ -913,6 +916,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* rule-trickster?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* rule-trickster?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-stay-on-board-name)
+      :desc (text-id rule-stay-on-board-desc)
+      :rule-id 'rule-stay-on-board
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-stay-on-board?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-stay-on-board?) val)
         ;; (complicated-settings-save)
         )
       )

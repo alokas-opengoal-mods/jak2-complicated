@@ -131,6 +131,7 @@ Process of adding a new condition:
     'complication-car-trouble
     'rule-trigger-discipline
     'rule-trickster
+    'rule-stay-on-board
     )
   )
 
@@ -692,6 +693,17 @@ Process of adding a new condition:
       :counter-goal 25
       :roll-weight 30
       :progress? #t
+      )
+    ;; rule-stay-on-board
+    (new 'static 'mod-rule
+      :name-text (text-id rule-stay-on-board-name)
+      :desc-text (text-id rule-stay-on-board-desc)
+      :rule-id 'rule-stay-on-board
+      :rule-type 'rule
+      :duration (seconds 30)
+      :grace-period (seconds 2.0)
+      :roll-weight 25
+      :progress? #f
       )
     )
   )

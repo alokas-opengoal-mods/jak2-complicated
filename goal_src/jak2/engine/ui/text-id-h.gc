@@ -993,6 +993,8 @@
   (rule-trigger-discipline-desc #x5031)
   (rule-trickster-name #x5032)
   (rule-trickster-desc #x5033)
+  (rule-stay-on-board-name #x5034)
+  (rule-stay-on-board-desc #x5035)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)
