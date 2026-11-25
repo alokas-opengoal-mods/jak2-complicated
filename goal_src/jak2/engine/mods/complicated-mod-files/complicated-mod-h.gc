@@ -132,6 +132,7 @@ Process of adding a new condition:
     'rule-trigger-discipline
     'rule-trickster
     'rule-stay-on-board
+    'complication-ammo-inefficiency
     )
   )
 
@@ -703,6 +704,16 @@ Process of adding a new condition:
       :duration (seconds 30)
       :grace-period (seconds 2.0)
       :roll-weight 25
+      :progress? #f
+      )
+    ;; complication-ammo-inefficiency
+    (new 'static 'mod-rule
+      :name-text (text-id complication-ammo-inefficiency-name)
+      :desc-text (text-id complication-ammo-inefficiency-desc)
+      :rule-id 'complication-ammo-inefficiency
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 30
       :progress? #f
       )
     )

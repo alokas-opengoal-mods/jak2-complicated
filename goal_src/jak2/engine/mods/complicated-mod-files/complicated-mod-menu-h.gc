@@ -148,6 +148,7 @@
     (complication-iron-man?         symbol)
     (complication-pov?              symbol)
     (complication-car-trouble?      symbol)
+    (complication-ammo-inefficiency?  symbol)
     
     ;; Punishments
     (punishment-fall-damage?        symbol)
@@ -323,6 +324,7 @@
   (set! (-> obj complication-iron-man?)         #t)
   (set! (-> obj complication-pov?)              #t)
   (set! (-> obj complication-car-trouble?)      #t)
+  (set! (-> obj complication-ammo-inefficiency?)  #t)
   
   ;; Punishments
   (set! (-> obj punishment-fall-damage?)        #t)
@@ -550,6 +552,7 @@
       (('rule-trigger-discipline) (-> *complicated-settings* rule-trigger-discipline?))
       (('rule-trickster) (-> *complicated-settings* rule-trickster?))
       (('rule-stay-on-board) (-> *complicated-settings* rule-stay-on-board?))
+      (('complication-ammo-inefficiency) (-> *complicated-settings* complication-ammo-inefficiency?))
       (else #t)
       )
     )
@@ -1246,6 +1249,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* complication-car-trouble?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* complication-car-trouble?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-ammo-inefficiency-name)
+      :desc (text-id complication-ammo-inefficiency-desc)
+      :rule-id 'complication-ammo-inefficiency
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-ammo-inefficiency?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-ammo-inefficiency?) val)
         ;; (complicated-settings-save)
         )
       )

@@ -1049,6 +1049,8 @@
   (complication-pov-desc #x6035)
   (complication-car-trouble-name #x6036)
   (complication-car-trouble-desc #x6037)
+  (complication-ammo-inefficiency-name #x6038)
+  (complication-ammo-inefficiency-desc #x6039)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

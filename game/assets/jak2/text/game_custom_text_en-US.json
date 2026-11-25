@@ -482,6 +482,9 @@
   
   "6036": "Car Trouble",
   "6037": "Your vehicle's hover zone switch is faulty.",
+  
+  "6038": "Ammo Inefficiency",
+  "6039": "Guns consume 3x more ammo.",
 
 
   // Punishments

@@ -1079,6 +1079,12 @@
           (not (in-race?))
           )
         )
+      (('complication-ammo-inefficiency)
+        (and
+          (gun-owned? 'any)
+          (not (in-race?))
+          )
+        )
       (else #t)
       )
     )
