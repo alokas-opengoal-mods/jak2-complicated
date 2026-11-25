@@ -130,6 +130,7 @@ Process of adding a new condition:
     'rule-propaganda
     'complication-car-trouble
     'rule-trigger-discipline
+    'rule-trickster
     )
   )
 
@@ -680,6 +681,17 @@ Process of adding a new condition:
       :duration (seconds 60)
       :roll-weight 50
       :progress? #f
+      )
+    ;; rule-trickster
+    (new 'static 'mod-rule
+      :name-text (text-id rule-trickster-name)
+      :desc-text (text-id rule-trickster-desc)
+      :rule-id 'rule-trickster
+      :rule-type 'rule
+      :duration (seconds 30)
+      :counter-goal 25
+      :roll-weight 30
+      :progress? #t
       )
     )
   )

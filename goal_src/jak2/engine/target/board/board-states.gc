@@ -355,6 +355,7 @@
             )
         (let ((f0-5 (fabs (deg-diff f0-2 f28-0))))
           (when (and (>= f30-0 49152.0) (>= 4551.1113 f0-5))
+            (mod-rule-counter-add-progress 'rule-trickster 1) ;; Mod change
             (cond
               ((>= f30-0 191146.67)
                (add-to-trick-list (-> self board) (board-tricks board-boost) 2000.0)
@@ -1394,6 +1395,7 @@
 (defstate target-board-flip (target)
   :event (-> target-board-jump event)
   :enter (behavior ((arg0 float) (arg1 float) (arg2 symbol))
+    (mod-rule-counter-add-progress 'rule-trickster 1) ;; Mod change
     (set! (-> self control unknown-word04) (the-as uint arg2))
     (forward-up-nopitch->quaternion
       (-> self control dir-targ)
@@ -1559,6 +1561,7 @@
 (defstate target-board-hold (target)
   :event (-> target-board-jump event)
   :enter (behavior ((arg0 float) (arg1 float) (arg2 symbol))
+    (mod-rule-counter-add-progress 'rule-trickster 1) ;; Mod change
     (set! (-> self control unknown-word04) (the-as uint arg2))
     (forward-up-nopitch->quaternion
       (-> self control dir-targ)

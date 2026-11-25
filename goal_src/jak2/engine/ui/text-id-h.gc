@@ -991,6 +991,8 @@
   (rule-propaganda-desc #x502f)
   (rule-trigger-discipline-name #x5030)
   (rule-trigger-discipline-desc #x5031)
+  (rule-trickster-name #x5032)
+  (rule-trickster-desc #x5033)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)
