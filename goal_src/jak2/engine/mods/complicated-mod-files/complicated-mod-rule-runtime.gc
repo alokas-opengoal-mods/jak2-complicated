@@ -204,6 +204,11 @@
 
 (defun mod-on-orb-pickup ((amount int))
   (mod-rule-counter-add-progress 'rule-money-pressure amount)
+  (mod-rule-trigger-rotten-eggs)
+  (none))
+
+(defun mod-on-gem-pickup ((amount int))
+  (mod-rule-counter-add-progress 'rule-gem-pressure amount)
   (none))
 
 (defun mod-rule-reroll-current ((apply-buffer symbol))

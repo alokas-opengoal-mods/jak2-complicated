@@ -94,6 +94,7 @@
     (rule-trigger-discipline?       symbol)
     (rule-trickster?                symbol)
     (rule-stay-on-board?            symbol)
+    (rule-gem-pressure?             symbol)
 
     ;; Complications
     (complication-brittle-bones?    symbol)
@@ -271,6 +272,7 @@
   (set! (-> obj rule-trigger-discipline?)       #t)
   (set! (-> obj rule-trickster?)                #t)
   (set! (-> obj rule-stay-on-board?)            #t)
+  (set! (-> obj rule-gem-pressure?)             #t)
 
   ;; Complications
   (set! (-> obj complication-brittle-bones?)    #t)
@@ -556,6 +558,7 @@
       (('rule-stay-on-board) (-> *complicated-settings* rule-stay-on-board?))
       (('complication-ammo-inefficiency) (-> *complicated-settings* complication-ammo-inefficiency?))
       (('complication-traffic-jam) (-> *complicated-settings* complication-traffic-jam?))
+      (('rule-gem-pressure) (-> *complicated-settings* rule-gem-pressure?))
       (else #t)
       )
     )
@@ -718,6 +721,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* rule-money-pressure?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* rule-money-pressure?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-gem-pressure-name)
+      :desc (text-id rule-gem-pressure-desc)
+      :rule-id 'rule-gem-pressure
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-gem-pressure?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-gem-pressure?) val)
         ;; (complicated-settings-save)
         )
       )

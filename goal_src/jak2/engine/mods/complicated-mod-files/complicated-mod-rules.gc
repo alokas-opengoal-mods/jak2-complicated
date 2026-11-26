@@ -221,49 +221,72 @@
       'ctymarka
       'ctymarkb
       'ctypal
-      'hideout)
+      'hideout
+      'oracle
+      'hiphog)
       #t
       )
     )
   )
 
 (defun sparse-enemy-level? ((level symbol))
-  (case level
-    (('ruins)
-      (or (task-node-open? (game-task-node ruins-mech-resolution)))
-      )
-    (('sewer)
-      (or (task-node-open? (game-task-node sewer-board-resolution))
-          (task-node-open? (game-task-node sewer-board-drain))
-          )
-      )
-    (('fortress
-      'forexita
-      'forexitb
-      'fordumpa
-      'fordumpc
-      )
-      (or 
-        (task-node-open? (game-task-node fortress-escape-introduction))
-        (task-node-open? (game-task-node fortress-escape-resolution))
-        (= (current-checkpoint-name) "fordumpa-start")
-        (= (current-checkpoint-name) "fordumpc-start")
-        (= (current-checkpoint-name) "fordumpc-movie")
-        (= (current-checkpoint-name) "fordumpc-explode")
+  (or 
+    (and (city-level? level)
+         (or (task-node-open? (game-task-node city-keira-delivery-delivery))
+             (task-node-open? (game-task-node city-keira-delivery-resolution))
+             (task-node-open? (game-task-node city-krew-collection-collection))
+             (task-node-open? (game-task-node city-krew-collection-resolution))
+             (task-node-open? (game-task-node city-port-run-resolution))
+             (task-node-open? (game-task-node city-port-run-post-win))
+             (task-node-open? (game-task-node city-errol-challenge-race))
+             (task-node-open? (game-task-node city-errol-challenge-resolution))
+             )
+         )
+    (case level
+      (('ruins)
+        (task-node-open? (game-task-node ruins-mech-resolution))
         )
-      )
-      (('gungame
+      (('sewer)
+        (or 
+          (task-node-open? (game-task-node sewer-board-drain))
+          (task-node-open? (game-task-node sewer-board-resolution))
+          )
+        )
+      (('strip)
+        (or 
+          (task-node-open? (game-task-node strip-grenade-explode))
+          (task-node-open? (game-task-node strip-grenade-resolution))
+          (task-node-open? (game-task-node strip-drop-resolution))
+          )
+        )
+      (('forest)
+        (or 
+          (task-node-open? (game-task-node forest-scouts-pegasus))
+          (task-node-open? (game-task-node forest-scouts-resolution))
+          (task-node-open? (game-task-node forest-protect-meeting))
+          )
+        )
+      (('prison
+        'forexita
+        'forexitb
+        'fordumpa
+        'fordumpc
+        'gungame
         'mincan
-        'prison
         'tomba
         'tombb
         'tombc
         'tombboss
         'palcab
         'palroof
+        'stadium
+        'consite
+        'under
+        'underb
         )
         #t
         )
+      )
     )
   )
 
@@ -331,70 +354,58 @@
   )
 
 
+(defun level-has-metal-heads? ((level symbol))
+  (or
+    (and (city-level? level)
+         (task-node-closed? (game-task-node consite-find-baron-resolution))
+         (not (task-node-closed? (game-task-node nest-boss-resolution)))
+         )
+    (task-node-open? (game-task-node city-intercept-tanker-resolution))
 
-
-(defun active-level-enemy-count ()
-  (let ((enemy-count 0))
-    (dotimes (i (-> *level* length))
-      (let ((lev (-> *level* level i)))
-        (when (= (-> lev status) 'active)
-          ;; actor entities
-          (let ((actors (-> lev bsp actors)))
-            (when (nonzero? actors)
-              (dotimes (ii (-> actors length))
-                (let ((entity (-> actors data ii actor)))
-                  (when (and (case (-> entity etype symbol) 
-                                (('amphibian
-                                  'fodder
-                                  'guard
-                                  'crimson-guard-level
-                                  'crimson-guard-hover
-                                  'metalmonk
-                                  'hopper
-                                  'centurion
-                                  'grunt
-                                  'flitter
-                                  'flamer
-                                  'wasp
-                                  'rapid-gunner
-                                  'shield-gunner
-                                  'grenadier
-                                  'flying-spider
-                                  'mantis
-                                  'ginsu
-                                  'jellyfish
-                                  'monster-frog
-                                  'tomb-baby-spider
-                                  'spyder
-                                  'juicer
-                                  'spydroid
-                                  ) #t)
-                                  )
-                              (or (not (-> entity extra))
-                                  (zero? (-> entity extra))
-                                  (not (logtest? (-> entity extra perm status) (entity-perm-status dead bit-0)))
-                                  )
-                              )
-                      (+! enemy-count 1)
-                      ;; (format #t "Level enemy ~D: ~S~%"
-                      ;;   enemy-count 
-                      ;;   (the string (-> entity etype symbol))
-                      ;;   )
-                    )
-                  )
-                )
-              )
-            )
+    (case level
+      (('stadium)
+        (task-node-open? (game-task-node city-defend-stadium-resolution))
+        )
+      (('ruins)
+        (not (task-node-open? (game-task-node ruins-tower-resolution)))
+        )
+      (('sewer)
+        (or
+          (not (task-node-open? (game-task-node sewer-board-drain)))
+          (not (task-node-open? (game-task-node sewer-board-resolution)))
           )
         )
+      (('strip)
+        (or
+          (task-node-open? (game-task-node strip-rescue-battle))
+          (task-node-open? (game-task-node strip-rescue-resolution))
+          )
+        )
+      (('forest)
+        (or
+          (task-node-open? (game-task-node forest-hunt-resolution))
+          )
+        )
+      (('strip)
+        (or
+          (task-node-open? (game-task-node forest-hunt-resolution))
+          )
+        )
+      (('drillmid)
+        (or
+          (not (task-node-open? (game-task-node drill-ship-resolution)))
+          )
+        )
+      (('atoll
+        'mountain
+        'dig3a
+        'dig3b
+        'nest
+        'nestb)
+        #t
+        )
       )
-    ;; (format #t "Level enemy count: ~D~%" enemy-count)
-    enemy-count
     )
-  )
-
-(defun level-has-enough-enemies? ((count int))
-  (>= (active-level-enemy-count) count)
   )
 
 (defun level-has-crate? ((level symbol))
@@ -852,20 +863,20 @@
         )
       (('rule-distancing)
         (and
-          (task-node-open? (game-task-node stadium-board1-board))
-          (task-node-open? (game-task-node stadium-board1-training))
-          (task-node-open? (game-task-node stadium-board1-training-judge))
-          (task-node-open? (game-task-node stadium-board1-done))
-          (task-node-open? (game-task-node stadium-board1-resolution))
-          (task-node-open? (game-task-node city-meet-brutter-resolution))
-          (task-node-open? (game-task-node city-shuttle-shuttle))
-          (task-node-open? (game-task-node city-shuttle-resolution))
-          (task-node-open? (game-task-node city-save-lurkers-save-lurkers))
-          (task-node-open? (game-task-node city-save-lurkers-resolution))
-          (task-node-open? (game-task-node forest-scouts-pegasus))
-          (task-node-open? (game-task-node forest-scouts-resolution))
-          (task-node-open? (game-task-node city-errol-challenge-race))
-          (task-node-open? (game-task-node city-errol-challenge-resolution))
+          (not (task-node-open? (game-task-node stadium-board1-board)))
+          (not (task-node-open? (game-task-node stadium-board1-training)))
+          (not (task-node-open? (game-task-node stadium-board1-training-judge)))
+          (not (task-node-open? (game-task-node stadium-board1-done)))
+          (not (task-node-open? (game-task-node stadium-board1-resolution)))
+          (not (task-node-open? (game-task-node city-meet-brutter-resolution)))
+          (not (task-node-open? (game-task-node city-shuttle-shuttle)))
+          (not (task-node-open? (game-task-node city-shuttle-resolution)))
+          (not (task-node-open? (game-task-node city-save-lurkers-save-lurkers)))
+          (not (task-node-open? (game-task-node city-save-lurkers-resolution)))
+          (not (task-node-open? (game-task-node forest-scouts-pegasus)))
+          (not (task-node-open? (game-task-node forest-scouts-resolution)))
+          (not (task-node-open? (game-task-node city-errol-challenge-race)))
+          (not (task-node-open? (game-task-node city-errol-challenge-resolution)))
           )
         )
       (('rule-red-light)
@@ -1083,6 +1094,17 @@
         (and
           (gun-owned? 'any)
           (not (in-race?))
+          )
+        )
+      (('complication-traffic-jam)
+        (and
+          (city-level? level-name)
+          )
+        )
+      (('rule-gem-pressure)
+        (and
+          (not (sparse-enemy-level? level-name))
+          (level-has-metal-heads? level-name)
           )
         )
       (else #t)

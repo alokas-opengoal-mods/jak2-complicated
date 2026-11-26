@@ -134,6 +134,7 @@ Process of adding a new condition:
     'rule-stay-on-board
     'complication-ammo-inefficiency
     'complication-traffic-jam
+    'rule-gem-pressure
     )
   )
 
@@ -726,6 +727,17 @@ Process of adding a new condition:
       :duration (seconds 60)
       :roll-weight 40
       :progress? #f
+      )
+    ;; rule-gem-pressure
+    (new 'static 'mod-rule
+      :name-text (text-id rule-gem-pressure-name)
+      :desc-text (text-id rule-gem-pressure-desc)
+      :rule-id 'rule-gem-pressure
+      :rule-type 'rule
+      :duration (seconds 60)
+      :roll-weight 30
+      :counter-goal 5
+      :progress? #t
       )
     )
   )

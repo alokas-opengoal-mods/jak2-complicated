@@ -995,6 +995,8 @@
   (rule-trickster-desc #x5033)
   (rule-stay-on-board-name #x5034)
   (rule-stay-on-board-desc #x5035)
+  (rule-gem-pressure-name #x5036)
+  (rule-gem-pressure-desc #x5037)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)

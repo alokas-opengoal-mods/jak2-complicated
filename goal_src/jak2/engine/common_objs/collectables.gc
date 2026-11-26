@@ -436,6 +436,10 @@
      (talker-spawn-func (-> *talker-speech* 16) *entity-pool* (target-pos 0) (the-as region #f))
      (runs-on-orb-pickup) ;; Mod change
      )
+     ;; Mod change
+    (((pickup-type gem))
+     (runs-on-gem-pickup) 
+     )
     )
   (let ((s4-9 (handle->process arg0)))
     (if (nonzero? (-> this collect-effect))
