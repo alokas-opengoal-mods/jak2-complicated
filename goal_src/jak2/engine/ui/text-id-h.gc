@@ -1051,6 +1051,8 @@
   (complication-car-trouble-desc #x6037)
   (complication-ammo-inefficiency-name #x6038)
   (complication-ammo-inefficiency-desc #x6039)
+  (complication-traffic-jam-name #x603a)
+  (complication-traffic-jam-desc #x603b)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

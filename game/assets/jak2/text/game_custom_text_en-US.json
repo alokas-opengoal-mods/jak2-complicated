@@ -485,6 +485,9 @@
   
   "6038": "Ammo Inefficiency",
   "6039": "Guns consume 3x more ammo.",
+  
+  "603a": "Traffic Jam",
+  "603b": "Everyone keeps switching hover zones.",
 
 
   // Punishments

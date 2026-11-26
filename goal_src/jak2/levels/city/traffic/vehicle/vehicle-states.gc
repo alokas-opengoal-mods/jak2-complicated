@@ -7,6 +7,125 @@
 
 ;; DECOMP BEGINS
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;  complication-traffic-jam  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define *mod-traffic-jam-timer-handles*
+  (new 'global 'boxed-array handle 128))
+(define *mod-traffic-jam-timer-next-times*
+  (new 'global 'boxed-array time-frame 128))
+(define *mod-traffic-jam-timer-overflow-warned?* #f)
+(define *mod-traffic-jam-timer-table-initialized?* #f)
+
+(defun mod-rule-traffic-jam-slot ((vehicle-handle handle) (create? symbol))
+  (when (not *mod-traffic-jam-timer-table-initialized?*)
+    (dotimes (i 128)
+      (set! (-> *mod-traffic-jam-timer-handles* i) (the-as handle #f))
+      (set! (-> *mod-traffic-jam-timer-next-times* i) 0)
+      )
+    (set! *mod-traffic-jam-timer-table-initialized?* #t)
+    )
+  (let ((slot -1)
+        (free-slot -1)
+        (i 0))
+    (while (< i 128)
+      (let ((entry-handle (-> *mod-traffic-jam-timer-handles* i)))
+        (when (and entry-handle (not (handle->process entry-handle)))
+          (set! (-> *mod-traffic-jam-timer-handles* i) (the-as handle #f))
+          (set! (-> *mod-traffic-jam-timer-next-times* i) 0)
+          (set! entry-handle (the-as handle #f))
+          )
+        (cond
+          ((and entry-handle (= entry-handle vehicle-handle))
+            (set! slot i)
+            )
+          ((and (not entry-handle) (< free-slot 0))
+            (set! free-slot i)
+            )
+          )
+        )
+      (+! i 1)
+      )
+    (cond
+      ((>= slot 0) slot)
+      ((and create? (>= free-slot 0))
+        (set! (-> *mod-traffic-jam-timer-handles* free-slot) vehicle-handle)
+        free-slot
+        )
+      (else -1)
+      )
+    )
+  )
+
+(defun mod-rule-traffic-jam-forget-vehicle! ((this vehicle))
+  (let ((slot (mod-rule-traffic-jam-slot
+                (process->handle (the-as process this))
+                #f
+                )))
+    (when (>= slot 0)
+      (set! (-> *mod-traffic-jam-timer-handles* slot) (the-as handle #f))
+      (set! (-> *mod-traffic-jam-timer-next-times* slot) 0)
+      )
+    )
+  (none)
+  )
+
+(defun mod-rule-zone-switch-due? ((this vehicle))
+  (let* ((vehicle-handle (process->handle (the-as process this)))
+         (enabled? (mod-rule-active? 'complication-traffic-jam))
+         (slot (mod-rule-traffic-jam-slot vehicle-handle #f))
+         (new-entry? #f)
+         (now (current-time)))
+    (when (not enabled?)
+      (when (>= slot 0)
+        (set! (-> *mod-traffic-jam-timer-handles* slot) (the-as handle #f))
+        (set! (-> *mod-traffic-jam-timer-next-times* slot) 0)
+        )
+      )
+    (when (and enabled? (< slot 0))
+      (set! slot (mod-rule-traffic-jam-slot vehicle-handle #t))
+      (if (>= slot 0)
+          (begin
+            (set! (-> *mod-traffic-jam-timer-next-times* slot)
+                  (+ now (mod-rand-int-range (seconds 0.2) (seconds 1.0)))
+                  )
+            (set! new-entry? #t)
+            )
+          (when (not *mod-traffic-jam-timer-overflow-warned?*)
+            (format 0 "Traffic-jam vehicle timer table is full.~%")
+            (set! *mod-traffic-jam-timer-overflow-warned?* #t)
+            )
+          )
+      )
+    (cond
+      ((or (not enabled?) (< slot 0) new-entry?)
+        #f
+        )
+      ((>= now (-> *mod-traffic-jam-timer-next-times* slot))
+        (set! (-> *mod-traffic-jam-timer-next-times* slot)
+              (+ now (mod-rand-int-range (seconds 0.2) (seconds 1.0)))
+              )
+        #t
+        )
+      (else #f)
+      )
+    )
+  )
+
+(defun mod-rule-update-hover-zones ((this vehicle))
+  (when (and (mod-rule-zone-switch-due? this)
+             (not (logtest? (-> this flags) (rigid-body-object-flag player-driving)))
+             (mod-rule-active? 'complication-traffic-jam))
+    (if (zero? (-> this flight-level-index))
+        (switch-zone-high! this)
+        (switch-zone-low! this)
+        )
+    )
+  (none)
+  )
+  
+
 (defbehavior vehicle-event-handler vehicle ((arg0 process) (arg1 int) (arg2 symbol) (arg3 event-message-block))
   (rigid-body-object-method-46 self (the-as process-drawable arg0) arg1 arg2 arg3)
   )
@@ -65,6 +184,7 @@
   :trans #f
   :code sleep-code
   :post (behavior ()
+    (mod-rule-update-hover-zones self) ;; Mod change
     (check-player-get-on self)
     (vehicle-method-122 self)
     )

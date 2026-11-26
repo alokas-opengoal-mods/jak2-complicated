@@ -1056,12 +1056,43 @@
   0
   )
 
+;; (defmethod switch-zone-high! ((this vehicle))
+;;   (when (and (logtest? (-> this info flags) 64) (< (-> this flight-level-index) 1))
+;;     1
+;;     (cond
+;;       ((< (+ 8192.0 (-> this rbody state position y)) (-> this flight-level))
+;;        (sound-play "bike-up")
+;;        (prepare-zone-transition this 1)
+;;        )
+;;       (else
+;;         (set! (-> this flight-level-index) 1)
+;;         )
+;;       )
+;;     )
+;;   0
+;;   (none)
+;;   )
+
+;; (defmethod switch-zone-low! ((this vehicle))
+;;   (when (and (logtest? (-> this info flags) 64) (> (-> this flight-level-index) 0))
+;;     (sound-play "bike-down")
+;;     (prepare-zone-transition this 0)
+;;     )
+;;   0
+;;   (none)
+;;   )
+
 (defmethod switch-zone-high! ((this vehicle))
-  (when (and (logtest? (-> this info flags) 64) (< (-> this flight-level-index) 1))
+  (when (and 
+      ;; (logtest? (-> this info flags) 64) ;; Mod change: related to complication-traffic-jam
+      (< (-> this flight-level-index) 1)
+      )
     1
     (cond
       ((< (+ 8192.0 (-> this rbody state position y)) (-> this flight-level))
-       (sound-play "bike-up")
+       (when (logtest? (-> this flags) (rigid-body-object-flag player-driving)) ;; Mod change
+         (sound-play "bike-up")
+         )
        (prepare-zone-transition this 1)
        )
       (else
@@ -1074,8 +1105,13 @@
   )
 
 (defmethod switch-zone-low! ((this vehicle))
-  (when (and (logtest? (-> this info flags) 64) (> (-> this flight-level-index) 0))
-    (sound-play "bike-down")
+  (when (and 
+      ;; (logtest? (-> this info flags) 64) ;; Mod change: related to complication-traffic-jam
+      (> (-> this flight-level-index) 0)
+      )
+    (when (logtest? (-> this flags) (rigid-body-object-flag player-driving)) ;; Mod change
+      (sound-play "bike-down")
+      )
     (prepare-zone-transition this 0)
     )
   0
@@ -1261,7 +1297,19 @@
   )
 
 (defmethod vehicle-method-105 ((this vehicle))
-  (logtest? (rigid-body-object-flag disturbed player-touching player-driving in-pursuit) (-> this flags))
+  ;; (logtest? (rigid-body-object-flag disturbed player-touching player-driving in-pursuit) (-> this flags))
+  
+  ;; Mod change: related to complication-traffic-jam
+  (logtest?
+    (-> this flags)
+    (rigid-body-object-flag 
+      disturbed
+      player-touching
+      player-driving
+      in-pursuit
+      flight-level-transition
+      )
+    )
   )
 
 (defmethod vehicle-method-106 ((this vehicle))

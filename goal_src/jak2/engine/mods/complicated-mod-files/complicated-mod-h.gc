@@ -133,6 +133,7 @@ Process of adding a new condition:
     'rule-trickster
     'rule-stay-on-board
     'complication-ammo-inefficiency
+    'complication-traffic-jam
     )
   )
 
@@ -714,6 +715,16 @@ Process of adding a new condition:
       :rule-type 'complication
       :duration (seconds 60)
       :roll-weight 30
+      :progress? #f
+      )
+    ;; complication-traffic-jam
+    (new 'static 'mod-rule
+      :name-text (text-id complication-traffic-jam-name)
+      :desc-text (text-id complication-traffic-jam-desc)
+      :rule-id 'complication-traffic-jam
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 40
       :progress? #f
       )
     )

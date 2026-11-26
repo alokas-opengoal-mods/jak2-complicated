@@ -1049,16 +1049,19 @@
         )
       )
     )
-  (when (zero? (-> this flight-level-index))
-    (if (logtest? (-> this flags) (rigid-body-object-flag riding))
-        (switch-zone-high! this)
-        )
+  (when (not (mod-rule-active? 'complication-traffic-jam)) ;; Mod change
+    (when (zero? (-> this flight-level-index))
+      (if (logtest? (-> this flags) (rigid-body-object-flag riding))
+          (switch-zone-high! this)
+          )
+      )
     )
   0
   (none)
   )
 
 (defmethod vehicle-guard-method-154 ((this vehicle-guard))
+  (mod-rule-update-hover-zones this) ;; Mod change
   (if (not (logtest? (-> this rbody state flags) (rigid-body-flag enable-physics)))
       (rigid-body-object-method-38 this)
       )
@@ -1210,6 +1213,7 @@
         (speech-control-method-12 *speech-control* self (speech-type speech-type-1))
         )
       )
+    (mod-rule-update-hover-zones self) ;; Mod change
     (check-player-get-on self)
     (vehicle-method-122 self)
     )

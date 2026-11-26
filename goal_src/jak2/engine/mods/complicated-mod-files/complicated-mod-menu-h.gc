@@ -149,6 +149,7 @@
     (complication-pov?              symbol)
     (complication-car-trouble?      symbol)
     (complication-ammo-inefficiency?  symbol)
+    (complication-traffic-jam?      symbol)
     
     ;; Punishments
     (punishment-fall-damage?        symbol)
@@ -325,6 +326,7 @@
   (set! (-> obj complication-pov?)              #t)
   (set! (-> obj complication-car-trouble?)      #t)
   (set! (-> obj complication-ammo-inefficiency?)  #t)
+  (set! (-> obj complication-traffic-jam?)      #t)
   
   ;; Punishments
   (set! (-> obj punishment-fall-damage?)        #t)
@@ -553,6 +555,7 @@
       (('rule-trickster) (-> *complicated-settings* rule-trickster?))
       (('rule-stay-on-board) (-> *complicated-settings* rule-stay-on-board?))
       (('complication-ammo-inefficiency) (-> *complicated-settings* complication-ammo-inefficiency?))
+      (('complication-traffic-jam) (-> *complicated-settings* complication-traffic-jam?))
       (else #t)
       )
     )
@@ -1249,6 +1252,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* complication-car-trouble?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* complication-car-trouble?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-traffic-jam-name)
+      :desc (text-id complication-traffic-jam-desc)
+      :rule-id 'complication-traffic-jam
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-traffic-jam?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-traffic-jam?) val)
         ;; (complicated-settings-save)
         )
       )
