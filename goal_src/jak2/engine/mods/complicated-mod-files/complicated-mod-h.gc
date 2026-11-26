@@ -136,6 +136,8 @@ Process of adding a new condition:
     'complication-traffic-jam
     'rule-gem-pressure
     'complication-most-wanted
+    'rule-outlaw
+    'rule-model-citizen
     )
   )
 
@@ -746,6 +748,27 @@ Process of adding a new condition:
       :desc-text (text-id complication-most-wanted-desc)
       :rule-id 'complication-most-wanted
       :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 40
+      :progress? #f
+      )
+    ;; rule-outlaw
+    (new 'static 'mod-rule
+      :name-text (text-id rule-outlaw-name)
+      :desc-text (text-id rule-outlaw-desc)
+      :rule-id 'rule-outlaw
+      :rule-type 'rule
+      :duration (seconds 30)
+      :roll-weight 40
+      :counter-goal 1
+      :progress? #f
+      )
+    ;; rule-model-citizen
+    (new 'static 'mod-rule
+      :name-text (text-id rule-model-citizen-name)
+      :desc-text (text-id rule-model-citizen-desc)
+      :rule-id 'rule-model-citizen
+      :rule-type 'rule
       :duration (seconds 60)
       :roll-weight 40
       :progress? #f

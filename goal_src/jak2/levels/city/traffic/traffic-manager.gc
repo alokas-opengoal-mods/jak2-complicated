@@ -9,6 +9,13 @@
 
 (define *traffic-engine* (the-as traffic-engine #f))
 
+;; Mod change
+(defun get-traffic-alert-level ()
+  (when *traffic-engine*
+    (the int (get-alert-level *traffic-engine*))
+    )
+  )
+
 (define *traffic-fast-spawn* #f)
 
 (deftype traffic-manager (process)

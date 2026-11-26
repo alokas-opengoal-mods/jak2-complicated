@@ -997,6 +997,10 @@
   (rule-stay-on-board-desc #x5035)
   (rule-gem-pressure-name #x5036)
   (rule-gem-pressure-desc #x5037)
+  (rule-outlaw-name #x5038)
+  (rule-outlaw-desc #x5039)
+  (rule-model-citizen-name #x503a)
+  (rule-model-citizen-desc #x503b)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)

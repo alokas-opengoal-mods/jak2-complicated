@@ -1112,6 +1112,26 @@
           (city-level? level-name)
           )
         )
+      (('rule-outlaw)
+        (and
+          (city-level? level-name)
+          (<= (get-traffic-alert-level) 0)
+          (not (and
+            (task-node-closed? (game-task-node consite-find-baron-resolution))
+            (not (task-node-closed? (game-task-node nest-boss-resolution)))
+            )
+          )
+        )
+      (('rule-model-citizen)
+        (and
+          (city-level? level-name)
+          (<= (get-traffic-alert-level) 0)
+          (not (and
+            (task-node-closed? (game-task-node consite-find-baron-resolution))
+            (not (task-node-closed? (game-task-node nest-boss-resolution)))
+            )
+          )
+        )
       (else #t)
       )
     )

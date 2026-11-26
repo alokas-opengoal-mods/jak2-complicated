@@ -163,6 +163,8 @@
       (if #t
           (increase-alert-level a0-1 arg0 arg1)
           )
+      (mod-rule-counter-add-progress 'rule-outlaw 1) ;; Mod change
+      (mod-rule-fail! 'rule-model-citizen) ;; Mod change
       )
     )
   0

@@ -38,3 +38,4 @@
 (define-extern *lights-out-disable-render-effects?* symbol)
 (define-extern mod-rule-invis-effect (function none))
 (define-extern target-slot-count-value (function int))
+(define-extern get-traffic-alert-level (function int))

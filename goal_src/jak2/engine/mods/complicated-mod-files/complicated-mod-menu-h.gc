@@ -95,6 +95,8 @@
     (rule-trickster?                symbol)
     (rule-stay-on-board?            symbol)
     (rule-gem-pressure?             symbol)
+    (rule-outlaw?                   symbol)
+    (rule-model-citizen?            symbol)
 
     ;; Complications
     (complication-brittle-bones?    symbol)
@@ -252,6 +254,8 @@
   (set! (-> obj rule-trickster?)                #t)
   (set! (-> obj rule-stay-on-board?)            #t)
   (set! (-> obj rule-gem-pressure?)             #t)
+  (set! (-> obj rule-outlaw?)                   #t)
+  (set! (-> obj rule-model-citizen?)            #t)
 
   ;; Complications
   (set! (-> obj complication-brittle-bones?)    #t)
@@ -511,6 +515,8 @@
       (('complication-traffic-jam) (-> *complicated-settings* complication-traffic-jam?))
       (('rule-gem-pressure) (-> *complicated-settings* rule-gem-pressure?))
       (('complication-most-wanted) (-> *complicated-settings* complication-most-wanted?))
+      (('rule-outlaw) (-> *complicated-settings* rule-outlaw?))
+      (('rule-model-citizen) (-> *complicated-settings* rule-model-citizen?))
       (else #t)
       )
     )
@@ -901,6 +907,30 @@
       :get-value-fn (lambda () (-> *complicated-settings* rule-stay-on-board?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* rule-stay-on-board?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-outlaw-name)
+      :desc (text-id rule-outlaw-desc)
+      :rule-id 'rule-outlaw
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-outlaw?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-outlaw?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id rule-model-citizen-name)
+      :desc (text-id rule-model-citizen-desc)
+      :rule-id 'rule-model-citizen
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* rule-model-citizen?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* rule-model-citizen?) val)
         ;; (complicated-settings-save)
         )
       )
