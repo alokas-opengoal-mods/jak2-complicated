@@ -1107,6 +1107,11 @@
           (level-has-metal-heads? level-name)
           )
         )
+      (('complication-most-wanted)
+        (and
+          (city-level? level-name)
+          )
+        )
       (else #t)
       )
     )
