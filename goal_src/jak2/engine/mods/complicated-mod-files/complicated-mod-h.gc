@@ -135,6 +135,7 @@ Process of adding a new condition:
     'complication-ammo-inefficiency
     'complication-traffic-jam
     'rule-gem-pressure
+    'complication-most-wanted
     )
   )
 
@@ -738,6 +739,16 @@ Process of adding a new condition:
       :roll-weight 30
       :counter-goal 5
       :progress? #t
+      )
+    ;; complication-most-wanted
+    (new 'static 'mod-rule
+      :name-text (text-id complication-most-wanted-name)
+      :desc-text (text-id complication-most-wanted-desc)
+      :rule-id 'complication-most-wanted
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 40
+      :progress? #f
       )
     )
   )

@@ -204,7 +204,6 @@
 
 (defun mod-on-orb-pickup ((amount int))
   (mod-rule-counter-add-progress 'rule-money-pressure amount)
-  (mod-rule-trigger-rotten-eggs)
   (none))
 
 (defun mod-on-gem-pickup ((amount int))
@@ -1018,6 +1017,13 @@
   (none)
   )
 
+(defun mod-rule-update-most-wanted ()
+  (when (mod-rule-active? 'complication-most-wanted)
+    (send-event *traffic-manager* 'set-alert-level 4)
+    )
+  (none)
+  )
+
 
 (defun mod-rule-trigger-brittle-bones ()
   (when (mod-rule-active? 'complication-brittle-bones)
@@ -1468,6 +1474,7 @@
             (mod-rule-update-shifty)
             (mod-rule-update-car-trouble)
             (mod-rule-update-stay-on-board)
+            (mod-rule-update-most-wanted)
             ;; (mod-orb-hunt-update)
             (let ((target (mod-rule-target-slot-count)))
               (when (< target *mod-last-target-slot-count*)

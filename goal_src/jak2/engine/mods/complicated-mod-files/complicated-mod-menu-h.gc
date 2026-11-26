@@ -151,6 +151,7 @@
     (complication-car-trouble?      symbol)
     (complication-ammo-inefficiency?  symbol)
     (complication-traffic-jam?      symbol)
+    (complication-most-wanted?      symbol)
     
     ;; Punishments
     (punishment-fall-damage?        symbol)
@@ -281,6 +282,7 @@
   (set! (-> obj complication-car-trouble?)      #t)
   (set! (-> obj complication-ammo-inefficiency?)  #t)
   (set! (-> obj complication-traffic-jam?)      #t)
+  (set! (-> obj complication-most-wanted?)      #t)
   
   ;; Punishments
   (set! (-> obj punishment-fall-damage?)        #t)
@@ -508,6 +510,7 @@
       (('complication-ammo-inefficiency) (-> *complicated-settings* complication-ammo-inefficiency?))
       (('complication-traffic-jam) (-> *complicated-settings* complication-traffic-jam?))
       (('rule-gem-pressure) (-> *complicated-settings* rule-gem-pressure?))
+      (('complication-most-wanted) (-> *complicated-settings* complication-most-wanted?))
       (else #t)
       )
     )
@@ -1240,6 +1243,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* complication-ammo-inefficiency?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* complication-ammo-inefficiency?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-most-wanted-name)
+      :desc (text-id complication-most-wanted-desc)
+      :rule-id 'complication-most-wanted
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-most-wanted?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-most-wanted?) val)
         ;; (complicated-settings-save)
         )
       )

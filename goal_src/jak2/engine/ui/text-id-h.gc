@@ -1055,6 +1055,8 @@
   (complication-ammo-inefficiency-desc #x6039)
   (complication-traffic-jam-name #x603a)
   (complication-traffic-jam-desc #x603b)
+  (complication-most-wanted-name #x603c)
+  (complication-most-wanted-desc #x603d)
 
   ;; Punishments
   (punishment-countdown-name #x7000)
