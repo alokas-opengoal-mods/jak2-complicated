@@ -710,6 +710,7 @@
                  (-> block param 0)
                  (static-attack-info ((id (-> self attack-id)) (vector s4-1) (shove-back (meters 8)) (shove-up (meters 3))))
                  )
+               (mod-rule-counter-add-progress 'rule-shocked 1) ;; Mod change
                )
              (let ((v0-0 (current-time)))
                (set! (-> self collide-off-timer) (the-as uint v0-0))
