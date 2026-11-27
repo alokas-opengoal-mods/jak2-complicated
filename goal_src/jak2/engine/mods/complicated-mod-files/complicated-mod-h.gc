@@ -139,6 +139,7 @@ Process of adding a new condition:
     'rule-outlaw
     'rule-model-citizen
     'rule-gunless
+    'complication-knockback
     )
   )
 
@@ -782,6 +783,16 @@ Process of adding a new condition:
       :rule-type 'rule
       :duration (seconds 60)
       :roll-weight 40
+      :progress? #f
+      )
+    ;; complication-knockback
+    (new 'static 'mod-rule
+      :name-text (text-id complication-knockback-name)
+      :desc-text (text-id complication-knockback-desc)
+      :rule-id 'complication-knockback
+      :rule-type 'complication
+      :duration (seconds 60)
+      :roll-weight 30
       :progress? #f
       )
     )

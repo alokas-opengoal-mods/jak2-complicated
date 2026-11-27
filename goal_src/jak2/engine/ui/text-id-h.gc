@@ -1063,6 +1063,8 @@
   (complication-traffic-jam-desc #x603b)
   (complication-most-wanted-name #x603c)
   (complication-most-wanted-desc #x603d)
+  (complication-knockback-name #x603e)
+  (complication-knockback-desc #x603f)
 
   ;; Punishments
   (punishment-countdown-name #x7000)

@@ -1141,6 +1141,11 @@
           (not is-indax?)
           )
         )
+      (('complication-knockback)
+        (and
+          (not (in-race?))
+          )
+        )
       (else #t)
       )
     )

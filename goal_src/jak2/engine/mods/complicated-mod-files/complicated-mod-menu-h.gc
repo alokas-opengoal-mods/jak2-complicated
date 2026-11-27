@@ -155,6 +155,7 @@
     (complication-ammo-inefficiency?  symbol)
     (complication-traffic-jam?      symbol)
     (complication-most-wanted?      symbol)
+    (complication-knockback?        symbol)
     
     ;; Punishments
     (punishment-fall-damage?        symbol)
@@ -289,6 +290,7 @@
   (set! (-> obj complication-ammo-inefficiency?)  #t)
   (set! (-> obj complication-traffic-jam?)      #t)
   (set! (-> obj complication-most-wanted?)      #t)
+  (set! (-> obj complication-knockback?)        #t)
   
   ;; Punishments
   (set! (-> obj punishment-fall-damage?)        #t)
@@ -520,6 +522,7 @@
       (('rule-outlaw) (-> *complicated-settings* rule-outlaw?))
       (('rule-model-citizen) (-> *complicated-settings* rule-model-citizen?))
       (('rule-gunless) (-> *complicated-settings* rule-gunless?))
+      (('complication-knockback) (-> *complicated-settings* complication-knockback?))
       (else #t)
       )
     )
@@ -1300,6 +1303,18 @@
       :get-value-fn (lambda () (-> *complicated-settings* complication-most-wanted?))
       :on-confirm (lambda ((val symbol))
         (set! (-> *complicated-settings* complication-most-wanted?) val)
+        ;; (complicated-settings-save)
+        )
+      )
+    (new 'static 'mod-menu-generic-boolean-option
+      :name (text-id complication-knockback-name)
+      :desc (text-id complication-knockback-desc)
+      :rule-id 'complication-knockback
+      :truthy-text (text-id progress-on)
+      :falsey-text (text-id progress-off)
+      :get-value-fn (lambda () (-> *complicated-settings* complication-knockback?))
+      :on-confirm (lambda ((val symbol))
+        (set! (-> *complicated-settings* complication-knockback?) val)
         ;; (complicated-settings-save)
         )
       )
