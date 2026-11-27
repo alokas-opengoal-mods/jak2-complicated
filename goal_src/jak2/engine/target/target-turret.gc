@@ -1821,6 +1821,7 @@
          (vf3 :class vf)
          (vf4 :class vf)
          )
+    (mod-rule-fail! 'rule-gunless) ;; Mod change
     (init-vf0-vector)
     (when (< (-> this heat) 1.0)
       (let ((s3-0 (new 'static 'array int32 4 5 11 7 9))

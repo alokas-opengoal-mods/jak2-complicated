@@ -291,7 +291,9 @@
   )
 
 (defun sparse-hitlist-level? ((level symbol))
-  (or (sparse-enemy-level? level)
+  (or 
+    (sparse-enemy-level? level)
+    (city-level? level)
     (case level
       (('ruins)
         (or (task-node-open? (game-task-node ruins-mech-resolution))
@@ -1130,6 +1132,13 @@
             (task-node-closed? (game-task-node consite-find-baron-resolution))
             (not (task-node-closed? (game-task-node nest-boss-resolution)))
             ))
+          )
+        )
+      (('rule-gunless)
+        (and
+          (gun-owned? 'any)
+          (not (in-race?))
+          (not is-indax?)
           )
         )
       (else #t)

@@ -138,6 +138,7 @@ Process of adding a new condition:
     'complication-most-wanted
     'rule-outlaw
     'rule-model-citizen
+    'rule-gunless
     )
   )
 
@@ -768,6 +769,16 @@ Process of adding a new condition:
       :name-text (text-id rule-model-citizen-name)
       :desc-text (text-id rule-model-citizen-desc)
       :rule-id 'rule-model-citizen
+      :rule-type 'rule
+      :duration (seconds 60)
+      :roll-weight 40
+      :progress? #f
+      )
+    ;; rule-gunless
+    (new 'static 'mod-rule
+      :name-text (text-id rule-gunless-name)
+      :desc-text (text-id rule-gunless-desc)
+      :rule-id 'rule-gunless
       :rule-type 'rule
       :duration (seconds 60)
       :roll-weight 40

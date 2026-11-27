@@ -412,6 +412,9 @@
   "503a": "Model Citizen",
   "503b": "Do not alert the guards.",
 
+  "503c": "Gunless",
+  "503d": "Do not fire any weapons.",
+
 
   // Complications
   "6000": "Brittle Bones",

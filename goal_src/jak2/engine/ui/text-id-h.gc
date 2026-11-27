@@ -1001,6 +1001,8 @@
   (rule-outlaw-desc #x5039)
   (rule-model-citizen-name #x503a)
   (rule-model-citizen-desc #x503b)
+  (rule-gunless-name #x503c)
+  (rule-gunless-desc #x503d)
 
   ;; Complications
   (complication-brittle-bones-name #x6000)
