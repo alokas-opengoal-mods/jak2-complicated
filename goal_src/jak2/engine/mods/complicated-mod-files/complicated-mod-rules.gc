@@ -1119,7 +1119,7 @@
           (not (and
             (task-node-closed? (game-task-node consite-find-baron-resolution))
             (not (task-node-closed? (game-task-node nest-boss-resolution)))
-            )
+            ))
           )
         )
       (('rule-model-citizen)
@@ -1129,7 +1129,7 @@
           (not (and
             (task-node-closed? (game-task-node consite-find-baron-resolution))
             (not (task-node-closed? (game-task-node nest-boss-resolution)))
-            )
+            ))
           )
         )
       (else #t)
